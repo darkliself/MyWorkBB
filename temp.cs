@@ -1,530 +1,435 @@
-// Regular expression BEGIN
+//§§5435445243161518, 5435445243142044, 5435445243167883, 543544524340300 "Printers BEGIN" "Serhii.O"
 
-var regexes = new Dictionary<string, string>(){
-    { @"([,].+[^,])( and )", @"$1, $2" },
-    { @"(?<=\d) (?=(yd\(s\)|mm|cm|m|L|mL|gram|cup\(s\)|qt|MB\/s)( |$|\|))", @"" },
-    { @" +", @" " },
-    { @"(?<!Windows|Gen|Windows Embedded Standard|iOS|Android|iPhone|Pixel|Samsung Galaxy Tab|Storm|\/|\d x|\d,|No.) 1 (x )?(?!Plus|\d|x \d|year|oz.|mil.|lb.|lbs.|gal.|fl. oz.|cu. ft.)", @" one " },
-    { @"(?<!Windows|Gen|Windows Embedded Standard|iOS|Android|iPhone|Pixel|Samsung Galaxy Tab|Storm|\/|\d x|\d,|No.) 2 (x )?(?!Plus|\d|x \d|years|oz.|mil.|lb.|lbs.|gal.|fl. oz.|cu. ft.)", @" two " },
-    { @"(?<!Windows|Gen|Windows Embedded Standard|iOS|Android|iPhone|Pixel|Samsung Galaxy Tab|Storm|\/|\d x|\d,|No.) 3 (x )?(?!Plus|\d|x \d|years|oz.|mil.|lb.|lbs.|gal.|fl. oz.|cu. ft.)", @" three " },
-    { @"(?<!Windows|Gen|Windows Embedded Standard|iOS|Android|iPhone|Pixel|Samsung Galaxy Tab|Storm|\/|\d x|\d,|No.) 4 (x )?(?!Plus|\d|x \d|years|oz.|mil.|lb.|lbs.|gal.|fl. oz.|cu. ft.)", @" four " },
-    { @"(?<!Windows|Gen|Windows Embedded Standard|iOS|Android|iPhone|Pixel|Samsung Galaxy Tab|Storm|\\/|\d x|\d,|No.) 5 (x )?(?!Plus|\d|x \d|years|oz.|mil.|lb.|lbs.|gal.|cu. ft.)", @" five "},
-    { @"(?<!Windows|Gen|Windows Embedded Standard|iOS|Android|iPhone|Pixel|Samsung Galaxy Tab|Storm|\/|\d x|\d,|No.) 6 (x )?(?!Plus|\d|x \d|years|oz.|mil.|lb.|lbs.|gal.|fl. oz.|cu. ft.)", @" six " },
-    { @"(?<!Windows|Gen|Windows Embedded Standard|iOS|Android|iPhone|Pixel|Samsung Galaxy Tab|Storm|\/|\d x|\d,|No.) 7 (x )?(?!Plus|\d|x \d|years|oz.|mil.|lb.|lbs.|gal.|fl. oz.|cu. ft.)", @" seven " },
-    { @"(?<!Windows|Gen|Windows Embedded Standard|iOS|Android|iPhone|Pixel|Samsung Galaxy Tab|Storm|\/|\d x|\d,|No.) 8 (x )?(?!Plus|\d|x \d|years|oz.|mil.|lb.|lbs.|gal.|fl. oz.|cu. ft.)", @" eight " },
-    { @"(?<!Windows|Gen|Windows Embedded Standard|iOS|Android|iPhone|Pixel|Samsung Galaxy Tab|Storm|\/|\d x|\d,|No.) 9 (x )?(?!Plus|\d|x \d|years|oz.|mil.|lb.|lbs.|gal.|fl. oz.|cu. ft.)", @" nine " },
-    { @"(?<!Windows|Gen|Windows Embedded Standard|iOS|Android|iPhone|Pixel|Samsung Galaxy Tab|Storm|\/|\d x|\d,|No.) 1$", @" one" },
-    { @"(?<!Windows|Gen|Windows Embedded Standard|iOS|Android|iPhone|Pixel|Samsung Galaxy Tab|Storm|\/|\d x|\d,|No.) 2$", @" two" },
-    { @"(?<!Windows|Gen|Windows Embedded Standard|iOS|Android|iPhone|Pixel|Samsung Galaxy Tab|Storm|\/|\d x|\d,|No.) 3$", @" three" },
-    { @"(?<!Windows|Gen|Windows Embedded Standard|iOS|Android|iPhone|Pixel|Samsung Galaxy Tab|Storm|\/|\d x|\d,|No.) 4$", @" four" },
-    { @"(?<!Windows|Gen|Windows Embedded Standard|iOS|Android|iPhone|Pixel|Samsung Galaxy Tab|Storm|\/|\d x|\d,|No.) 5$", @" five" },
-    { @"(?<!Windows|Gen|Windows Embedded Standard|iOS|Android|iPhone|Pixel|Samsung Galaxy Tab|Storm|\/|\d x|\d,|No.) 6$", @" six" },
-    { @"(?<!Windows|Gen|Windows Embedded Standard|iOS|Android|iPhone|Pixel|Samsung Galaxy Tab|Storm|\/|\d x|\d,|No.) 7$", @" seven" },
-    { @"(?<!Windows|Gen|Windows Embedded Standard|iOS|Android|iPhone|Pixel|Samsung Galaxy Tab|Storm|\/|\d x|\d,|No.) 8$", @" eight" },
-    { @"(?<!Windows|Gen|Windows Embedded Standard|iOS|Android|iPhone|Pixel|Samsung Galaxy Tab|Storm|\/|\d x|\d,|No.) 9$", @" nine" },
-    { @"^1 (x )?(?!Plus|x \d|mil.|gal.|oz.|lb.)", @"One " },
-    { @"^2 (x )?(?!Plus|x \d|mil.|gal.|oz.|lb.)", @"Two " },
-    { @"^3 (x )?(?!Plus|x \d|mil.|gal.|oz.|lb.)", @"Three " },
-    { @"^4 (x )?(?!Plus|x \d|mil.|gal.|oz.|lb.)", @"Four " },
-    { @"^5 (x )?(?!Plus|x \d|mil.|gal.|oz.|lb.)", @"Five " },
-    { @"^6 (x )?(?!Plus|x \d|mil.|gal.|oz.|lb.)", @"Six " },
-    { @"^7 (x )?(?!Plus|x \d|mil.|gal.|oz.)", @"Seven " },
-    { @"^8 (x )?(?!Plus|x \d|mil.|gal.|oz.|lb.)", @"Eight " },
-    { @"^9 (x )?(?!Plus|x \d|mil.|gal.|oz.|lb.)", @"Nine " },
-    { @"^3-button", @"Three-button" },
-    { @"^4-button", @"Four-button" },
-    { @"^5-button", @"Five-button" },
-    { @"^6-button", @"Six-button" },
-    { @"^7-button", @"Seven-button" },
-    { @"^8-button", @"Eight-button" },
-    { @"^9-button", @"Nine-button" },
-    { @"\(4-way\)", @"(four-way)" },
-    { @"(?<=[Ww]ater|[Dd]irt|[Ss]now|[Dd]rop|[Ff]ire|[Ss]plash|[Ss]and|[Ww]eather|[Rr]ain|[Tt]ear)(?<!-) ?proof", @"-proof"},
-    { @"Gray\/Silver", @"Gray/silver" },
-    { @"(?<=(^A)|( a))cid free", @"cid-free" },
-    { @"(?<=(^R)|( r))esidue free", @"esidue-free" },
-    { @"(?<= )tyvek", @"Tyvek" },
-    { @"(?<=[0-9]) percent(?= |$|.)", @"%" },
-    { @"®|™|©", @""},
-    { @"one touch ring", @"one-touch ring" },
-    { @"One touch ring", @"One-touch ring" },
-    { @" rip-Proof", @" Rip-Proof" },
-    { @"non-View", @"non-view" },
-    { @"(l|L)eather(s|S)oft", @"LeatherSoft" },
-    { @"caribbean blue", @"Caribbean blue" },
-    { @"SanDisk secureAccess", @"SanDisk SecureAccess" },
-    { @"encryptStick lite", @"EncryptStick Lite" },
-    { @"big sur color", @"Big Sur color" },
-    { @" punk color", @" Punk color" },
-    { @"post-consumer", @"postconsumer" },
-    { @"multi-pack", @"multipack" },
-    { @"Bluetrack", @"BlueTrack" },
-    { @"C-fold", @"C-Fold" },
-    { @"-Strip", @"-strip" },
-    { @"postconsumer", @"post-consumer" },
-    { @"(\[\[.+)( x )(.+\]\])", @"$1W$2$3L" },
-    { @"\[\[", @""},
-    { @"-Tilt", @"-tilt"},
-    { @"H.K. anderson", @"H.K. Anderson" },
-    { @" Extra Bold", @" extra bold" },
-    { @"double wall construction", @"double-wall construction" },
-    { @"Male to male", @"Male to Male" },
-    { @"multicolor", @"multi colors" },
-    { @"[Aa]ssorted(?! color)", @"$& colors" },
-    { @"(?<= )PLA(?= |$)", @"plastic" },
-    { @"arabica flavor", @"Arabica flavor" },
-    { @"black and white images", @"black/white images" },
-    { @"ActiveAire Passive Whole-Room Freshener Dispenser", @"ActiveAire passive whole-room freshener dispenser" },
-    { @"chisel tip marker", @"chisel-tip marker" },
-    { @"NFC\/wireless direct", @"NFC\/Wireless Direct" },
-    { @"Audio Line In", @"audio line-in" },
-    { @"VGA In", @"VGA input" },
-    { @"(?<=\d )lbs(?=[^.]|$)", @"$&." },
-    { @"jalapeno", @"jalapeño" },
-    { @"##", @"" }
-};
+PrintersTypeOfPrinterUse();
+PrintersPrintTechnologyResolution();
+PrintersPrintSpeedMode();
+PrintersConnectivity();
+// Dimensions - All
+PrintersInputLoadingFeature();
+PrintersProcessorMemory();
+AutomaticPrintingFeatures();
+PrintersDisplay();
+PrintersScanningCapabilities();
+// Standards - All
+LargeFormatPrinter();
+// Warranty Information - All
 
-// Regular expression END
+// --[FEATURE #1]
+// --Type of Printer & Use
+void PrintersTypeOfPrinterUse(){
+	var result = "";
+	// Single-Function|All-in-One|
+	var TypeOfPrinterRef = R("SP-13860").HasValue() ? R("SP-13860").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-13860").HasValue() ? R("cnet_common_SP-13860").Replace("<NULL>", "").Text : "";
 
-void AddBullet(Dictionary<string, string> dictionaryBulletsPool2, string bulletKey, bool addBlank){
-    if (dictionaryBulletsPool2.ContainsKey(bulletKey)){
-        Add(dictionaryBulletsPool2[bulletKey]);
-    }
-    else if (addBlank){
-        Add("@@");
-    }
+	if(!String.IsNullOrEmpty(TypeOfPrinterRef)){
+		switch(TypeOfPrinterRef){
+			case "All-in-One":
+			result = "All-in-one printer gives you printing, copying, and scanning capability";
+			break;
+			case "Single-Function":
+			result = "This single-function printer focuses exclusively on printing, so it is easy to use";
+			break;
+			case "Wide/Large Format":
+			result = "Wide and large format printer to accommodate a range of printing projects";
+			break;
+		}
+	}
+	if(!String.IsNullOrEmpty(result)){
+	    Add($"PrintersTypeOfPrinterUse⸮{result}");
+	}
 }
 
-var dictionaryBulletsPool = new Dictionary<string, string>();
-var bulletsPool = R("cnet_common_feature_bullets_pool").Text;
-var RegexString = "";
+// --[FEATURE #2]
+// --Print Technology & Resolution
+void PrintersPrintTechnologyResolution(){
+	var result = "";
+	// Dot Matrix|Borderless|Laser|Inkjet
+	var PrintTechnologyRef = R("SP-13581").HasValue() ? R("SP-13581").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-13581").HasValue() ? R("cnet_common_SP-13581").Replace("<NULL>", "").Text : "";
+	var Printing_MaxResolutionBW_Color = Coalesce(A[2758], A[2759]); // Printing - Max Resolution B/W | Max Resolution Color
 
-foreach(var bulletPoint in bulletsPool.Split("|")){
-    RegexString = bulletPoint.Split("⸮").Last(); 
-    foreach(var regex in regexes){
-        RegexString = Coalesce(RegexString).RegexReplace(regex.Key, regex.Value).Text;
-    }
-    dictionaryBulletsPool.Add(
-        bulletPoint.Split("⸮").First(),
-        RegexString
-    );  
+	if(!String.IsNullOrEmpty(PrintTechnologyRef)){
+		switch(PrintTechnologyRef){
+			case var a when a.Equals("Laser"):
+			result = Printing_MaxResolutionBW_Color.HasValue() ?
+			$"Laser printing with up to {Printing_MaxResolutionBW_Color.FirstValue()} resolution ensures detailed, high-quality prints" :
+			"Invest in a laser printer that will keep your business running smoothly";
+			break;
+			case var a when a.Equals("Inkjet"):
+			result = Printing_MaxResolutionBW_Color.HasValue() ?
+			$"Inkjet printer has a resolution quality that goes up to {Printing_MaxResolutionBW_Color.FirstValue()} for excellent readability" :
+			"Simplify your office printing solutions with this inkjet printer";
+			break;
+			case var a when a.Equals("Dot Matrix"):
+			result = Printing_MaxResolutionBW_Color.HasValue() ?
+			$"Dot matrix printer creates documents up to {Printing_MaxResolutionBW_Color.FirstValue()} for sharp resolution" :
+			"Simplify your office printing solutions with this dot matrix printer";
+			break;
+			case var a when a.Equals("Borderless"):
+			result = Printing_MaxResolutionBW_Color.HasValue() ?
+			$"Borderless printer creates documents up to {Printing_MaxResolutionBW_Color.FirstValue()} for sharp resolution" :
+			"Simplify your office printing solutions with this borderless printer";
+			break;
+			case var a when a.Equals("PageWide"):
+			result = Printing_MaxResolutionBW_Color.HasValue() ?
+			$"PageWide printer has a resolution quality that goes up to {Printing_MaxResolutionBW_Color.FirstValue()} for excellent readability" :
+			"Simplify your office printing solutions with this PageWide";
+			break;
+		}
+	}
+	if(!String.IsNullOrEmpty(result)){
+	    Add($"PrintersPrintTechnologyResolution⸮{result}");
+	}
 }
 
-if (CAT.Alt.Count() > 0)
-{
-    switch (CAT.MainAlt.Key){
-        // "Office Chairs" "Serhii.O" 
-        case var a when a.In("2324927166253"): 
-        AddBullet(dictionaryBulletsPool, "TypeofChairUse", true); 
-        AddBullet(dictionaryBulletsPool, "OfficeChairsTrueColorUpholsteryMaterial", true); 
-        AddBullet(dictionaryBulletsPool, "TypeOfSupportAndErgonomic", true); 
-        AddBullet(dictionaryBulletsPool, "OfficeChairsOverallDimensions", true); 
-        AddBullet(dictionaryBulletsPool, "SeatDimension", true); 
-        AddBullet(dictionaryBulletsPool, "BackDimension", true); 
-        AddBullet(dictionaryBulletsPool, "ArmType", true); 
-        AddBullet(dictionaryBulletsPool, "TiltMechanismType", true); 
-        AddBullet(dictionaryBulletsPool, "OfficeChairsCapacity", true); 
-        AddBullet(dictionaryBulletsPool, "OfficeChairsAssemblyRequired", true); 
-        AddBullet(dictionaryBulletsPool, "CertificationsStandardsANSIBIFMA", true); 
-        AddBullet(dictionaryBulletsPool, "Warranty", true); 
-        break; 
-        // "Monitor Mounts & Stands" "Serhii.O" 
-        case var a when a.In("590434034623141470"):
-        AddBullet(dictionaryBulletsPool, "MonitorMountStandTypeUse", true);
-        AddBullet(dictionaryBulletsPool, "MonitorSizeSupported", true);
-        AddBullet(dictionaryBulletsPool, "AdjustableMinimumMaximumHeight", true);
-        AddBullet(dictionaryBulletsPool, "Material", true);
-        AddBullet(dictionaryBulletsPool, "MonitorMountStandArticulation", true);
-        AddBullet(dictionaryBulletsPool, "MonitorMountStandRotation", true);
-        AddBullet(dictionaryBulletsPool, "MonitorMountStandStorageOptions", true);
-        AddBullet(dictionaryBulletsPool, "WeightAll", true);
-        AddBullet(dictionaryBulletsPool, "Dimensions", true);
-        AddBullet(dictionaryBulletsPool, "MountBracketOrVESAPattern", true);
-        AddBullet(dictionaryBulletsPool, "CompliantStandards", true);
-        AddBullet(dictionaryBulletsPool, "TrueColor", false);
-        AddBullet(dictionaryBulletsPool, "RubberFeet", false);
-        AddBullet(dictionaryBulletsPool, "Warranty", true);
-        break;
-        // "Filing Accessories" "Serhii.O" 
-        case var a when a.In("135391203158855"):
-        AddBullet(dictionaryBulletsPool, "FilingAccessoryType", true);
-        AddBullet(dictionaryBulletsPool, "TrueColorMaterial", true);
-        AddBullet(dictionaryBulletsPool, "Dimensions", true);
-        AddBullet(dictionaryBulletsPool, "PaperSizeFilingAccessory", true);
-        AddBullet(dictionaryBulletsPool, "PackSize", true);
-        AddBullet(dictionaryBulletsPool, "FolderExpands", false);
-        AddBullet(dictionaryBulletsPool, "TypeOfFilingAccessory", false);
-        AddBullet(dictionaryBulletsPool, "AdhesiveFilingAccessory", false);
-        AddBullet(dictionaryBulletsPool, "HeavyDutyFilingAccessory", false);
-        AddBullet(dictionaryBulletsPool, "LaminatedSurfaceFilingAccessory", false);
-        AddBullet(dictionaryBulletsPool, "CutTabFilingAccessory", false);
-        AddBullet(dictionaryBulletsPool, "TearResistantFilingAccessory⸮", false);
-        AddBullet(dictionaryBulletsPool, "BlankInsertsFilingAccessory", false);
-        AddBullet(dictionaryBulletsPool, "PrintingTechnologyFilingAccessory", false);
-        AddBullet(dictionaryBulletsPool, "HeavyWeightFilingAccessory", false);
-        AddBullet(dictionaryBulletsPool, "SelfAdhesivenessFilingAccessory", false);
-        AddBullet(dictionaryBulletsPool, "AlphabeticalOrderFilingAccessory", false);
-        break;
-        // "Headsets & Microphones" "Serhii.O" 
-        case var a when a.In("168130738704140478"):
-        AddBullet(dictionaryBulletsPool, "HeadsetMicrophoneTypeUse", true);
-        AddBullet(dictionaryBulletsPool, "CordHeadsetMicrophone", true);
-        AddBullet(dictionaryBulletsPool, "HeadsetDesignColor", true);
-        AddBullet(dictionaryBulletsPool, "MaterialOfItemCoating", true);
-        AddBullet(dictionaryBulletsPool, "MicrophoneAndHeadsetTechnology", true);
-        AddBullet(dictionaryBulletsPool, "InterfaceHeadsetMicrophone", true);
-        AddBullet(dictionaryBulletsPool, "SensitivityHeadsetMicrophone", false);
-        AddBullet(dictionaryBulletsPool, "MicrophonesFrequency", false);
-        AddBullet(dictionaryBulletsPool, "ImpedanceHeadsetMicrophone", false);
-        AddBullet(dictionaryBulletsPool, "PowerSource", false);
-        AddBullet(dictionaryBulletsPool, "PushToTalk", false);
-        AddBullet(dictionaryBulletsPool, "Warranty", true);
-        break;
-        // "Computer Mice" "Serhii.O" 
-        case var a when a.In("5904340310149141983"):
-        AddBullet(dictionaryBulletsPool, "MouseTrackingMethod", true);
-        AddBullet(dictionaryBulletsPool, "WirelessOrWired", true);
-        AddBullet(dictionaryBulletsPool, "MouseTrackingMethodOperation", true);
-        AddBullet(dictionaryBulletsPool, "TypeOfBatteryNumber", true);
-        AddBullet(dictionaryBulletsPool, "MultiDevice", true);
-        AddBullet(dictionaryBulletsPool, "CompliantStandards", true);
-        AddBullet(dictionaryBulletsPool, "NumberOfButtons", false);
-        AddBullet(dictionaryBulletsPool, "Ergonomic", false);
-        AddBullet(dictionaryBulletsPool, "BatteryIndicator", false);
-        AddBullet(dictionaryBulletsPool, "AdjustableTrackball", false);
-        AddBullet(dictionaryBulletsPool, "BlueTrackTechnology", false);
-        AddBullet(dictionaryBulletsPool, "GestureFunction", false);
-        AddBullet(dictionaryBulletsPool, "OpticalSensor", false);
-        AddBullet(dictionaryBulletsPool, "USBCompatibility", false);
-        AddBullet(dictionaryBulletsPool, "ControlCursor", false);
-        AddBullet(dictionaryBulletsPool, "Warranty", true);
-        break;
-        // "Computer Monitors" "Serhii.O" 
-        case var a when a.In("590442000142219"):
-        AddBullet(dictionaryBulletsPool, "MonitorScreenSize", true);
-        AddBullet(dictionaryBulletsPool, "DisplayTechnology", true);
-        AddBullet(dictionaryBulletsPool, "MonitorResolution", true);
-        AddBullet(dictionaryBulletsPool, "InterfaceOfMonitor", true);
-        AddBullet(dictionaryBulletsPool, "MonitorAspectRatio", true);
-        AddBullet(dictionaryBulletsPool, "MonitorColor", true);
-        AddBullet(dictionaryBulletsPool, "MaxViewingAngle", true);
-        AddBullet(dictionaryBulletsPool, "OverallDimensions", true);
-        AddBullet(dictionaryBulletsPool, "SpeakersIncluded", true);
-        AddBullet(dictionaryBulletsPool, "WeightAll", true);
-        AddBullet(dictionaryBulletsPool, "CompliantStandards", false);
-        AddBullet(dictionaryBulletsPool, "TrueColor", false);
-        AddBullet(dictionaryBulletsPool, "Warranty", true);
-        break;
-        // "Audio/Video Cables" "Serhii.O" 
-        case var a when a.In("590434031426140452"):
-        AddBullet(dictionaryBulletsPool, "TypeOfCableInterfaceUse", true);
-        AddBullet(dictionaryBulletsPool, "DimensionsAudioVideoCables", true);
-        AddBullet(dictionaryBulletsPool, "ConnectorsPlating", true);
-        AddBullet(dictionaryBulletsPool, "CableJacketMaterial", true);
-        AddBullet(dictionaryBulletsPool, "SpecificAudioVisualFeature", true);
-        AddBullet(dictionaryBulletsPool, "ConnectorFinishAndOrConnectorMaterial", true);
-        AddBullet(dictionaryBulletsPool, "CompliantStandards", true);
-        AddBullet(dictionaryBulletsPool, "SerialATA", true);
-        AddBullet(dictionaryBulletsPool, "ProvidesProtection", false);
-        AddBullet(dictionaryBulletsPool, "HDCPCompliant", false);
-        AddBullet(dictionaryBulletsPool, "LatchedConnectors", false);
-        AddBullet(dictionaryBulletsPool, "StrainRelief", false);
-        AddBullet(dictionaryBulletsPool, "Warranty", true);
-        break;
-        // "TVs" "Serhii.O" 
-        case var a when a.In("591714025317164870"):
-        AddBullet(dictionaryBulletsPool, "TVSizeUse", true);
-        AddBullet(dictionaryBulletsPool, "TVHDQualityTVType", true);
-        AddBullet(dictionaryBulletsPool, "Enabled3D", true);
-        AddBullet(dictionaryBulletsPool, "TVDisplayResolution", true);
-        AddBullet(dictionaryBulletsPool, "IntergratedIOFeatures", true);
-        AddBullet(dictionaryBulletsPool, "AudioVideoEnhancementTechnology", true);
-        AddBullet(dictionaryBulletsPool, "PortsInterfaces", true);
-        AddBullet(dictionaryBulletsPool, "Weight", true);
-        AddBullet(dictionaryBulletsPool, "VESAMountingStandard", true);
-        AddBullet(dictionaryBulletsPool, "CompliantStandards", true);
-        AddBullet(dictionaryBulletsPool, "RemoteControlDetails", true);
-        AddBullet(dictionaryBulletsPool, "Warranty", true);
-        break;
-        // "Laptops" "Serhii.O" 
-        case var a when a.In("3364010221167289"):
-        AddBullet(dictionaryBulletsPool, "ProcessorType", true);
-        AddBullet(dictionaryBulletsPool, "HardDriveType", true);
-        AddBullet(dictionaryBulletsPool, "OperatingSystem", true);
-        AddBullet(dictionaryBulletsPool, "RAMType", true);
-        AddBullet(dictionaryBulletsPool, "LaptopMemoryType", true);
-        AddBullet(dictionaryBulletsPool, "ScreenResolution", true);
-        AddBullet(dictionaryBulletsPool, "ScreenSize", true);
-        AddBullet(dictionaryBulletsPool, "Graphics", true);
-        AddBullet(dictionaryBulletsPool, "BacklitKeyboard", true);
-        AddBullet(dictionaryBulletsPool, "WirelessConnectivity", true);
-        AddBullet(dictionaryBulletsPool, "BatteryLife", true);
-        AddBullet(dictionaryBulletsPool, "Warranty", true);
-        break;
-        // "Desktop Computers" "Serhii.O" 
-        case var a when a.In("3364110222167288"):
-        AddBullet(dictionaryBulletsPool, "ProcessorType", true);
-        AddBullet(dictionaryBulletsPool, "RAMType", true);
-        AddBullet(dictionaryBulletsPool, "HardDriveMemoryTypeCapacityOfDesktop", true);
-        AddBullet(dictionaryBulletsPool, "OperatingSystem", true);
-        AddBullet(dictionaryBulletsPool, "Graphics", true);
-        AddBullet(dictionaryBulletsPool, "WirelessConnectivity", true);
-        AddBullet(dictionaryBulletsPool, "OpticalDriveOfDesktop", true);
-        AddBullet(dictionaryBulletsPool, "USBPortsOfDesktop", true);
-        AddBullet(dictionaryBulletsPool, "AdditionalPortsInterface", false);
-        AddBullet(dictionaryBulletsPool, "Dimensions", true);
-        AddBullet(dictionaryBulletsPool, "BoxContentsOfDesktop", false);
-        AddBullet(dictionaryBulletsPool, "Warranty", true);
-        break;
-        // "MICR Ink for All Units" "Serhii.O" 
-        case var a when a.In("12375510567216950"): 
-        AddBullet(dictionaryBulletsPool, "TypeOfCartridges", true); 
-        AddBullet(dictionaryBulletsPool, "ColorOfCartridges", true); 
-        AddBullet(dictionaryBulletsPool, "CartridgeYieldType", true); 
-        AddBullet(dictionaryBulletsPool, "PageYieldPerPackage", true); 
-        AddBullet(dictionaryBulletsPool, "InkOrTonerSpecialType", true); 
-        AddBullet(dictionaryBulletsPool, "CartridgeCompatible", true); 
-        AddBullet(dictionaryBulletsPool, "InkOrTonerPackSize", true); 
-        break; 
-        // "Remanufactured Laser Printer Ink, Toner & Drum Units, InkJet Printer Ink, Toner & Drum Units" "Serhii.O" 
-        case var a when a.In("5226058", "5226054", "5226006", "12393811005220973", "5226157", "12375510567216950", "12366910285216553", "1212164913166147", "12378610641217427"):
-        AddBullet(dictionaryBulletsPool, "CartridgeYieldType", true);
-        AddBullet(dictionaryBulletsPool, "CartridgePackageContents", true);
-        AddBullet(dictionaryBulletsPool, "VendorSpecificInformation", true);
-        AddBullet(dictionaryBulletsPool, "CartridgeSavingsMessage", true);
-        AddBullet(dictionaryBulletsPool, "CartridgeCompatible", true);
-        AddBullet(dictionaryBulletsPool, "RecycledPostConsumerContent", true);
-        AddBullet(dictionaryBulletsPool, "CartridgeMediaIncluded", true);
-        AddBullet(dictionaryBulletsPool, "CartridgeFeatures", true);
-        AddBullet(dictionaryBulletsPool, "CartridgeRemanufactured", true);
-        break;
-        // "Heaters" "Serhii.O" 
-        case var a when a.In("168339291098380001"):
-        AddBullet(dictionaryBulletsPool, "TypeOfHeater", true);
-        AddBullet(dictionaryBulletsPool, "SpeedSettingsOfHeater", true);
-        AddBullet(dictionaryBulletsPool, "MaximumWattageHeaterBTUOfHeater", true);
-        AddBullet(dictionaryBulletsPool, "EstimatedCoverageOfHeater", true);
-        AddBullet(dictionaryBulletsPool, "FeaturesOfHeater", true);
-        AddBullet(dictionaryBulletsPool, "SpecialButtonsAndControlsOfHeater", true);
-        AddBullet(dictionaryBulletsPool, "AdjustableOfHeater", true);
-        AddBullet(dictionaryBulletsPool, "Dimensions", true);
-        AddBullet(dictionaryBulletsPool, "CompliantStandards", true);
-        AddBullet(dictionaryBulletsPool, "Warranty", true);
-        break;
-        // "Classification Folders" "Serhii.O" 
-        case var a when a.In("135391203142831"):
-        AddBullet(dictionaryBulletsPool, "TrueColorMaterialOfClassificationFolders", true);
-        AddBullet(dictionaryBulletsPool, "FastenersOfClassificationFolders", true);
-        AddBullet(dictionaryBulletsPool, "SizeLetterAndlegalOfClassificationFolders", true);
-        AddBullet(dictionaryBulletsPool, "TabStyleAndLocationOfClassificationFolders", true);
-        AddBullet(dictionaryBulletsPool, "RecycledPostConsumerContent", true);
-        AddBullet(dictionaryBulletsPool, "PackSize", true);
-        AddBullet(dictionaryBulletsPool, "AdditionalSafeSHIELDOfClassificationFolders", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalTyvekGussetOfClassificationFolders", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalReinforcedTabsOfClassificationFolders", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalAntimicrobialOfClassificationFolders", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalDividersOfClassificationFolders", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalHeavyDutyOfClassificationFolders", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalMulticolorOfClassificationFolders", false);
-        break;
-        // "Pens" "Alex K." 
-        case var a when a.In("1114953110001"):
-        AddBullet(dictionaryBulletsPool, "PenType", true);
-        AddBullet(dictionaryBulletsPool, "PenInkTrueColor", true);
-        AddBullet(dictionaryBulletsPool, "PenPointTypeAndSize", true);
-        AddBullet(dictionaryBulletsPool, "PenBarrelColorAndBarrelMaterial", true);
-        AddBullet(dictionaryBulletsPool, "PackSize", true);
-        AddBullet(dictionaryBulletsPool, "AdditionalPenGrip", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalPenClip", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalPenRefillable", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalPenBarrelShape", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalPenInkLevelViewingWindow", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalArchivalAcidFree", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalUniSuperInk", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalUniFlowSystem", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalLiquidInkSystem", false);
-        AddBullet(dictionaryBulletsPool, "Warranty", true);
-        break;
-        // "File Folders" "Serhii.O" 
-        case var a when a.In("135391203141669"):
-        AddBullet(dictionaryBulletsPool, "TrueColorMaterialOfFileFolder", true);
-        AddBullet(dictionaryBulletsPool, "NumberOfTabs", true);
-        AddBullet(dictionaryBulletsPool, "FileFolderSize", true);
-        AddBullet(dictionaryBulletsPool, "PackSize", true);
-        AddBullet(dictionaryBulletsPool, "RecycledPostConsumerContent", true);
-        AddBullet(dictionaryBulletsPool, "CapacityOfFileFolders", true);
-        AddBullet(dictionaryBulletsPool, "AdditionalResistsOfFileFolders", false);
-        AddBullet(dictionaryBulletsPool, "AdditonalFeaturesOfFileFolders", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalRoundedCornersOfFileFolders", false);
-        AddBullet(dictionaryBulletsPool, "AcidFree", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalReinforcedShelfMasterOfFileFolders", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalProtectCutLessOfFileFolders", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalStraightCutOfFileFolders", false);
-        break;
-        // "Labels" "Serhii.O" 
-        case var a when a.In("1385810842142725"):
-        AddBullet(dictionaryBulletsPool, "LabelTypeOfLabels", true);
-        AddBullet(dictionaryBulletsPool, "LayFlatLabelDimensions", true);
-        AddBullet(dictionaryBulletsPool, "TrueColorMaterial", true);
-        AddBullet(dictionaryBulletsPool, "AdhesiveType", true);
-        AddBullet(dictionaryBulletsPool, "PackageContentsLabels", true);
-        AddBullet(dictionaryBulletsPool, "PopUpEdge", false);
-        AddBullet(dictionaryBulletsPool, "TrueBlockTechnology", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalLabels8", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalLabels9", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalLabels10", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalLabels11", false);
-        AddBullet(dictionaryBulletsPool, "DesignProSoftware", false);
-        AddBullet(dictionaryBulletsPool, "PrinterCompatibility", true);
-        break;
-        // "Post-it&reg; & Sticky Notes" "Alex K." 
-        case var a when a.In("167638614736165755"): 
-        AddBullet(dictionaryBulletsPool, "TypeOfStickyNotes", true);
-        AddBullet(dictionaryBulletsPool, "PostItSizeColorCollection", true);
-        AddBullet(dictionaryBulletsPool, "SheetCountPadsPack", true);
-        AddBullet(dictionaryBulletsPool, "PopUpOrFlat", true);
-        AddBullet(dictionaryBulletsPool, "LineType", true);
-        AddBullet(dictionaryBulletsPool, "DispenserIncluded", true);
-        AddBullet(dictionaryBulletsPool, "RecycledContent", true);
-        AddBullet(dictionaryBulletsPool, "PostConsumerContent", true);
-        break;
-        // "Fans" "Alex K." 
-        case var a when a.In("168339291098380002"):
-        AddBullet(dictionaryBulletsPool, "FanTypeAndUse", true);
-        AddBullet(dictionaryBulletsPool, "SpecialButtonsAndControls", true);
-        AddBullet(dictionaryBulletsPool, "Dimensions", true);
-        AddBullet(dictionaryBulletsPool, "OscillatingFanPosition", true);
-        AddBullet(dictionaryBulletsPool, "ColorFamily", true); // can be for all categories
-        AddBullet(dictionaryBulletsPool, "FanCordLength", true);
-        AddBullet(dictionaryBulletsPool, "PackSize", true);
-        AddBullet(dictionaryBulletsPool, "AdditionalMetalHousing", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalTimer", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalCarryHandle", false);
-        AddBullet(dictionaryBulletsPool, "CompliantStandards", false); // waiting for rename in heaters
-        AddBullet(dictionaryBulletsPool, "Warranty", false);
-        break;
-        // "Juice" "Alex K." 
-        case var a when a.In("168412514983216257"):
-        AddBullet(dictionaryBulletsPool, "JuiceType", true);
-        AddBullet(dictionaryBulletsPool, "CapacityOz", true);
-        AddBullet(dictionaryBulletsPool, "DrinkPackSize", true);
-        AddBullet(dictionaryBulletsPool, "Ingredients", true);
-        AddBullet(dictionaryBulletsPool, "SugarFree", true);
-        AddBullet(dictionaryBulletsPool, "ArtificialFlavorsOrPreservatives", true);
-        AddBullet(dictionaryBulletsPool, "Kosher", false);
-        AddBullet(dictionaryBulletsPool, "GlutenFree", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalVitamins", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalProductEnergy", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalContainerType", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalCapriSunVaietyPack", false);
-        break;
-        // "Markers" "Alex K." 
-        case var a when a.In("1114953140896"):
-        AddBullet(dictionaryBulletsPool, "MarkerTypeAndUse", true);
-        AddBullet(dictionaryBulletsPool, "MarkerInkColor", true);
-        AddBullet(dictionaryBulletsPool, "MarkerPointType", true);
-        AddBullet(dictionaryBulletsPool, "PackSize", true);
-        AddBullet(dictionaryBulletsPool, "NonToxic", true);
-        AddBullet(dictionaryBulletsPool, "CompliantStandards", true);
-        AddBullet(dictionaryBulletsPool, "AdditionalOdor", false);
-        break;
-        // "Binder Accessories" "Alex K."  
-        case var a when a.In("13529397020006"):
-        AddBullet(dictionaryBulletsPool, "BinderAccessoryTypeAndUse", true);
-        AddBullet(dictionaryBulletsPool, "TrueColorMaterial", true);
-        AddBullet(dictionaryBulletsPool, "Dimensions", true);
-        AddBullet(dictionaryBulletsPool, "TabIndexPunchInformation", true);
-        AddBullet(dictionaryBulletsPool, "PackSize", true);
-        AddBullet(dictionaryBulletsPool, "RecycledPostConsumerContent", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalArchivalSafe", false);
-        break;
-        // "Notebooks" "Alex K." 
-        case var a when a.In("1676378310636165557"):
-        AddBullet(dictionaryBulletsPool, "NotebookTypeAndUse", true);
-        AddBullet(dictionaryBulletsPool, "NumSheetDimension", true);
-        AddBullet(dictionaryBulletsPool, "TrueColor", true);
-        AddBullet(dictionaryBulletsPool, "NotebookCoverMaterial", true);
-        AddBullet(dictionaryBulletsPool, "Perforation", true);
-        AddBullet(dictionaryBulletsPool, "NotebookBinding", true);
-        AddBullet(dictionaryBulletsPool, "PackSize", true);
-        AddBullet(dictionaryBulletsPool, "RecycledContent", true);
-        AddBullet(dictionaryBulletsPool, "AcidFree", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalRemovableDividers", false);
-        AddBullet(dictionaryBulletsPool, "AdditionalPenHolder", false);
-        AddBullet(dictionaryBulletsPool, "PostConsumerContent", false);
-        break;
-        // "Notepads" "Alex K." 
-        case var a when a.In("1676393410999220835"):
-        AddBullet(dictionaryBulletsPool, "NotepadTypeAndUse", true);
-        AddBullet(dictionaryBulletsPool, "NotepadsSheetDimension", true);
-        AddBullet(dictionaryBulletsPool, "NumberSheetsPerPadAndPerforation", true);
-        AddBullet(dictionaryBulletsPool, "PackSize", true);
-        AddBullet(dictionaryBulletsPool, "BindingPosition", true);
-        AddBullet(dictionaryBulletsPool, "TrueColorAndCoverMateral", true);
-        AddBullet(dictionaryBulletsPool, "RecycledContent", true);
-        AddBullet(dictionaryBulletsPool, "AcidFree", false);
-        AddBullet(dictionaryBulletsPool, "HolePunchedNotepad", false);
-        AddBullet(dictionaryBulletsPool, "FormsPerBook", false);
-        AddBullet(dictionaryBulletsPool, "PostConsumerContent", false);
-        break;
-        // "Colored Paper" "Alex K." 
-        case var a when a.In("1676385310823140679"):
-        AddBullet(dictionaryBulletsPool, "ColoredPaperTypeAndUse", true);
-        AddBullet(dictionaryBulletsPool, "NumberOfHoles", true);
-        AddBullet(dictionaryBulletsPool, "ColoredPaperSheetDimentions", true);
-        AddBullet(dictionaryBulletsPool, "PaperWeight", true);
-        AddBullet(dictionaryBulletsPool, "PaperColorTypeAndBrightness", true);
-        AddBullet(dictionaryBulletsPool, "TrueColor", true);
-        AddBullet(dictionaryBulletsPool, "PackSize", true);
-        AddBullet(dictionaryBulletsPool, "CompliantStandards", true);
-        AddBullet(dictionaryBulletsPool, "RecycledContent", true);
-        AddBullet(dictionaryBulletsPool, "AcidFree", false);
-        AddBullet(dictionaryBulletsPool, "PostConsumerContent", false);
-        break;
-        // "Post-it&reg; / Sticky Flags & Tabs" "Alex K." 
-        case var a when a.In("167638614736165756"):
-        AddBullet(dictionaryBulletsPool, "FlagTabTypeAndUse", true);
-        AddBullet(dictionaryBulletsPool, "ColorFamily", true);
-        AddBullet(dictionaryBulletsPool, "PackSize", true);
-        AddBullet(dictionaryBulletsPool, "Messaging", true);
-        AddBullet(dictionaryBulletsPool, "FlagOrTabWidthInInches", true);
-        AddBullet(dictionaryBulletsPool, "RecycledContent", true);
-        AddBullet(dictionaryBulletsPool, "PostConsumerContent", false);
-        AddBullet(dictionaryBulletsPool, "CompliantStandards", false);
-        AddBullet(dictionaryBulletsPool, "AcidFree", false);
-        break;
-        // "Label Maker Tapes & Printer Labels" "Alex K." 
-        case var a when a.In("1681361910108140557"):
-        AddBullet(dictionaryBulletsPool, "LabelMakerTapeWidth", true);
-        AddBullet(dictionaryBulletsPool, "PrintTrueColorOnLabelTrueColor", true);
-        AddBullet(dictionaryBulletsPool, "CompatibleDevices", true);
-        AddBullet(dictionaryBulletsPool, "UseSurfacesApplicationsAdhesiveEtc", true);
-        AddBullet(dictionaryBulletsPool, "PackSize", true);
-        AddBullet(dictionaryBulletsPool, "WaterResistant", false);
-        AddBullet(dictionaryBulletsPool, "TearResistant", false);
-        AddBullet(dictionaryBulletsPool, "ColdEnvironment", false);
-        AddBullet(dictionaryBulletsPool, "OilResistance", false);
-        AddBullet(dictionaryBulletsPool, "AcidFree", false);
-        AddBullet(dictionaryBulletsPool, "RecycledContent", false);
-        AddBullet(dictionaryBulletsPool, "PostConsumerContent", false);
-        AddBullet(dictionaryBulletsPool, "CompliantStandards", false);
-        break;
-            // "Post-it&reg; / Sticky Flags & Tabs" "Alex K." 
-        case var a when a.In("167638614736165756"):
-        AddBullet(dictionaryBulletsPool, "BinderTypeDurabilityColor", true);
-        AddBullet(dictionaryBulletsPool, "Dimensions", true);
-        AddBullet(dictionaryBulletsPool, "RingTypeClosure", true);
-        AddBullet(dictionaryBulletsPool, "BinderCapacity", true);
-        AddBullet(dictionaryBulletsPool, "InputSize", true);
-        AddBullet(dictionaryBulletsPool, "MaterialOfItemFinish", true);
-        AddBullet(dictionaryBulletsPool, "DesignIncludesPockets", true);
-        AddBullet(dictionaryBulletsPool, "PackSize", true);
-        AddBullet(dictionaryBulletsPool, "RecycledContent", false);
-        AddBullet(dictionaryBulletsPool, "IncludedLabels", false);
-        AddBullet(dictionaryBulletsPool, "DuraHinge", false);
-        AddBullet(dictionaryBulletsPool, "HandleStrap", false);
-        AddBullet(dictionaryBulletsPool, "PostConsumerContent", false);
-        AddBullet(dictionaryBulletsPool, "AcidFree", false);
-        break;
-    }
+// --[FEATURE #3]
+// --Print Speed & Mode (simplex/duplex), Output Color & Monthly Duty Cycle
+void PrintersPrintSpeedMode(){
+	var result = "";
+	var MaximumPrinterMonthlyDutyCycleRef = R("SP-4540").HasValue() ? R("SP-4540").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-4540").HasValue() ? R("cnet_common_SP-4540").Replace("<NULL>", "").Text : "";
+	var OfficeMachine_MonthlyDutyCycle = A[2694]; // Office Machine - Monthly Duty Cycle (max)
+	var Printing_MaxPrintingSpeed = A[2760]; // Printing - Max Printing Speed B/W (ppm)
+	var Printing_MaxPrintingSpeedColor = A[2761]; // Printing - Max Printing Speed Color (ppm)
+	var Printing_MaxPrintingSpeed2 = A[5435]; // Printing - Max Printing Speed B/W
+	var Printing_MaxPrintingSpeedColor2 = A[5436]; // Printing - Max Printing Speed Color
+	var DutyCycle = OfficeMachine_MonthlyDutyCycle.HasValue() ? $" with a monthly duty cycle of {OfficeMachine_MonthlyDutyCycle.FirstValue()} {OfficeMachine_MonthlyDutyCycle.Units.First().Name.Replace("page", "pages").Replace("sheet", "sheets")}" : "";
+
+	if(!String.IsNullOrEmpty(MaximumPrinterMonthlyDutyCycleRef)
+	&& Printing_MaxPrintingSpeed.HasValue()
+	&& Printing_MaxPrintingSpeedColor.HasValue()
+	&& Printing_MaxPrintingSpeed.HasValue(Printing_MaxPrintingSpeedColor.FirstValue().ToString())){
+		result = $"##{Printing_MaxPrintingSpeed.FirstValue()}ppm for color and black/white images{DutyCycle}";
+	}
+	else if(!String.IsNullOrEmpty(MaximumPrinterMonthlyDutyCycleRef)
+	&& Printing_MaxPrintingSpeed.HasValue()
+	&& Printing_MaxPrintingSpeedColor.HasValue()){
+		result = $"##{Printing_MaxPrintingSpeed.FirstValue()}ppm in black/white and ##{Printing_MaxPrintingSpeedColor.FirstValue()}ppm in color{DutyCycle}";
+	}
+	else if(!String.IsNullOrEmpty(MaximumPrinterMonthlyDutyCycleRef)
+	&& Printing_MaxPrintingSpeed.HasValue()){
+		result = $"##{Printing_MaxPrintingSpeed.FirstValue()}ppm in black/white{DutyCycle}";
+	}
+	else if(!String.IsNullOrEmpty(MaximumPrinterMonthlyDutyCycleRef)
+	&& Printing_MaxPrintingSpeedColor.HasValue()){
+		result = $"##{Printing_MaxPrintingSpeedColor.FirstValue()}ppm in color{DutyCycle}";
+	}
+	else if(!String.IsNullOrEmpty(MaximumPrinterMonthlyDutyCycleRef)
+	&& Printing_MaxPrintingSpeed2.HasValue()
+	&& Printing_MaxPrintingSpeedColor2.HasValue()){
+		result = $"##{Printing_MaxPrintingSpeed2.FirstValue()} {Printing_MaxPrintingSpeed2.Units.First().Name} in black/white and ##{Printing_MaxPrintingSpeedColor2.FirstValue()} {Printing_MaxPrintingSpeedColor2.Units.First().Name} in color{DutyCycle}";
+	}
+	else if(!String.IsNullOrEmpty(MaximumPrinterMonthlyDutyCycleRef)
+	&& Printing_MaxPrintingSpeed2.HasValue()){
+		result = $"##{Printing_MaxPrintingSpeed2.FirstValue()} {Printing_MaxPrintingSpeed2.Units.First().Name} in black/white{DutyCycle}";
+	}
+	else if(!String.IsNullOrEmpty(MaximumPrinterMonthlyDutyCycleRef)
+	&& Printing_MaxPrintingSpeedColor2.HasValue()){
+		result = $"##{Printing_MaxPrintingSpeedColor2.FirstValue()} {Printing_MaxPrintingSpeedColor2.Units.First().Name} in color{DutyCycle}";
+	}
+	else if(Printing_MaxPrintingSpeed.HasValue()
+	&& Printing_MaxPrintingSpeedColor.HasValue()
+	&& Printing_MaxPrintingSpeed.HasValue(Printing_MaxPrintingSpeedColor.FirstValue().ToString())){
+		result = $"##{Printing_MaxPrintingSpeed.FirstValue()}ppm for color and black/white images";
+	}
+	else if(Printing_MaxPrintingSpeed.HasValue()
+	&& Printing_MaxPrintingSpeedColor.HasValue()){
+		result = $"##{Printing_MaxPrintingSpeed.FirstValue()}ppm in black/white and ##{Printing_MaxPrintingSpeedColor.FirstValue()}ppm in color";
+	}
+	else if(Printing_MaxPrintingSpeed.HasValue()){
+		result = $"##{Printing_MaxPrintingSpeed.FirstValue()}ppm in black/white";
+	}
+	else if(Printing_MaxPrintingSpeedColor.HasValue()){
+		result = $"Has a printing speed of ##{Printing_MaxPrintingSpeedColor.FirstValue()}ppm in color";
+	}
+	else if(Printing_MaxPrintingSpeed2.HasValue()
+	&& Printing_MaxPrintingSpeedColor2.HasValue()){
+		result = $"Has a printing speed of ##{Printing_MaxPrintingSpeed2.FirstValue()} {Printing_MaxPrintingSpeed2.Units.First().Name} in black/white and ##{Printing_MaxPrintingSpeedColor2.FirstValue()} {Printing_MaxPrintingSpeedColor2.Units.First().Name} in color";
+	}
+	else if(Printing_MaxPrintingSpeed2.HasValue()){
+		result = $"Has a printing speed of ##{Printing_MaxPrintingSpeed2.FirstValue()} {Printing_MaxPrintingSpeed2.Units.First().Name} in black/white";
+	}
+	else if(Printing_MaxPrintingSpeedColor2.HasValue()){
+		result = $"Has a printing speed of ##{Printing_MaxPrintingSpeedColor2.FirstValue()} {Printing_MaxPrintingSpeedColor2.Units.First().Name} in color";
+	}
+	if(!String.IsNullOrEmpty(result)){
+	    Add($"PrintersPrintSpeedMode⸮{result}");
+	}
 }
+
+// --[FEATURE #4]
+// --Connectivity (No. of Ports & Interface); Includes wireless
+void PrintersConnectivity(){
+	var result = "";
+	var Connectivity_Interface = A[2703]; // Connectivity - Interface
+	var InterfaceRequired_Type = A[6836]; // Interface Required - Type
+
+	if(Connectivity_Interface.HasValue()
+	&& Connectivity_Interface.Where("%Wi-Fi%").Any()
+	&& InterfaceRequired_Type.HasValue()){
+		result = $@"{InterfaceRequired_Type.Values.Match(23, 6836).Values(" x ").Select(s => s.RegexReplace(@"(.*)\sx\s(\d*).*", "##$2 x $1")).Flatten(", ").Replace("<>", "##1")} and Wi-Fi connectivity help to enhance productivity";
+	}
+	else if(Connectivity_Interface.HasValue()
+	&& Connectivity_Interface.WhereNot("%Bluetooth%").Any()
+	&& Connectivity_Interface.Where("%Wi-Fi%").Any()
+	&& Connectivity_Interface.Values.Count() > 1){
+		result = $@"{InterfaceRequired_Type.WhereNot("%Wi-Fi%").Match(23, 6836).Values(" x ").Select(s => s.RegexReplace(@"(.*)\sx\s(\d*).*", "##$2 x $1")).Flatten(", ").Replace("<>", "##1")} and Wi-Fi connectivity help to enhance productivity";
+	}
+	else if(Connectivity_Interface.HasValue()
+	&& Connectivity_Interface.WhereNot("%Bluetooth%").Any()
+	&& Connectivity_Interface.Where("%LAN%").Any()
+	&& InterfaceRequired_Type.HasValue()){
+	    var Lan = $"{InterfaceRequired_Type.Where("%lan%").Match(23, 6836).Values(" x ").Select(s => s.RegexReplace(@"(.*)\sx\s(\d*).*", "##$2")).First()} x".Replace("## x", "##1 x");
+		result = $@"Network-ready wired {Lan} {Connectivity_Interface.Where("%LAN%").First().Value()} Ethernet and {InterfaceRequired_Type.WhereNot("%LAN%").Match(23, 6836).Values(" x ").Select(s => s.RegexReplace(@"(.*)\sx\s(\d*).*", "##$2 x $1")).Flatten(", ").RegexReplace(@"(## x)", "##1 x")} connectivity";
+	}
+	else if(Connectivity_Interface.HasValue()
+	&& Connectivity_Interface.WhereNot("%Bluetooth%").Any()
+	&& Connectivity_Interface.Where("%LAN%").Any()){
+		result = $@"Network-ready wired {Connectivity_Interface.Where("%LAN%").First().Value()} Ethernet and {Connectivity_Interface.WhereNot("%LAN%").Flatten(", ")} connectivity";
+	}
+	else if(InterfaceRequired_Type.HasValue()){
+		var Bluetooth = Connectivity_Interface.HasValue() && Connectivity_Interface.Where("%Bluetooth%").Any() ? $", and {Connectivity_Interface.Where("%Bluetooth%").First().Value()} interface" : "";
+		result = $@"Printer features {InterfaceRequired_Type.Values.Match(23, 6836).Values(" x ").Select(s => s.RegexReplace(@"(.*)\sx\s(\d*).*", "##$2 x $1")).Flatten(", ").Replace("<>", "##1")}{Bluetooth}";
+	}
+	if(!String.IsNullOrEmpty(result)){
+	    Add($"PrintersConnectivity⸮{result}");
+	}
+}
+
+// --[FEATURE #5] - All
+// --Dimensions (in Inches): H x W x D
+
+// --[FEATURE #6]
+// --Input loading feature, Input capacity & Media type supported (includes ink cartridges)
+void PrintersInputLoadingFeature(){
+	var result = "";
+	var PaperInputCapacityRef = R("SP-4547").HasValue() ? R("SP-4547").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-4547").HasValue() ? R("cnet_common_SP-4547").Replace("<NULL>", "").Text : "";
+	var Printer_MediaType = A[193]; // Printer - Media Type
+	var DocumentMediaHandlingDetails_Type = A[2710]; // Document & Media Handling Details - Type
+	var DocumentMediaHandling_SupportedMediaType = A[2730]; // Document & Media Handling - Supported Media Type
+	var TotalMediaCapacity  = A[443]; // Total Media Capacity
+	var MediaCapacity = TotalMediaCapacity.HasValue() ? $"{TotalMediaCapacity.FirstValue()} {TotalMediaCapacity.Units.First().Name.Replace("page", "pages").Replace("sheet", "sheets").Replace("sheetss", "sheets")}" : "";
+
+	if(!String.IsNullOrEmpty(PaperInputCapacityRef)
+	&& Coalesce(DocumentMediaHandling_SupportedMediaType, Printer_MediaType).HasValue()
+	&& DocumentMediaHandlingDetails_Type.HasValue("bypass tray")
+	&& DocumentMediaHandlingDetails_Type.Where("bypass tray").Match(2712).Values().First().In("%1%")
+	&& !String.IsNullOrEmpty(MediaCapacity)){
+		result = $"{MediaCapacity} input capacity and a single-sheet bypass tray; types of media supported include {Coalesce(DocumentMediaHandling_SupportedMediaType, Printer_MediaType).Values.Select(s => s.Value()).FlattenWithAnd(10, ",").TrimEnd(",")}";
+	}
+	else if(!String.IsNullOrEmpty(PaperInputCapacityRef)
+	&& DocumentMediaHandlingDetails_Type.HasValue("bypass tray")
+	&& DocumentMediaHandlingDetails_Type.Where("bypass tray").Match(2712).Values().First().In("%1%")
+	&& !String.IsNullOrEmpty(MediaCapacity)){
+		result = $"{MediaCapacity} input capacity lessens the need for constant reloading; single sheet bypass tray";
+	}
+	else if(!String.IsNullOrEmpty(PaperInputCapacityRef)
+	&& Coalesce(DocumentMediaHandling_SupportedMediaType, Printer_MediaType).HasValue()
+	&& !String.IsNullOrEmpty(MediaCapacity)){
+		result = $"{MediaCapacity} input capacity; types of media supported include {Coalesce(DocumentMediaHandling_SupportedMediaType, Printer_MediaType).Values.Select(s => s.Value()).FlattenWithAnd(10, ",").TrimEnd(",")}";
+	}
+	else if(!String.IsNullOrEmpty(PaperInputCapacityRef)
+	&& !String.IsNullOrEmpty(MediaCapacity)){
+		result = $"{MediaCapacity} input capacity lessens the need for constant reloading";
+	}
+	else if(Coalesce(DocumentMediaHandling_SupportedMediaType, Printer_MediaType).HasValue()){
+		result = $"Types of media supported include {Coalesce(DocumentMediaHandling_SupportedMediaType, Printer_MediaType).Values.Select(s => s.Value()).FlattenWithAnd(10, ",").TrimEnd(",")}";
+	}
+	if(!String.IsNullOrEmpty(result)){
+	    Add($"PrintersInputLoadingFeature⸮{result}");
+	}
+}
+
+// --[FEATURE #7]
+// --Printer processor & printer/fax memory
+void PrintersProcessorMemory(){
+	var result = "";
+	var PrinterProcessorRef = R("SP-5129").HasValue() ? R("SP-5129").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-5129").HasValue() ? R("cnet_common_SP-5129").Replace("<NULL>", "").Text : "";
+	var PrinterMemoryRef = R("SP-4539").HasValue() ? R("SP-4539").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-4539").HasValue() ? R("cnet_common_SP-4539").Replace("<NULL>", "").Text : "";
+	var FaxMachine_TotalMemoryCapacity = A[2747]; // Fax Machine - Total Memory Capacity
+
+	if(!String.IsNullOrEmpty(PrinterProcessorRef)
+	&& !String.IsNullOrEmpty(PrinterMemoryRef)
+	&& FaxMachine_TotalMemoryCapacity.HasValue()){
+		result = $"{PrinterProcessorRef} processor, {PrinterMemoryRef} printer memory and fax memory of up to {FaxMachine_TotalMemoryCapacity.FirstValue()} pages provides convenient, reliable printing of your most important documents";
+	}
+	else if(!String.IsNullOrEmpty(PrinterProcessorRef)
+	&& !String.IsNullOrEmpty(PrinterMemoryRef)){
+		result = $"{PrinterProcessorRef} processor and {PrinterMemoryRef.Split(":").Last()} of memory ensure speed and accuracy";
+	}
+	else if(!String.IsNullOrEmpty(PrinterProcessorRef)
+	&& FaxMachine_TotalMemoryCapacity.HasValue()){
+		result = $"{PrinterProcessorRef} processor and fax memory of up to {FaxMachine_TotalMemoryCapacity.FirstValue()} pages provides convenient, reliable printing of your most important documents";
+	}
+	else if(!String.IsNullOrEmpty(PrinterMemoryRef)
+	&& FaxMachine_TotalMemoryCapacity.HasValue()){
+	    var MemoryRef = PrinterMemoryRef.Split(" ").ToList();
+        var Memory = MemoryRef.Select(s => MemoryRef.IndexOf(s) == 1 ? s.ToLower() : s).Flatten(" ");
+		result = $"{Memory}, up to {FaxMachine_TotalMemoryCapacity.FirstValue()} pages fax memory";
+	}
+	else if(!String.IsNullOrEmpty(PrinterProcessorRef)){
+		result = $"Processor speed is {PrinterProcessorRef} to handle large printing jobs";
+	}
+	else if(!String.IsNullOrEmpty(PrinterMemoryRef)){
+	    var MemoryRef = PrinterMemoryRef.Split(" ").ToList();
+        var Memory = MemoryRef.Select(s => MemoryRef.IndexOf(s) == 1 ? s.ToLower() : s).Flatten(" ");
+		result = $"{Memory} printer memory provides convenient, reliable printing of your most important documents";
+	}
+	else if(FaxMachine_TotalMemoryCapacity.HasValue()){
+		result = $"The fax memory accommodates up to {FaxMachine_TotalMemoryCapacity.FirstValue()} pages for snag-free operation";
+	}
+	if(!String.IsNullOrEmpty(result)){
+	    Add($"PrintersProcessorMemory⸮{result}");
+	}
+}
+
+// --[FEATURE #8]
+// --Automatic Printing Features; including duplex printing
+void AutomaticPrintingFeatures(){
+	var result = "";
+	// Automatic|Manual
+	var DuplexPrintingRef = R("SP-13862").HasValue() ? R("SP-13862").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-13862").HasValue() ? R("cnet_common_SP-13862").Replace("<NULL>", "").Text : "";
+	var DocumentFeederCapacityRef = R("SP-350275").HasValue() ? R("SP-350275").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-350275").HasValue() ? R("cnet_common_SP-350275").Replace("<NULL>", "").Text : "";
+	var DocumentMediaHandlingDetails_Type = A[2710]; // Document & Media Handling Details - Type
+	var Copying_AutomaticDuplexing = A[2778]; // Copying - Automatic Duplexing
+	var Printing_AutomaticDuplexing = A[5425]; // Printing - Automatic Duplexing
+	var Scanning_AutomaticDuplexing = A[5738]; // Scanning - Automatic Duplexing
+	var Details_Type = DocumentMediaHandlingDetails_Type.HasValue()
+	&& DocumentMediaHandlingDetails_Type.Where("ADF").Any()
+	&& A[2725].HasValue()
+	&& A[2725].HasValue(DocumentMediaHandlingDetails_Type.Where("ADF").Match(2712).Values().Select(s => s.RegexReplace(@"(.*)\s(\d*).*", "$2")).First().ToString()) ?
+	$" with {A[2725].FirstValue()} {A[2725].Units.First().Name} auto feeder" : "";
+
+	if(Copying_AutomaticDuplexing.HasValue("yes")
+	&& Printing_AutomaticDuplexing.HasValue("yes")
+	&& Scanning_AutomaticDuplexing.HasValue("yes")){
+		result = $"Automatic duplexing for effortless two-sided copying, scanning, and printing{Details_Type}";
+	}
+	else if(Copying_AutomaticDuplexing.HasValue("yes")
+	&& Printing_AutomaticDuplexing.HasValue("yes")){
+		result = $"Automatic two-sided printing and copying helps save paper{Details_Type}";
+	}
+	else if(Copying_AutomaticDuplexing.HasValue("yes")){
+		result = $"Automatic two-sided duplexing enables hands-free two-sided copying{Details_Type}";
+	}
+	else if(Printing_AutomaticDuplexing.HasValue("yes")){
+		result = $"Help save paper and create two-sided documents with automatic duplex printing{Details_Type}";
+	}
+	else if(Scanning_AutomaticDuplexing.HasValue("yes")
+	&& Copying_AutomaticDuplexing.HasValue("yes")){
+		result = $"Save time with single pass duplex scanning and copying, by scanning both sides of 2-Sided documents simultaneously{Details_Type}";
+	}
+	else if(Scanning_AutomaticDuplexing.HasValue("yes")){
+		result = $"Single-pass duplex scanning allows fast multi-page scanning{Details_Type}";
+	}
+	else if(!String.IsNullOrEmpty(DocumentFeederCapacityRef)){
+		result = $"{SKU.ProductType} with automatic duplex printing and {DocumentFeederCapacityRef} sheets auto feeder";
+	}
+	else if(!String.IsNullOrEmpty(DuplexPrintingRef)){
+		result = $"{SKU.ProductType} with automatic duplex printing";
+	}
+	if(!String.IsNullOrEmpty(result)){
+	    Add($"AutomaticPrintingFeatures⸮{result}");
+	}
+}
+
+// --[FEATURE #9]
+// --Display, Indicators, and Controls (Button, Touch Screen, LCD, etc)
+void PrintersDisplay(){
+	var result = "";
+	var PrinterDisplayRef = R("SP-4562").HasValue() ? R("SP-4562").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-4562").HasValue() ? R("cnet_common_SP-4562").Replace("<NULL>", "").Text : "";
+	var Display_Features = A[5299]; // Display - Features
+	var Chassis_BuiltInDevices = A[2239]; // Chassis - Built-In Devices
+
+	if(!String.IsNullOrEmpty(PrinterDisplayRef)
+	&& Display_Features.HasValue("touch screen")){
+		result = $"Easily manage tasks with the {PrinterDisplayRef.Replace("touch screen", "")} touchscreen";
+	}
+	else if(!String.IsNullOrEmpty(PrinterDisplayRef)
+	&& Coalesce(PrinterDisplayRef).ExtractNumbers().Any()
+	&& Coalesce(PrinterDisplayRef).ExtractNumbers().First() >= 2){
+		result = $"{PrinterDisplayRef.Replace("Five lines", "Five-line").Replace("touch screen", "touchscreen")} display enables easy setup and navigation";
+	}
+	else if(Display_Features.HasValue("touch screen")){
+		result = "Easily manage your print jobs with the touch screen display";
+	}
+	else if(Chassis_BuiltInDevices.HasValue()
+	&& Chassis_BuiltInDevices.Where("%touch screen%", "%display%").Any()){
+		var BuiltInDevices = Chassis_BuiltInDevices.HasValue("control panel") ? $" and {Chassis_BuiltInDevices.FirstValue()}" : "";
+		result = $"Easily manage your print jobs with the {Chassis_BuiltInDevices.Where("%touch screen%").First().Value().Replace("touch screen", "touchscreen").Replace(" inch", @"""").Replace(" display", "")} display{BuiltInDevices}";
+	}
+	if(!String.IsNullOrEmpty(result)){
+	    Add($"PrintersDisplay⸮{result}");
+	}
+}
+
+// --[FEATURE #10]
+// --Scanning capabilities (includes scanner type, technology/software, resolution & output color)
+void PrintersScanningCapabilities(){
+	var result = "";
+	var ScanResolutionRef = R("SP-4557").HasValue() ? R("SP-4557").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-4557").HasValue() ? R("cnet_common_SP-4557").Replace("<NULL>", "").Text : "";
+	var Scanning_OpticalResolution = A[2754]; // Scanning - Optical Resolution
+	var InterfaceRequired_Type = A[2755]; // Interface Required - Type
+	var Scanning_ColorDepth = A[2756]; // Scanning - Color Depth
+	var Scanning_GrayscaleDepth = A[2757]; // Scanning - Grayscale Depth
+	var Scanning_ColorDepthInternal = A[4724]; // Scanning - Color Depth (Internal)
+	var OpticalResolution = Scanning_OpticalResolution.HasValue() && InterfaceRequired_Type.HasValue() ? 
+	    $"{Scanning_OpticalResolution.FirstValue()} optical resolution, " : Scanning_OpticalResolution.HasValue() ?
+	    $"{Scanning_OpticalResolution.FirstValue()} optical resolution " : "";
+	var Required_Type = InterfaceRequired_Type.HasValue() ? $"{InterfaceRequired_Type.FirstValue()} interpolated resolution" : "";
+	var ColorDepth = Scanning_ColorDepth.HasValue() ? $"{Scanning_ColorDepth.FirstValue()} color depth, " : "";
+	var GrayscaleDepth = Scanning_GrayscaleDepth.HasValue() ? $"{Scanning_GrayscaleDepth.FirstValue()} grayscale depth " : "";
+
+	if(Scanning_GrayscaleDepth.HasValue()){		
+		result = $"{OpticalResolution}{Required_Type}{ColorDepth}{GrayscaleDepth}for good quality printed text ##and images";
+	}
+	else if(Scanning_ColorDepth.HasValue()){
+		result = $"{OpticalResolution}{Required_Type}{ColorDepth}for good quality printed text ##and images";
+	}
+	else if(InterfaceRequired_Type.HasValue()){
+		result = $"{OpticalResolution}{Required_Type}for good quality printed text ##and images";
+	}
+	else if(Scanning_OpticalResolution.HasValue()){
+		result = $"{OpticalResolution}for good quality printed text and images";
+	}
+	else if(!String.IsNullOrEmpty(ScanResolutionRef)
+	&& (Scanning_ColorDepth.HasValue() || Scanning_ColorDepthInternal.HasValue())){
+		result = $"Color scanner captures resolutions up to {ScanResolutionRef} to capture every detail";
+	}
+	else if(!String.IsNullOrEmpty(ScanResolutionRef)){
+		result = $"Scanner captures resolutions up to {ScanResolutionRef} to capture every detail";
+	}
+	if(!String.IsNullOrEmpty(result)){
+	    Add($"PrintersScanningCapabilities⸮{result}");
+	}
+}
+
+// --[FEATURE #11] - All
+// --Certification and Standards
+
+// --[FEATURE #12] - All
+// --Use for additional product and/or manufacturer information relevant to the customer buying decision
+void LargeFormatPrinter(){
+    var result = "";
+    var DocumentMediaHandling_LargeFormatPrinterSize = A[4919]; // Document & Media Handling - Large Format Printer Size
+    
+    if(DocumentMediaHandling_LargeFormatPrinterSize.HasValue()){
+        result = $"{DocumentMediaHandling_LargeFormatPrinterSize.FirstValue()} large-format printer is equipped to satisfy many diverse needs of architects, engineers, constructors, GIS and other professional";
+    }
+    if(!String.IsNullOrEmpty(result)){
+	    Add($"LargeFormatPrinter⸮{result}");
+	}
+}
+
+// --[FEATURE #13] - All
+// --Warranty Information. NOTE: If REFURBISHED, then “Warranty Length Non-mfg. warranty through Vendor. This product is NOT warrantied through Brand Name”
+
+//5435445243161518, §§5435445243142044, §§5435445243167883, §§543544524340300 "Printers END" "Serhii.O" §§
