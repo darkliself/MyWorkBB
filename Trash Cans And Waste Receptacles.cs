@@ -6,6 +6,21 @@ TrashCanCapacity();
 //Dimensions
 LidType();
 HandleDetails();
+//Safety features
+// Standards
+SlideLockSecurity();
+HandsFreeOperation();
+TrashCansPedal();
+FingerPrintResistantCoating();
+CarbonFilterGate();
+TrashCanBase();
+StayOpenFunction();
+LinerPocket();
+RemovableInnerBucket();
+ShoxSilentLid();
+VentingChannels();
+InternalHinge();
+TrashCanWheels();
 
 // --[FEATURE #1]
 // --Type of trash can & use
@@ -207,12 +222,229 @@ void HandleDetails() {
 // --Certifications & Standards (If applicable)
 
 // --[FEATURE #10]
-// --Additional
+// --Additional Slide Lock Security
+void SlideLockSecurity() {
+    var result = "";
+    var features = A[6609];
+    var lidLock = R("SP-21194").HasValue() ? R("SP-21194").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-21194").HasValue() ? R("cnet_common_SP-21194").Replace("<NULL>", "").Text : "";
+
+    if (features.HasValue("slide lock")) {
+        result = "A slide lock securely locks the lid to help keep pets and curious children from getting into the trash";
+    }
+    else if (!String.IsNullOrEmpty(lidLock) && lidLock.ToLower().Equals("yes")) {
+        result = "Locks for secure use";
+    }
+    else if (Coalesce(features).HasValue("screw closure", "tie-down rings")) {
+        result = $"{features.Where("screw closure", "tie-down rings").Select(o=>o.Value()).FlattenWithAnd().ToUpperFirstChar()} help make security simple";
+    }
+    
+    if (!String.IsNullOrEmpty(result)) {
+        Add($"SlideLockSecurity⸮{result}");
+    }
+}
 
 // --[FEATURE #11]
 // --Additional
+void HandsFreeOperation() {
+    var result = "";
+    var features = A[6609];
+    var type = R("SP-18159").HasValue() ? R("SP-18159").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-18159").HasValue() ? R("cnet_common_SP-18159").Replace("<NULL>", "").Text : "";
 
+    if (!String.IsNullOrEmpty(type)) {
+        if (features.HasValue("odorless") && type.ToLower().Equals("sensor trash cans")) {
+            
+            result = "100% touch-free, odor-free and eliminates cross-contamination of germs";
+        }
+        else if (type.ToLower().Equals("step trash cans") || type.ToLower().Equals("sensor trash cans")) {
+            result = "Touch-free feature prevents the cross-contamination of germs";
+        }
+    }
+    if (!String.IsNullOrEmpty(result)) {
+        Add($"HandsFreeOperation⸮{result}");
+    }
+}
 // --[FEATURE #12]
+// --Additional Trash Cans Pedal
+void TrashCansPedal() {
+    var result = "";
+    var features = A[6609];
+    if (features.HasValue("features")) {
+        result = "Strong steel pedal is engineered for a smooth and easy step";
+    }
+    if (!String.IsNullOrEmpty(result)) {
+        Add($"TrashCansPedal⸮{result}");
+    }
+}
+
+// --[FEATURE #13]
+// --Additional Finger-print Resistant Coating
+
+void FingerPrintResistantCoating() {
+    var result = "";
+    var features = A[6609];
+   
+    if (features.HasValue("fingerprint-resistant coating")) {
+        result = "Fingerprint-resistant coating is easy to clean";
+    }
+    else if (features.HasValue("dent-proof plastic lid")) {
+        result = "Dent-proof plastic lid won't show dirt or fingerprints";
+    }
+    if (!String.IsNullOrEmpty(result)) {
+        Add($"FingerPrintResistantCoating⸮{result}");
+    }
+}
+
+// --[FEATURE #14]
+// --Additional Carbon Filter Gate
+void CarbonFilterGate() {
+    var result = "";
+    var features = A[6609];
+   
+    if (Coalesce(features).HasValue("Carbon filter gate%")) {
+        result = "Fingerprint-resistant coating is easy to clean";
+    }
+    else if (features.HasValue("dent-proof plastic lid")) {
+        result = "Dent-proof plastic lid won't show dirt or fingerprints";
+    }
+    if (!String.IsNullOrEmpty(result)) {
+        Add($"CarbonFilterGate⸮{result}");
+    }
+}
+
+// --[FEATURE #15]
 // --Additional
+
+void TrashCanBase() {
+    var result = "";
+    var features = A[6609];
+   
+    if (features.HasValue("anti-slip base")) {
+        result = "Non-skid base to prevent the bin from sliding";
+    }
+    else if (features.HasValue("solid base")) {
+        result = "Solid base keeps potential liquid spills contained";
+    }
+    else if (features.HasValue("reinforced base")) {
+        result = "Reinforced base to reduce wear and tear from dragging";
+    }
+    if (!String.IsNullOrEmpty(result)) {
+        Add($"TrashCanBase⸮{result}");
+    }
+}
+
+// --[FEATURE #16]
+// --Additional Stay Open Function
+
+void StayOpenFunction() {
+    var result = "";
+    var features = A[6609];
+   
+    if (features.HasValue("stay-open function")) {
+        result = "Non-skid base to prevent the bin from sliding";
+    }
+    if (!String.IsNullOrEmpty(result)) {
+        Add($"StayOpenFunction⸮{result}");
+    }
+}
+
+// --[FEATURE #17]
+// --Additional Liner Pocket
+void LinerPocket() {
+    var result = "";
+    var features = A[6609];
+   
+    if (features.HasValue("liner pocket")) {
+        result = "Liner pocket keeps liners where you need them and dispenses them one by one from inside the can for a faster liner change";
+    }
+    if (!String.IsNullOrEmpty(result)) {
+        Add($"LinerPocket⸮{result}");
+    }
+}
+
+
+// --[FEATURE #18]
+// --Additional Removable Inner Bucket
+void RemovableInnerBucket() {
+    var result = "";
+    var features = A[6609];
+    if (features.HasValue("removable inner bucket")) {
+        result = "Inner trash bucket is fully removable for easy emptying and cleaning";
+    }
+    if (!String.IsNullOrEmpty(result)) {
+        Add($"RemovableInnerBucket⸮{result}");
+    }
+}
+
+// --[FEATURE #19]
+// --Additional lid shox technology/silent lid
+void ShoxSilentLid () {
+    var result = "";
+    var features = A[6609];
+    if (features.HasValue("lid shox technology")) {
+        result = "Lid shox technology controls the motion of the lid for a slow, silent close";
+    }
+    else if (Coalesce(features).HasValue("silent%lid")) {
+        result = "Lid closes slowly with whisper quiet operation";
+    }
+    if (!String.IsNullOrEmpty(result)) {
+        Add($"ShoxSilentLid⸮{result}");
+    }
+}
+
+// --[FEATURE #20]
+// --Additional venting channels
+void VentingChannels () {
+    var result = "";
+    var features = A[6609];
+    if (features.HasValue("venting channels")) {
+        result = "Venting channels reduce the force needed to lift each trash bin";
+    }
+    if (!String.IsNullOrEmpty(result)) {
+        Add($"VentingChannels⸮{result}");
+    }
+}
+
+// --[FEATURE #21]
+// --Additional internal hinge
+void InternalHinge () {
+    var result = "";
+    var features = A[6609];
+    if (features.HasValue("internal hinge")) {
+        result = "Internal hinge prevents the lid from bumping the wall";
+    }
+    if (!String.IsNullOrEmpty(result)) {
+        Add($"InternalHinge⸮{result}");
+    }
+}
+
+// --[FEATURE #22]
+// --Additional wheels
+void TrashCanWheels () {
+    var result = "";
+    var features = A[6609];
+    if (features.HasValue("wheels")) {
+        result = "Wheels make the can easy to move";
+    }
+    if (!String.IsNullOrEmpty(result)) {
+        Add($"TrashCanWheels⸮{result}");
+    }
+}
+
+// --[FEATURE #23]
+// --Additional powered
+TrashCanPowered();
+void TrashCanPowered () {
+    var result = "";
+    var batteryFormFactor = A[335];
+    var batteryNum = A[861];
+    if (batteryFormFactor.HasValue() && batteryNum.HasValue()) {
+        result = "Powered by {batteryNum.Values} {batteryFormFactor.Values} batteries";
+    }
+    if (!String.IsNullOrEmpty(result)) {
+        Add($"TrashCanPowered⸮{result}");
+    }
+}
 
 //168328278181141928 end of "Trash Cans & Waste Receptacles" §§
