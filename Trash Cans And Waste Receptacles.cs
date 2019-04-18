@@ -5,8 +5,9 @@ TrashCanCapacity();
 //Color & Material of item
 //Dimensions
 LidType();
+RimBorderDetails();
 HandleDetails();
-//Safety features
+SafetyFeatures();
 // Standards
 SlideLockSecurity();
 HandsFreeOperation();
@@ -21,6 +22,7 @@ ShoxSilentLid();
 VentingChannels();
 InternalHinge();
 TrashCanWheels();
+TrashCanPowered();
 
 // --[FEATURE #1]
 // --Type of trash can & use
@@ -174,7 +176,6 @@ void LidType() {
 
 // --[FEATURE #6]
 // --Rim/Border Details
-RimBorderDetails();
 void RimBorderDetails() {
     var result = "";
 	var features = A[6609];
@@ -217,6 +218,45 @@ void HandleDetails() {
 
 // --[FEATURE #8]
 // --Safety features (If applicable)
+void SafetyFeatures() {
+    var result = "";
+    var features = A[6609];
+    var fireResistant = A[6817];
+    Add(features.Values);
+    var test = features.WhereNot("stackable").Where(o => Coalesce(o.Value()).In("ergonomic grip", "curved rim")).Select(o => o.Value().Replace(" rim", "")).Flatten(", ");
+    Add(test);
+    if ((Coalesce(features).HasValue("%fire-resistant%") || fireResistant.HasValue())
+    && Coalesce(features).WhereNot("% lid %", "% lid","%fingerprint%","%fire%").Where(o => Coalesce(o.Value()).In("%resist%","%proof%")).Count() > 1) {
+        var tmp = Coalesce(features).WhereNot("% lid %", "% lid","%fingerprint%","%fire%").Where(o => Coalesce(o.Value()).In("%resist%","%proof%")).Select(o => o.Value().Replace("-resistant", "").Replace("proof", "")).FlattenWithAnd();
+        result = $"Resistant to fire, {tmp} to provide you with years of service";
+    }
+    else if ((Coalesce(features).HasValue("%fire-resistant%") || fireResistant.HasValue())
+    && Coalesce(features).WhereNot("% lid %", "% lid","%fingerprint%","%fire%").Where(o => Coalesce(o.Value()).In("%resist%","%proof%")).Count() == 1) {
+        var tmp = Coalesce(features).WhereNot("% lid %", "% lid","%fingerprint%","%fire%").Where(o => Coalesce(o.Value()).In("%resist%","%proof%")).Select(o => o.Value().Replace("-resistant", "").Replace("proof", "")).FlattenWithAnd();
+        result = $"Resistant to fire and {tmp} to provide you with years of service";
+    }
+    else if (Coalesce(features).HasValue("%fire-resistant%") || fireResistant.HasValue()) {
+        result = "Firesafe construction will not burn, melt, or emit toxic fumes";
+    }
+    else if (Coalesce(features).WhereNot("% lid %", "% lid","%fingerprint%","%fire%").Where(o => Coalesce(o.Value()).In("%resist%","%proof%")).Count() > 1) {
+        var tmp = Coalesce(features).WhereNot("% lid %", "% lid","%fingerprint%","%fire%").Where(o => Coalesce(o.Value()).In("%resist%","%proof%")).Select(o => o.Value().Replace("-resistant", "").Replace("proof", "")).FlattenWithAnd(); 
+        result = $"Resistant to {tmp} to provide you with years of service";
+    }
+    else if (Coalesce(features).HasValue("%weather-resistant%")) {
+        result = "Weather-resistant construction for year-round use";
+    }
+    else if (Coalesce(features).HasValue("%UV-resistant%")) {
+        result = "UV-resistant to limit fading and provide you with years of service";
+    }
+    else if (Coalesce(features).WhereNot("% lid %", "% lid","%fingerprint%","%fire%").Where(o => Coalesce(o.Value()).In("%resist%","%proof%")).Count() > 0) {
+        var tmp = Coalesce(features).WhereNot("% lid %", "% lid","%fingerprint%","%fire%").Where(o => Coalesce(o.Value()).In("%resist%","%proof%")).Select(o => o.Value().Replace("-resistant", "").Replace("proof", "")).FlattenWithAnd(); 
+        result = $"Resistant to {tmp} to provide you with years of service";
+    }
+    
+    if (!String.IsNullOrEmpty(result)) {
+        Add($"SafetyFeatures⸮{result}");
+    }
+}
 
 // --[FEATURE #9]
 // --Certifications & Standards (If applicable)
@@ -280,7 +320,6 @@ void TrashCansPedal() {
 
 // --[FEATURE #13]
 // --Additional Finger-print Resistant Coating
-
 void FingerPrintResistantCoating() {
     var result = "";
     var features = A[6609];
@@ -434,7 +473,6 @@ void TrashCanWheels () {
 
 // --[FEATURE #23]
 // --Additional powered
-TrashCanPowered();
 void TrashCanPowered () {
     var result = "";
     var batteryFormFactor = A[335];
