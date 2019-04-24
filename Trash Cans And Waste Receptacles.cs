@@ -353,7 +353,7 @@ void CarbonFilterGate() {
 }
 
 // --[FEATURE #15]
-// --Additional
+// --Additional Trash Can Base
 
 void TrashCanBase() {
     var result = "";

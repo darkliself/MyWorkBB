@@ -113,8 +113,128 @@ foreach(var bulletPoint in bulletsPool.Split("|")){
 if (CAT.Alt.Count() > 0)
 {
     switch (CAT.MainAlt.Key){
-        // "Printers" "Serhii.O" 
-        case var a when a.In("5435445243161518", "5435445243142044", "5435445243167883", "543544524340300"):
+        // "Laptop Bags & Cases" "Serhii.O" 
+        case var a when a.In("5884389110931140978"):
+        AddBullet(dictionaryBulletsPool, "LaptopBagCasestyleUse", true);
+        AddBullet(dictionaryBulletsPool, "TrueColorMaterial", true);
+        AddBullet(dictionaryBulletsPool, "LaptopBagsCasesStrapHandleConfiguration", true);
+        AddBullet(dictionaryBulletsPool, "Dimensions", true);
+        AddBullet(dictionaryBulletsPool, "LaptopBagsCasesInnerDimensions", true);
+        AddBullet(dictionaryBulletsPool, "LaptopBagsCasesBottleHolder", true);
+        AddBullet(dictionaryBulletsPool, "LaptopBagsCasesDetailCompartments", true);
+        AddBullet(dictionaryBulletsPool, "LaptopBagsCasesWheeled", true);
+        AddBullet(dictionaryBulletsPool, "PackSize", true);
+        AddBullet(dictionaryBulletsPool, "LaptopBagsCasesCheckPointFriendly", false);
+        AddBullet(dictionaryBulletsPool, "LaptopBagsCasesWaterResistant", false);
+        AddBullet(dictionaryBulletsPool, "LaptopBagsCasesAntiScratch", false);
+        AddBullet(dictionaryBulletsPool, "Warranty", false);
+        break;
+        // "Headphones" "Serhii.O" 
+        case var a when a.In("5829362510113210844"):
+        AddBullet(dictionaryBulletsPool, "HeadphonesTypeUse", true);
+        AddBullet(dictionaryBulletsPool, "HeadphonesConnectivityOperationalRange", true);
+        AddBullet(dictionaryBulletsPool, "HeadphonesInterfaceBluetoothCompatibility", true);
+        AddBullet(dictionaryBulletsPool, "HeadphonesConstruction", true);
+        AddBullet(dictionaryBulletsPool, "HeadphonesBatteryType", true);
+        AddBullet(dictionaryBulletsPool, "HeadphonesRechargeBattery", true);
+        AddBullet(dictionaryBulletsPool, "HeadphonesPowerSourceRechargeTimeBatteryLife", true);
+        AddBullet(dictionaryBulletsPool, "HeadphonesBuiltRemote", false);
+        AddBullet(dictionaryBulletsPool, "HeadphonesBuiltMicAndControls", false);
+        AddBullet(dictionaryBulletsPool, "HeadphonesTechnologyFeature", false);
+        AddBullet(dictionaryBulletsPool, "HeadphonesEarParts", false);
+        AddBullet(dictionaryBulletsPool, "HeadphonesPushToTalk", false);
+        AddBullet(dictionaryBulletsPool, "HeadphonesBuiltInMicrophone", false);
+        AddBullet(dictionaryBulletsPool, "HeadphonesSoundIsolating", false);
+        AddBullet(dictionaryBulletsPool, "Warranty", true);
+        break;
+        // "Cell Phone Cases" "Serhii.O" 
+        case var a when a.In("530868304206053"):
+        AddBullet(dictionaryBulletsPool, "CellPhoneCaseStyleCompatibility", true);
+        AddBullet(dictionaryBulletsPool, "CellPhoneCaseMaterialtrueColor", true);
+        AddBullet(dictionaryBulletsPool, "CellPhoneCaseGripType", true);
+        AddBullet(dictionaryBulletsPool, "CellPhoneCaseFashionCase", false);
+        AddBullet(dictionaryBulletsPool, "CellPhoneCasesScreenProtector", false);
+        AddBullet(dictionaryBulletsPool, "CellPhoneCasesProtections", false);
+        AddBullet(dictionaryBulletsPool, "CellPhoneCasesRaisedEdge", false);
+        AddBullet(dictionaryBulletsPool, "CellPhoneCasesMagnetic", false);
+        AddBullet(dictionaryBulletsPool, "CellPhoneCasesLayerDefense", false);
+        AddBullet(dictionaryBulletsPool, "CellPhoneCasesUnderwater", false);
+        AddBullet(dictionaryBulletsPool, "CellPhoneCasesMicrofiber", false);
+        AddBullet(dictionaryBulletsPool, "CellPhoneCasesUltraSlim", false);
+        AddBullet(dictionaryBulletsPool, "Warranty", true);
+        break;
+        // "Projectors" "Serhii.O" 
+        case var a when a.In("168134749830140542"):
+        AddBullet(dictionaryBulletsPool, "ProjectorsTypeUse", true);
+        AddBullet(dictionaryBulletsPool, "ProjectorsSystem", true);
+        AddBullet(dictionaryBulletsPool, "ProjectorsColorBrightness", true);
+        AddBullet(dictionaryBulletsPool, "ProjectorsResolution", true);
+        AddBullet(dictionaryBulletsPool, "ProjectorsLampTypeLife", true);
+        AddBullet(dictionaryBulletsPool, "ProjectorsLensFocusType", true);
+        AddBullet(dictionaryBulletsPool, "ProjectorsProjectionDistance", true);
+        AddBullet(dictionaryBulletsPool, "ProjectorsThrowRatio", true);
+        AddBullet(dictionaryBulletsPool, "ProjectorsAudioSupport", true);
+        AddBullet(dictionaryBulletsPool, "ProjectorsConnectivity", true);
+        AddBullet(dictionaryBulletsPool, "ProjectorsCompatibility", true);
+        AddBullet(dictionaryBulletsPool, "Warranty", true);
+        break;
+        // "Vacuums" "Serhii.O" 
+        case var a when a.In("1683392410972140733"):
+        AddBullet(dictionaryBulletsPool, "VacuumsTypeUse", true);
+        AddBullet(dictionaryBulletsPool, "VacuumsBagless", true);
+        AddBullet(dictionaryBulletsPool, "VacuumsFiltrationSystem", true);
+        AddBullet(dictionaryBulletsPool, "VacuumsLightingPowerType", true);
+        AddBullet(dictionaryBulletsPool, "VacuumsPowerVoltage", true);
+        AddBullet(dictionaryBulletsPool, "VacuumsCordLength", true);
+        AddBullet(dictionaryBulletsPool, "CompliantStandards", true);
+        AddBullet(dictionaryBulletsPool, "Dimensions", false);
+        AddBullet(dictionaryBulletsPool, "AdditionalVacuumsMotorDetails", false);
+        AddBullet(dictionaryBulletsPool, "AdditionalVacuumsBatteries", false);
+        AddBullet(dictionaryBulletsPool, "AdditionalVacuumsCordlessDesign", false);
+        AddBullet(dictionaryBulletsPool, "AdditionalVacuumsFingertipControls", false);
+        AddBullet(dictionaryBulletsPool, "AdditionalVacuumsIndicators", false);
+        AddBullet(dictionaryBulletsPool, "AdditionalVacuumsSwivelSteering", false);
+        AddBullet(dictionaryBulletsPool, "AdditionalVacuumsBrushRoll", false);
+        AddBullet(dictionaryBulletsPool, "AdditionalVacuumsEdgeCreviceTool", false);
+        AddBullet(dictionaryBulletsPool, "AdditionalVacuumsCyclonicFiltration", false);
+        AddBullet(dictionaryBulletsPool, "AdditionalVacuumsCarpetHeightAdjustments", false);
+        AddBullet(dictionaryBulletsPool, "AdditionalVacuumsEdgeCleaning", false);
+        AddBullet(dictionaryBulletsPool, "AdditionalVacuumsPackageContent", false);
+        AddBullet(dictionaryBulletsPool, "Warranty", true);
+        break;
+        // "Chargers & Connectors" "Serhii.O" 
+        case var a when a.In("530868304162051"):
+        AddBullet(dictionaryBulletsPool, "ChargerTypeUse", true);
+        AddBullet(dictionaryBulletsPool, "Dimensions", true);
+        AddBullet(dictionaryBulletsPool, "ChargersConnectorsConnections", true);
+        AddBullet(dictionaryBulletsPool, "ChargersConnectorsCompatibility", true);
+        AddBullet(dictionaryBulletsPool, "ChargersConnectorsAudioFeatureOrVoltage", true);
+        AddBullet(dictionaryBulletsPool, "ChargersConnectorsVideoFeatureOrAdditionalChargerData", true);
+        AddBullet(dictionaryBulletsPool, "ChargersConnectorsDataFeatureOrAdditionalChargerData", true);
+        AddBullet(dictionaryBulletsPool, "PackSize", true);
+        AddBullet(dictionaryBulletsPool, "ChargersConnectorsKitContent", false);
+        AddBullet(dictionaryBulletsPool, "ChargersConnectorsFastCharging", false);
+        AddBullet(dictionaryBulletsPool, "ChargersConnectorsBraided", false);
+        AddBullet(dictionaryBulletsPool, "Warranty", true);
+        break;
+        // "Dry Erase Whiteboards" "Serhii.O" 
+        case var a when a.In("11012078166382"):
+        AddBullet(dictionaryBulletsPool, "DryEraseWhiteboardTypeUse", true);
+        AddBullet(dictionaryBulletsPool, "WhiteboardsOverallDimensions", true);
+        AddBullet(dictionaryBulletsPool, "WhiteboardsSurfaceMaterial", true);
+        AddBullet(dictionaryBulletsPool, "WhiteboardsFrameConstruction", true);
+        AddBullet(dictionaryBulletsPool, "WhiteboardsDesign", true);
+        AddBullet(dictionaryBulletsPool, "WhiteboardsAssemblyInformation", true);
+        AddBullet(dictionaryBulletsPool, "WhiteboardsPackageContents", true);
+        AddBullet(dictionaryBulletsPool, "AdditionalWhiteboardsStainResistant", false);
+        AddBullet(dictionaryBulletsPool, "AdditionalWhiteboardsBoardDesign", false);
+        AddBullet(dictionaryBulletsPool, "AdditionalWhiteboardsMarkerTrayHolds", false);
+        AddBullet(dictionaryBulletsPool, "AdditionalWhiteboardsMarkerGhostingResistant", false);
+        AddBullet(dictionaryBulletsPool, "AdditionalWhiteboardsMagnetic", false);
+        AddBullet(dictionaryBulletsPool, "Warranty", true);
+        break;
+        // "Printers Laser and Other" "Serhii.O" 
+        case var a when a.In("5435445243142044", "5435445243167883"):
         AddBullet(dictionaryBulletsPool, "PrintersTypeOfPrinterUse", true);
         AddBullet(dictionaryBulletsPool, "PrintersPrintTechnologyResolution", true);
         AddBullet(dictionaryBulletsPool, "PrintersPrintSpeedMode", true);
@@ -126,6 +246,23 @@ if (CAT.Alt.Count() > 0)
         AddBullet(dictionaryBulletsPool, "PrintersDisplay", true);
         AddBullet(dictionaryBulletsPool, "PrintersScanningCapabilities", true);
         AddBullet(dictionaryBulletsPool, "CompliantStandards", true);
+        AddBullet(dictionaryBulletsPool, "LargeFormatPrinter", false);
+        AddBullet(dictionaryBulletsPool, "Warranty", true);
+        break;
+        // "Printers All-in-One, Inkjet" "Serhii.O" 
+        case var a when a.In("5435445243161518", "543544524340300"):
+        AddBullet(dictionaryBulletsPool, "PrintersTypeOfPrinterUse", true);
+        AddBullet(dictionaryBulletsPool, "PrintersPrintTechnologyResolution", true);
+        AddBullet(dictionaryBulletsPool, "PrintersPrintSpeedMode", true);
+        AddBullet(dictionaryBulletsPool, "PrintersConnectivity", true);
+        AddBullet(dictionaryBulletsPool, "Dimensions", true);
+        AddBullet(dictionaryBulletsPool, "PrintersInputLoadingFeature", true);
+        AddBullet(dictionaryBulletsPool, "PrintersProcessorMemory", true);
+        AddBullet(dictionaryBulletsPool, "CompliantStandards", true);
+        AddBullet(dictionaryBulletsPool, "AutomaticPrintingFeatures", true);
+        AddBullet(dictionaryBulletsPool, "PrintersDisplay", true);
+        AddBullet(dictionaryBulletsPool, "PrintersScanningCapabilities", true);
+        AddBullet(dictionaryBulletsPool, "LargeFormatPrinter", false);
         AddBullet(dictionaryBulletsPool, "Warranty", true);
         break;
         // "Tablets & iPads" "Serhii.O" 
@@ -146,12 +283,13 @@ if (CAT.Alt.Count() > 0)
         // "Printer Parts" "Serhii.O" 
         case var a when a.In("54353597404140828"): 
         AddBullet(dictionaryBulletsPool, "PrinterPartTypeUse", true); 
-        AddBullet(dictionaryBulletsPool, "Dimensions", true); 
+        AddBullet(dictionaryBulletsPool, "ShippingDimensions", true); 
         AddBullet(dictionaryBulletsPool, "PrinterPartCompatibility", true); 
         AddBullet(dictionaryBulletsPool, "TrueColorMaterial", true); 
         AddBullet(dictionaryBulletsPool, "PackSize", true); 
         AddBullet(dictionaryBulletsPool, "OffersDutyCycle", false); 
-        AddBullet(dictionaryBulletsPool, "RecycledPostConsumerContent", false); 
+        AddBullet(dictionaryBulletsPool, "RecycledPostConsumerContent", false);
+        AddBullet(dictionaryBulletsPool, "CompliantStandards", false);
         AddBullet(dictionaryBulletsPool, "Warranty", true); 
         break; 
         // "Office Chairs" "Serhii.O" 
@@ -199,7 +337,7 @@ if (CAT.Alt.Count() > 0)
         AddBullet(dictionaryBulletsPool, "HeavyDutyFilingAccessory", false);
         AddBullet(dictionaryBulletsPool, "LaminatedSurfaceFilingAccessory", false);
         AddBullet(dictionaryBulletsPool, "CutTabFilingAccessory", false);
-        AddBullet(dictionaryBulletsPool, "TearResistantFilingAccessory⸮", false);
+        AddBullet(dictionaryBulletsPool, "TearResistantFilingAccessory", false);
         AddBullet(dictionaryBulletsPool, "BlankInsertsFilingAccessory", false);
         AddBullet(dictionaryBulletsPool, "PrintingTechnologyFilingAccessory", false);
         AddBullet(dictionaryBulletsPool, "HeavyWeightFilingAccessory", false);
@@ -214,10 +352,10 @@ if (CAT.Alt.Count() > 0)
         AddBullet(dictionaryBulletsPool, "MaterialOfItemCoating", true);
         AddBullet(dictionaryBulletsPool, "MicrophoneAndHeadsetTechnology", true);
         AddBullet(dictionaryBulletsPool, "InterfaceHeadsetMicrophone", true);
-        AddBullet(dictionaryBulletsPool, "SensitivityHeadsetMicrophone", false);
-        AddBullet(dictionaryBulletsPool, "MicrophonesFrequency", false);
-        AddBullet(dictionaryBulletsPool, "ImpedanceHeadsetMicrophone", false);
-        AddBullet(dictionaryBulletsPool, "PowerSource", false);
+        AddBullet(dictionaryBulletsPool, "SensitivityHeadsetMicrophone", true);
+        AddBullet(dictionaryBulletsPool, "MicrophonesFrequency", true);
+        AddBullet(dictionaryBulletsPool, "ImpedanceHeadsetMicrophone", true);
+        AddBullet(dictionaryBulletsPool, "PowerSource", true);
         AddBullet(dictionaryBulletsPool, "PushToTalk", false);
         AddBullet(dictionaryBulletsPool, "Warranty", true);
         break;
@@ -312,9 +450,9 @@ if (CAT.Alt.Count() > 0)
         AddBullet(dictionaryBulletsPool, "WirelessConnectivity", true);
         AddBullet(dictionaryBulletsPool, "OpticalDriveOfDesktop", true);
         AddBullet(dictionaryBulletsPool, "USBPortsOfDesktop", true);
-        AddBullet(dictionaryBulletsPool, "AdditionalPortsInterface", false);
+        AddBullet(dictionaryBulletsPool, "AdditionalPortsInterface", true);
         AddBullet(dictionaryBulletsPool, "Dimensions", true);
-        AddBullet(dictionaryBulletsPool, "BoxContentsOfDesktop", false);
+        AddBullet(dictionaryBulletsPool, "BoxContentsOfDesktop", true);
         AddBullet(dictionaryBulletsPool, "Warranty", true);
         break;
         // "MICR Ink for All Units" "Serhii.O" 
@@ -328,7 +466,7 @@ if (CAT.Alt.Count() > 0)
         AddBullet(dictionaryBulletsPool, "InkOrTonerPackSize", true); 
         break; 
         // "Remanufactured Laser Printer Ink, Toner & Drum Units, InkJet Printer Ink, Toner & Drum Units" "Serhii.O" 
-        case var a when a.In("5226058", "5226054", "5226006", "12393811005220973", "5226157", "12375510567216950", "12366910285216553", "1212164913166147", "12378610641217427"):
+        case var a when a.In("5226058", "5226054", "5226006", "12393811005220973", "5226157", "12366910285216553", "1212164913166147", "12378610641217427"):
         AddBullet(dictionaryBulletsPool, "CartridgeYieldType", true);
         AddBullet(dictionaryBulletsPool, "CartridgePackageContents", true);
         AddBullet(dictionaryBulletsPool, "VendorSpecificInformation", true);
@@ -459,8 +597,8 @@ if (CAT.Alt.Count() > 0)
         AddBullet(dictionaryBulletsPool, "AdditionalContainerType", false);
         AddBullet(dictionaryBulletsPool, "AdditionalCapriSunVaietyPack", false);
         break;
-        // "Markers" "Alex K." 
-        case var a when a.In("1114953140896"):
+        // "Markers", "Art & School Markers" "Alex K." 
+        case var a when a.In("1114953140896", "5787384610799221591"):
         AddBullet(dictionaryBulletsPool, "MarkerTypeAndUse", true);
         AddBullet(dictionaryBulletsPool, "MarkerInkColor", true);
         AddBullet(dictionaryBulletsPool, "MarkerPointType", true);
@@ -550,8 +688,8 @@ if (CAT.Alt.Count() > 0)
         AddBullet(dictionaryBulletsPool, "PostConsumerContent", false);
         AddBullet(dictionaryBulletsPool, "CompliantStandards", false);
         break;
-        // "Post-it&reg; / Sticky Flags & Tabs" "Alex K." 
-        case var a when a.In("167638614736165756"):
+        // "Binders" "Alex K." 
+        case var a when a.In("135293970167205"):
         AddBullet(dictionaryBulletsPool, "BinderTypeDurabilityColor", true);
         AddBullet(dictionaryBulletsPool, "Dimensions", true);
         AddBullet(dictionaryBulletsPool, "RingTypeClosure", true);
@@ -567,8 +705,8 @@ if (CAT.Alt.Count() > 0)
         AddBullet(dictionaryBulletsPool, "PostConsumerContent", false);
         AddBullet(dictionaryBulletsPool, "AcidFree", false);
         break;
-        // "Label Makers" "Alex K."
-         case var a when a.In("168136191010890400"):
+        // "Label Makers" "Alex K." 
+        case var a when a.In("168136191010890400"):
         AddBullet(dictionaryBulletsPool, "LabelMakerTypeAndUse", true);
         AddBullet(dictionaryBulletsPool, "LabelMakerMaxPrintSpeed", true);
         AddBullet(dictionaryBulletsPool, "LabelMakerMaximumResolution", true);
@@ -582,6 +720,105 @@ if (CAT.Alt.Count() > 0)
         AddBullet(dictionaryBulletsPool, "LabelMakerBatterySize", true);
         AddBullet(dictionaryBulletsPool, "Warranty", false);
         break;
+         // "Batteries" "Alex K." 
+        case var a when a.In("16831375514580302"):
+        AddBullet(dictionaryBulletsPool, "BatterySize", true);
+        AddBullet(dictionaryBulletsPool, "BatteryType", true);
+        AddBullet(dictionaryBulletsPool, "Rechargeable", true);
+        AddBullet(dictionaryBulletsPool, "BatteryCapacity", true);
+        AddBullet(dictionaryBulletsPool, "BatteryUse", true);
+        AddBullet(dictionaryBulletsPool, "AdditionalHiDensity", false);
+        AddBullet(dictionaryBulletsPool, "AdditionalPowerCheck", false);
+        AddBullet(dictionaryBulletsPool, "AdditionalDuralockPowerPreserve", false);
+        AddBullet(dictionaryBulletsPool, "AdditionalM3Technology", false);
+        AddBullet(dictionaryBulletsPool, "Warranty", false);
+        break;
+        // "Hand Soap & Dispensers" "Alex K." "Alex K." 
+        case var a when a.In("1683393110991141836"):
+        AddBullet(dictionaryBulletsPool, "CleanserFormFactorAndUse", true);
+        AddBullet(dictionaryBulletsPool, "SoapDispensersScent", true);
+        AddBullet(dictionaryBulletsPool, "CapacityAndContainerTypes", true);
+        AddBullet(dictionaryBulletsPool, "PackSize", true);
+        AddBullet(dictionaryBulletsPool, "SoapDispensersAntibacterial", false);
+        AddBullet(dictionaryBulletsPool, "Moisturizer", false);
+        AddBullet(dictionaryBulletsPool, "Hypoallergenic", false);
+        AddBullet(dictionaryBulletsPool, "StainRemoval", false);
+        AddBullet(dictionaryBulletsPool, "pHBalaced", false);
+        AddBullet(dictionaryBulletsPool, "SoapDispensersVitamins", false);
+        AddBullet(dictionaryBulletsPool, "AloeGlycerin", false);
+        AddBullet(dictionaryBulletsPool, "Pumice", false);
+        AddBullet(dictionaryBulletsPool, "LockingMechanism", false);
+        AddBullet(dictionaryBulletsPool, "ContainerFeatures", false);
+        AddBullet(dictionaryBulletsPool, "DispenserMaterial", false);
+        AddBullet(dictionaryBulletsPool, "AutomaticManualDispensers", false);
+        AddBullet(dictionaryBulletsPool, "CompliantStandards", false);
+        AddBullet(dictionaryBulletsPool, "Warranty", false);
+        break;
+        // "Card Files, Cases & Holders" "Alex K." 
+        case var a when a.In("1221973163092"):
+        AddBullet(dictionaryBulletsPool, "CardFileCaseAndHolderTypeAndUse", true);
+        AddBullet(dictionaryBulletsPool, "TrueColorMaterial", true);
+        AddBullet(dictionaryBulletsPool, "CardSizeAndCapacity", true);
+        AddBullet(dictionaryBulletsPool, "Dimensions", true);
+        AddBullet(dictionaryBulletsPool, "IndexTypes", true);
+        AddBullet(dictionaryBulletsPool, "PackSize", true);
+        AddBullet(dictionaryBulletsPool, "RecycledContent", false);
+        AddBullet(dictionaryBulletsPool, "RoundShapeCorners", false);
+        AddBullet(dictionaryBulletsPool, "FlexibleDividers", false);
+        AddBullet(dictionaryBulletsPool, "SecureClosure", false);
+        AddBullet(dictionaryBulletsPool, "LabelHolder", false);
+        AddBullet(dictionaryBulletsPool, "TransparentDesign", false);
+        AddBullet(dictionaryBulletsPool, "PostConsumerContent", false);
+        break;
+        // "Trash Cans & Waste Receptacles" "Alex K." 
+        case var a when a.In("168328278181141928"):
+        AddBullet(dictionaryBulletsPool, "TypeOfTrashCanAndUse", true);
+        AddBullet(dictionaryBulletsPool, "TrashCanCapacity", true);
+        AddBullet(dictionaryBulletsPool, "TrueColorMaterial", true);
+        AddBullet(dictionaryBulletsPool, "Dimensions", true);
+        AddBullet(dictionaryBulletsPool, "LidType", true);
+        AddBullet(dictionaryBulletsPool, "RimBorderDetails", true);
+        AddBullet(dictionaryBulletsPool, "HandleDetails", true);
+        AddBullet(dictionaryBulletsPool, "SafetyFeatures", true);
+        AddBullet(dictionaryBulletsPool, "CompliantStandards", true);
+        AddBullet(dictionaryBulletsPool, "SlideLockSecurity", false);
+        AddBullet(dictionaryBulletsPool, "HandsFreeOperation", false);
+        AddBullet(dictionaryBulletsPool, "TrashCansPedal", false);
+        AddBullet(dictionaryBulletsPool, "FingerPrintResistantCoating", false);
+        AddBullet(dictionaryBulletsPool, "CarbonFilterGate", false);
+        AddBullet(dictionaryBulletsPool, "TrashCanBase", false);
+        AddBullet(dictionaryBulletsPool, "StayOpenFunction", false);
+        AddBullet(dictionaryBulletsPool, "LinerPocket", false);
+        AddBullet(dictionaryBulletsPool, "RemovableInnerBucket", false);
+        AddBullet(dictionaryBulletsPool, "ShoxSilentLid", false);
+        AddBullet(dictionaryBulletsPool, "VentingChannels", false);
+        AddBullet(dictionaryBulletsPool, "InternalHinge", false);
+        AddBullet(dictionaryBulletsPool, "TrashCanWheels", false);
+        AddBullet(dictionaryBulletsPool, "TrashCanPowered", false);
+        break;
+        ////////// "Backpacks" "Alex K." "Serhii.O" "have some tmp features for SKU 21863890" 
+        case var a when a.In("5884203981142745"):
+        AddBullet(dictionaryBulletsPool, "BackpackStyleAndUse", true);
+        AddBullet(dictionaryBulletsPool, "TrueColorMaterial", true);
+        AddBullet(dictionaryBulletsPool, "LaptopCompatibleAndSize", false);
+        AddBullet(dictionaryBulletsPool, "BackpackSize", true);
+        AddBullet(dictionaryBulletsPool, "NumberOfCompartments", true);
+        AddBullet(dictionaryBulletsPool, "BackpacksWeightCapacity", true);
+        AddBullet(dictionaryBulletsPool, "IsWheeled", true);
+        AddBullet(dictionaryBulletsPool, "ShockAbsorbingShoulderStraps", false);
+        AddBullet(dictionaryBulletsPool, "AirFlowBackPadding", false);
+        AddBullet(dictionaryBulletsPool, "QuikPocket", false);
+        AddBullet(dictionaryBulletsPool, "BackpackFrontPocket", false);
+        AddBullet(dictionaryBulletsPool, "BackpackOrganizer", false);
+        AddBullet(dictionaryBulletsPool, "BackpacSidePocket", false);
+        AddBullet(dictionaryBulletsPool, "CaseBaseStabilizingPlatform", false);
+        AddBullet(dictionaryBulletsPool, "PaddedShoulderStrap", false);
+        AddBullet(dictionaryBulletsPool, "AdjustableShoulderStrap", false);
+        AddBullet(dictionaryBulletsPool, "TopCarryHandle", false);
+        AddBullet(dictionaryBulletsPool, "BackpackHandGrip", false);
+        AddBullet(dictionaryBulletsPool, "AdditionalStraps", false);
+        AddBullet(dictionaryBulletsPool, "Warranty", true);
+        break;
+        ///////// "END OF TEMP BACKPACKS" 
     }
 }
-
