@@ -1,4 +1,4 @@
-// §1114953140896 -- "Markers" "Alex K."
+//§§1114953140896 -- "Markers" "Alex K." 
 
 MarkerTypeAndUse();
 MarkerInkColor();
@@ -6,14 +6,13 @@ MarkerInkColor();
 MarkerPointType();
 // pack size
 NonToxic();
-// Certification & Standards
 Odor();
 
-// "Bullet 1" "Marker type & Use"
+// "Bullet 1" "Marker type & Use" 
 void MarkerTypeAndUse() {
-    //Sketch|Alcohol|Liquid Ink|Paint|Permanent|Fabric|Art|Dry Erase|Window|Wet Erase|Kid's Markers|Calligraphy|Paint|Chalk|Water Based|Brush Tip|China|Washable|Oil-Based
     var result = "";
-    var markerType = R("SP-22698").Text;
+    var markerType = R("SP-22698").HasValue() ? R("SP-22698").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-22698").HasValue() ? R("cnet_common_SP-22698").Replace("<NULL>", "").Text : "";
     var quickDry = Coalesce(A[6282]);
     if (!String.IsNullOrEmpty(markerType)) {
         if (quickDry.HasValue() && markerType.ToLower().Equals("alcohol")) {
@@ -62,7 +61,7 @@ void MarkerTypeAndUse() {
                     result = "China marker peels for continuous use";
                     break;
                 case "kid's markers":
-                    result = "Great for arts and crafts, homework and school projects, journal entries, scrapbooks, and more";
+                    result = "Kid's markers are great for arts, crafts, homework, school projects, journal entries, scrapbooks, and more";
                     break;
                 case "window":
                     result = "Window markers are suitable for indoor and outdoor use on windows around the house or car";
@@ -81,27 +80,29 @@ void MarkerTypeAndUse() {
 // "Bullet 2" "Marker ink color";
 void MarkerInkColor() {
     var result = "";
-    var trueColor = R("SP-23267").Text;
+    var trueColor = R("SP-23267").HasValue() ? R("SP-23267").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-23267").HasValue() ? R("cnet_common_SP-23267").Replace("<NULL>", "").Text : "";
+
     if (!String.IsNullOrEmpty(trueColor) && trueColor.ToLower().Equals("assorted")) {
         result = "Comes in assorted colors";
     }
-    else if (!String.IsNullOrEmpty(trueColor)) {
+    else if (!String.IsNullOrEmpty(trueColor) && !trueColor.ToLower().Equals("<null>")) {
         result = $"Ink comes in {trueColor.ToLower()}";
     }
     if (!String.IsNullOrEmpty(trueColor)) {
-        Add("MarkerInkColor⸮{result}");
+        Add($"MarkerInkColor⸮{result}");
     }
 }
 
-// "Bullet 3" "Marker point type"
-//Ultra Fine|Fine|Brush|Bold|Jumbo Chisel|Medium|Bullet|Extra Fine|Micro Chisel|Chisel|Assorted|Conical|Twin Tip|Extra Bold|Broad|Tri-Nib|Super Fine
 
+// "Bullet 3" "Marker point type" 
 void MarkerPointType() {
     var result = "";
-    var pointType = R("SP-16612").Text;
+    var pointType = R("SP-16612").HasValue() ? R("SP-16612").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-16612").HasValue() ? R("cnet_common_SP-16612").Replace("<NULL>", "").Text : "";
     var firstLineType = Coalesce(A[5981]);
     var secondLineType = Coalesce(A[5984]);
-    
+
     if (pointType.ToLower().Equals("bold")) {
         result = "Bold point creates thick, strong and detailed lines. Provides high visibility for your needs";
     }
@@ -129,7 +130,7 @@ void MarkerPointType() {
     else if (pointType.ToLower().Equals("conical")) {
         result = "Conical tips write broad and narrow";
     }
-    // "Bullet 3 and 4" "2nd marker tip type (If applicable)"
+    // "Bullet 3 and 4" "2nd marker tip type (If applicable)" 
     else if (pointType.ToLower().Equals("twin tip") 
         && firstLineType.HasValue("extra fine") 
         && secondLineType.HasValue("fine")) {
@@ -149,19 +150,21 @@ void MarkerPointType() {
             result = $"Features both {firstLineType.FirstValue().RegexReplace("(.+)", "a $1").RegexReplace("a ultra fine", "an ultra-fine")} tip and {secondLineType.FirstValue().RegexReplace("a ultra fine", "an ultra-fine")} tip, perfect for creating a variety of looks";
     }
      else if (!String.IsNullOrEmpty(pointType)) {
-        result = "{pointType} point provides accuracy and detail";
+        result = $"{pointType} point provides accuracy and detail";
     }   
     if (!String.IsNullOrEmpty(result)) {
         Add($"MarkerPointType⸮{result}");
     }  
 }
-// BUllet 5 "Pack size"
 
-// "Bullet 6" "NON-TOXIC"
+// BUllet 4 "Pack size" 
+
+// "Bullet 5" "NON-TOXIC" 
 void NonToxic() {
     var result = "";
-    var nonToxic = R("SP-21018").Text;
-    if (nonToxic.ToLower().Equals("Yes")) {
+    var nonToxic = R("SP-21018").HasValue() ? R("SP-21018").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-21018").HasValue() ? R("cnet_common_SP-21018").Replace("<NULL>", "").Text : "";
+    if (nonToxic.ToLower().Equals("yes")) {
         result = "As these markers are non-toxic, they are extremely safe to use";
     }
     if (!String.IsNullOrEmpty(result)) {
@@ -169,12 +172,15 @@ void NonToxic() {
     }
 }
 
-// "Bullet 7" "Certification & Standards"
 
-// "Additional Low Odor"
+// "Bullet 7" "Certification & Standards" 
+
+// "Additional Low Odor" 
 void Odor() {
     var result = "";
-    var odor = R("SP-21015").Text;
+    var odor = R("SP-21015").HasValue() ? R("SP-21015").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-21015").HasValue() ? R("cnet_common_SP-21015").Replace("<NULL>", "").Text : "";
+
     if (odor.ToLower().Equals("low odor")) {
         result = "Low-odor ink for your comfort";
     }
@@ -186,4 +192,5 @@ void Odor() {
     }
 }
 
-// §1114953140896 end of "Markers"
+
+//1114953140896 end of "Markers" §§
