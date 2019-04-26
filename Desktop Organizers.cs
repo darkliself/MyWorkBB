@@ -1,4 +1,4 @@
-//§§ "" ""
+//§§ 1221973140991 "Desktop Organizers" "Alex K."
 
 TypeOfDesktopOrganizerAndItsUse();
 // true color material
@@ -7,6 +7,9 @@ FeatureBenefitCompartments();
 FeatureBenefitNonSlip();
 OrganizerRemovableDivider();
 OrganizersStackable();
+PaperHoldersInfo();
+OrganizerWallMount();
+OrganizerPhoneHolder();
 
 // --[FEATURE #1]
 // --Type of Desktop Organizer and its use
@@ -155,34 +158,68 @@ void OrganizersStackable() {
 }
 
 // --[FEATURE #7]
-// -- Additional
+// -- Additional Paper Holders Info
 
-PaperHoldersInfo();
 void PaperHoldersInfo() {
     var result = "";
     var paperHolder = Coalesce(A[181], A[5925]);
     if (paperHolder.HasValue("%letter%", "%legal%", "%A4%")) {
-        
+        if (paperHolder.Where("%letter%", "%legal%", "%A4%").Count() == 3) {
+            result = "Holds A4, legal-, letter-size paper";
+        }
+        else if (paperHolder.Where("%letter%", "%legal%").Count() == 2) {
+            result = "Holds both legal and letter-size paper";
+        }
+        else if (paperHolder.Where("%A4%", "%letter%").Count() == 2) {
+            result = "Holds both A4 and letter-size paper";
+        }
+        else if (paperHolder.Where("%A4%", "%legal%").Count() == 2) {
+            result = "Holds both A4 and legal-size paper";
+        }
+        else if (paperHolder.Where("%letter%").Count() == 2) {
+            result = "Holds letter size-paper";
+        }
+        else if (paperHolder.Where("%legal%").Count() == 2) {
+            result = "Holds legal size-paper";
+        }
+        else if (paperHolder.Where("%A4%").Count() == 2) {
+            result = "Holds A4 size paper";
+        }
     }
-  
     if (!String.IsNullOrEmpty(result)) {
         Add($"PaperHoldersInfo⸮{result}");
     }
 }
 
+
 // --[FEATURE #8]
-// -- Additional
+// -- Additional wall mount
+void OrganizerWallMount() {
+    var result = "";
+    var features = A[5945];
+    if (Coalesce(features).HasValue("%wall%mount%")) {
+        result = "Unit can be wall-mounted to save space";
+    }
+    if (!String.IsNullOrEmpty(result)) {
+        Add($"OrganizerWallMount⸮{result}");
+    }
+}
+
 
 // --[FEATURE #9]
-// -- Additional
-
-// --[FEATURE #10]
-// -- Additional
-
-// --[FEATURE #11]
-// -- Additional
+// -- Additional phone holder
+void OrganizerPhoneHolder() {
+    var result = "";
+    var features = A[6294];
+    if (Coalesce(features).HasValue("phone holder")) {
+        result = "Angled platform holds phone at just the right degree for quick and easy dialing and picking up";
+    }
+    if (!String.IsNullOrEmpty(result)) {
+        Add($"OrganizerPhoneHolder⸮{result}");
+    }
+}
 
 // --[FEATURE #12]
 // --Warranty
 
-//§§ "" ""
+//1221973140991 end of "Desktop Organizers" §§

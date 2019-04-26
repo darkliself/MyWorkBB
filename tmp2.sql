@@ -1,237 +1,268 @@
---Type of Desktop Organizer and its use    
---Accessory Trays
---This medium accessory tray stacks and stores all your stuff. (https://www.staples.com/product_48955)
---Provides the extra space we all crave (https://www.staples.com/Poppin-Medium-Accessory-Tray-Pool-Blue-100238/product_48952)
-IF $SP-18586$ LIKE "Accessory Trays" 
-    THEN "Provides the extra space we all crave" 
---Mobile Device Stand/Holders
---The smart phone holder provides a removable ergonomic system to hold most mobile devices (https://www.staples.com/product_1610514)
-ELSE IF $SP-18586$ LIKE "Mobile Device Stand/Holders" 
-    THEN "The smart phone holder provides a removable ergonomic system to hold most mobile devices" 
---Pad Holders
---pad holder with pen is an excellent desk accessory (https://www.staples.com/product_155244)
-ELSE IF $SP-18586$ LIKE "Pad Holders" 
-    THEN "Pad holders are useful desk accessory" 
---Accessory Holders
-ELSE IF $SP-18586$ LIKE "Accessory Holders" 
-    THEN "Accessory holders are useful desk accessory" 
---Dispensers
-ELSE IF A[6284].Value LIKE "paper clip dispenser" 
-    THEN "Paper Clip Dispenser reduces clutter and adds convenience to your workspace" 
-ELSE IF $SP-18586$ LIKE "Dispensers" 
-    THEN "Dispensers are useful desk accessory" 
+--[Bullet 1] USB flash drive capacity & type
+--[Bullet 2] USB flash drive design, color family& USB flash drive material
+--[Bullet 3] USB flash drive interface
+--[Bullet 4] Maximum read & write speed (Mb per seconds)
+--[Bullet 5] Compatible With
+--[Bullet 6] Encryption
+--[Bullet 7] Security features
+--[Bullet 8] Languages Supported
+--[Last Bullet] Warranty
 
---Sets
---Storage/Document Boxes
---Document Box keeps important documents and file folders neatly tucked away. (https://www.staples.com/product_2566302)
-ELSE IF $SP-18586$ LIKE "Storage/Document Boxes" 
-    THEN "Document Box keeps important documents and file folders neatly tucked away" 
---Table Tops
-ELSE IF $SP-18586$ LIKE "Table Tops" 
-    THEN "Table Tops are useful desk accessory" 
---Stacking Supports
-ELSE IF $SP-18586$ LIKE "Stacking Supports" 
-    THEN "Stacking supports for trays provide solid support for stacking" 
---Letter Holder
-ELSE IF $SP-18586$ LIKE "Letter Holder" 
-    THEN "Letter holder helps organize cluttered desks" 
---Pen Cups
-ELSE IF $SP-18586$ LIKE "Pen Cups" 
-    THEN "Pen cup keeps pens and pencils organized" 
---Cabinets
-ELSE IF $SP-18586$ LIKE "Cabinets" 
-    THEN "Cabinets are useful desk accessory" 
+--[Bullet 1] USB flash drive capacity & type
+--        $SP-18334$ - Capacity
+--        $SP-14923$ - Type
 
--- Desk pad
-ELSE IF $SP-18586$ LIKE "Desk pad" 
-    THEN "Desk pad is an excellent desk protector" 
+    --4GB Flash drive offers reliable data storage (https://www.staples.com/Kanguru-Defender-Elite300-4GB-260-120-Mbps-SuperSpeed-USB-3-0-Secure-Flash-Drive-Black-KDFE300-4G/product_IM11P3185)
+    IF $SP-18334$ IN ("2GB", "4GB", "8GB", "16GB")
+    AND $SP-14923$ LIKE "Flash Drive" 
+        THEN $SP-18334$
+            _" flash drive offers reliable data storage" 
 
---Racks
-ELSE IF $SP-18586$ LIKE "Racks" 
-    THEN "Keep messages and other materials organized with this message rack" 
---Compartment Storage
-ELSE IF $SP-18586$ LIKE "Compartment Storage" 
-    THEN "Compartment storage is useful desk accessory for organizing your office, craft, or school supplies" 
---Copy Holders
-ELSE IF $SP-18586$ LIKE "Copy Holders" 
-    THEN "Copyholder makes reading at your desk an easier task" 
---Pencil Holders
-ELSE IF $SP-18586$ LIKE "Pencil Holders" 
-    THEN "Pencil holder provides plenty of room to store your writing instruments, rulers, and scissors" 
---Rotating Organizers
-ELSE IF $SP-18586$ LIKE "Rotating Organizers" 
-    THEN "Rotating desk organizer offers easy access to office supplies" 
---File Organizers
-ELSE IF $SP-18586$ LIKE "File Organizers" 
-    THEN "File organizer is great for keeping your desktop neat and tidy" 
----Storage Drawers
-ELSE IF $SP-18586$ LIKE "Storage Drawers" 
-    THEN "Storage Drawer keeps small supplies, writing instruments, and scissors organized" 
-ELSE IF $SP-18586$ LIKE "Set" 
-    THEN "This set is a useful desk accessory" 
-ELSE IF $SP-18586$ IS NOT NULL
-    THEN $SP-18586$_" are useful desk accessory" 
+    ELSE IF $SP-18334$ IN ("2GB", "4GB", "8GB", "16GB")
+    AND $SP-14923$ IS NOT NULL
+        THEN $SP-18334$
+             _" "_$SP-14923$_" flash drive offers reliable data storage" 
+
+    --128GB USB flash drive for convenient storage (https://www.staples.com/SanDisk-128GB-130-Mbps-USB-Flash-Drive/product_IM11A7133)
+    ELSE IF $SP-18334$ IS NOT NULL
+    AND $SP-14923$ LIKE "Flash Drive" 
+        THEN $SP-18334$
+            _" USB flash drive for convenient storage" 
+
+    ELSE IF $SP-18334$ IS NOT NULL
+    AND $SP-14923$ IS NOT NULL
+        THEN $SP-18334$
+            _" "_$SP-14923$_" USB flash drive for convenient storage" 
 ELSE "@@";
 
---True color and Desktop Organizer Material   
-IF $SP-22967$ LIKE "%clear%" 
-AND $SP-18549$ IS NOT NULL
-THEN "Made of clear "_$SP-18549$ 
-ELSE IF $SP-22967$ LIKE "%black%" 
-THEN "Comes in black" 
-ELSE IF $SP-22967$ NOT IN (NULL, "Multicolor", "Clear")
-AND A[5955].Where("%coated%").Values IS NOT NULL
-    THEN "Comes in "_$SP-22967$_" and made of "_A[5955].Where("%coated%").Values.First() 
-ELSE IF $SP-22967$ NOT IN (NULL, "Multicolor", "Clear")
-AND $SP-18549$ IS NOT NULL 
-    THEN "Comes in "_$SP-22967$_" and made of "_
-         $SP-18549$_" for durability" 
-ELSE IF $SP-22967$ LIKE "%assorted%" 
-AND $SP-18586$ NOT LIKE "sets" 
-    THEN $SP-18586$_" in bright, assorted colors stand out on your desk" 
-ELSE IF $SP-22967$ LIKE "%assorted%" 
-AND $SP-18586$ LIKE "sets" 
-    THEN "Comes in bright, assorted colors stand out on your desk" 
-ELSE IF $SP-22967$ LIKE "%multi%" 
-    THEN "Organizer is multicolored" 
-ELSE IF $SP-22967$ LIKE "%gray%" 
-AND $SP-18549$ IS NOT NULL 
-    THEN "Constructed with "_$SP-18549$_" material in a gray finish to match any workspace" 
-ELSE IF $SP-22967$ IS NOT NULL 
-AND $SP-18549$ IS NOT NULL 
-    THEN "Constructed with "_$SP-18549$_" material in a "_$SP-22967$_" finish to match any workspace" 
-ELSE IF $SP-22967$ LIKE "%gray%" 
-    THEN "Gray color" 
-ELSE IF $SP-22967$ LIKE "%gray%" 
-AND $SP-18586$ NOT LIKE "sets" 
-    THEN "Gray color" 
-ELSE IF $SP-22967$ IS NOT NULL AND $SP-18586$ IS NOT NULL
-    THEN $SP-22967$_" "_$SP-18586$
-ELSE IF $SP-22967$ IS NOT NULL  
-    THEN $SP-22967$_" construction" 
+--[Bullet 2] USB flash drive design, color family& USB flash drive material 
+
+--    $SP-22140$ - Design
+--    $SP-22967$ - Color
+--    $SP-14924$ - Material
+
+    --All three is not null and colors aren't assorted
+    IF $SP-22140$ IS NOT NULL
+        AND $SP-22967$ NOT LIKE "Assorted" 
+        AND $SP-14924$ IS NOT NULL 
+        THEN $SP-22140$_" designed "_$SP-22967$_" flash drive is made of "_$SP-14924$
+
+    --All three is not null and colors are assorted
+    ELSE IF $SP-22140$ IS NOT NULL
+        AND $SP-22967$ LIKE "Assorted" 
+        AND $SP-14924$ IS NOT NULL 
+        THEN $SP-22140$_" designed flash drives in "_$SP-22967$_" colors are made of "_$SP-14924$
+
+    --EMPTY MATERIAL
+
+    --Swivel design
+    --The drive has a capless design with a rotating case to protect the drive and its contents (https://www.staples.com/lexar-32gb-2-0-usb-drive-teal-ljdtt32gamodt/product_SS7923457)
+    ELSE IF $SP-22140$ LIKE "Swivel" 
+    AND $SP-22967$ LIKE "Assorted" 
+        THEN "Flash drives in assorted colors have a capless design with a rotating case" 
+    ELSE IF $SP-22140$ LIKE "Swivel" 
+    AND $SP-22967$ IS NOT NULL
+        THEN "Flash drive in "_$SP-22967$_" color has a capless design with a rotating case" 
+    ELSE IF $SP-22140$ LIKE "Swivel" 
+        THEN "Flash drive has a capless design with a rotating case to protect the drive and its contents" 
+
+    --Black color with retractable design for enhanced portability (https://www.staples.com/SanDisk-Ultra-Dual-USB-3-0-Flash-Drive/product_SS4150993)
+    ELSE IF $SP-22967$ LIKE "Assorted" 
+       THEN $SP-22140$_" flash drive in assorted colors" 
+    ELSE IF $SP-22967$ IS NOT NULL 
+        THEN $SP-22967$_" "_$SP-22140$_" flash drive" 
+
+    --EMPTY COLOR
+
+    ELSE IF $SP-14924$ IS NOT NULL
+        THEN $SP-22140$_" designed flash drive is made of "_$SP-14924$
+
+    ELSE "Flash drive has "_$SP-22140$_" design";
+
+--[Bullet 3] USB flash drive interface
+
+    --USB 2.0 interface is compatible with various USB-ready devices (https://www.staples.com/Gigastone-8GB-USB-2-0-Black-and-Silver/product_2721783)
+    IF $SP-18335$ LIKE "USB 2.0" 
+        THEN "USB 2.0 interface is compatible with various USB-ready devices" 
+
+    --USB 3.0 drive makes transporting and sharing files simple and convenient (https://www.staples.com/verbatim-32gb-pinstripe-usb-3-0-flash-drive-blue-red-2pk-70056/product_24337384) 
+    ELSE IF $SP-18335$ LIKE "USB 3.0" 
+        THEN "USB 3.0 interface makes transporting and sharing files simple and convenient" 
+
+    --USB 3.1 interface enables blazing-fast data transferring ability (https://www.staples.com/SanDisk-Extreme-PRO-USB-3-1-Solid-State-Flash-Drive-SDCZ880-256G-A46/product_IM14U1074)
+    ELSE IF A[2448].Value LIKE "USB 3.1" 
+        THEN "USB 3.1 interface enables blazing-fast data transferring ability" 
+
+    --USB Type-C flash drive provides a seamless way to move content between your Type-C devices (https://www.staples.com/lexar-jumpdrive-32gb-c20c-usb-type-c-flash-drive/product_24319519)
+    ELSE IF $SP-18335$ LIKE "Type C" 
+        THEN "USB Type-C flash drive provides a seamless way to move content between your Type-C devices" 
+
+    --USB 3.0 and micro-USB connectors interface with multiple devices for ease of use (https://www.staples.com/SanDisk-Ultra-Dual-32GB-130MB-s-USB-3-0-Flash-Drive-SDDD2-032G-A46/product_1623787)
+    ELSE IF A[2448].Value LIKE "%/ micro USB" 
+        THEN A[2448].Value.Split("/").First()
+            _" and micro-USB connectors interface with multiple devices for ease of use" 
+
+    --Dual USB 3.0 and Apple Lightning flash drive (https://www.staples.com/Verbatim-32GB-iStore-n-Go-Dual-USB-3-0-Flash-Drive-for-Apple-Lightning-Devices/product_2290456)    
+    ELSE IF A[2448].Value LIKE "%/ Apple Lightning" 
+    AND A[2448].Value NOT LIKE "%micro USB%" 
+        THEN "Dual " 
+            _A[2448].Value.Split("/").First()
+            _" and Apple Lightning flash drive" 
 ELSE "@@";
 
---Dimensions in Inches: Height x Width x Depth    
-IF A[1488].Value IS NOT NULL
-AND $SP-20654$ IS NOT NULL
-    THEN "Dimensions: ##"_$SP-20654$_"""H x "_$SP-21044$_"""Dia." 
-ELSE IF $SP-20654$ IS NOT NULL
-AND $SP-21044$ IS NOT NULL
-AND $SP-20657$ IS NOT NULL
-    THEN "Dimensions: ##"_$SP-20654$_"""H x "_$SP-21044$_"""W x "_$SP-20657$_"""D" 
+--[Bullet 4] Maximum read & write speed (Mb per seconds)
+
+    --10 Mbps read speed and 3 Mbps write speed for quick data access and transfer (https://www.staples.com/Gigastone-8GB-USB-2-0-Black-and-Silver/product_2721783)
+    IF $SP-22260$ < 45
+    AND $SP-22261$ IS NOT NULL
+        THEN $SP-22260$
+            _"MB/s read speed and " 
+            _$SP-22261$
+            _"MB/s write speed for quick data access and transfer" 
+
+    --Up to 185MB/s read and 135MB/s write speeds provide swift performance (https://www.staples.com/PNY-Turbo-USB-3-0-Flash-Drive-Silver-Black/product_SS2196523)
+    ELSE IF $SP-22260$ IS NOT NULL
+    AND $SP-22261$ IS NOT NULL
+        THEN "Up to "_$SP-22260$
+            _"MB/s read and " 
+            _$SP-22261$
+            _"MB/s write speeds provide swift performance" 
+
+    ELSE IF $SP-22260$ < 45
+        THEN $SP-22260$
+             _"MB/s read speed for quick data access and transfer" 
+    ELSE IF $SP-22260$ IS NOT NULL
+        THEN "Up to "_$SP-22260$
+             _"MB/s read speed provides swift performance" 
+
+    ELSE IF $SP-22261$ < 45
+        THEN $SP-22260$
+             _"MB/s write speed for quick data access and transfer" 
+    ELSE IF $SP-22261$ IS NOT NULL
+        THEN "Up to "_$SP-22260$
+             _"MB/s write speed provides swift performance" 
 ELSE "@@";
 
---Feature/Benefit (Capacity as in Letter Size, 7-compartment tray, etc.) Use multiple bullets as necessary    
---Non-slip rubber feet reduce movement and protect your work surface from scratches and scuffs (https://www.staples.com/product_1587549)
---Desk Organizer provides an assortment of seven compartments that can easy store all your office supplies. !!!!!!!!!!!!
-IF A[6289].Value NOT LIKE "1" 
-AND A[6289].Value IS NOT NULL
-    THEN "Desk Organizer provides "_A[6289].Value_" compartments, which can easily store all your supplies" 
-ELSE IF A[6546].Value NOT LIKE "1" 
-AND A[6546].Value IS NOT NULL
-    THEN "Desk Organizer provides "_A[6546].Value_" compartments, which can easily store all your supplies" 
+--[Bullet 5] Compatible With
+
+    --Compatible with Windows ME/2000/XP/Vista/7/8/10, Mac OS 9.0 or later, Linux kernel V2.4 or later (https://www.staples.com/Gigastone-8GB-USB-2-0-Black-and-Silver/product_2721783)
+
+IF A[429].Values IS NOT NULL AND A[429].Values.Count >2 THEN
+         "Compatible with: "_          
+         A[429].Values
+         .IfLike("%Windows%", "PC")
+         .IfLike("%MacOS%", "Mac")
+         .IfLike("%Linux%", "Linux")
+         .IfLike("%Android%", "Android")
+         .IfLike("%Symbian%", "Symbian")
+         .Distinct
+         .FlattenWithAnd()
+         .Prefix("##").Replace(" "," ##").Replace("##and ", ", and ")   
+
+ELSE IF A[429].Values IS NOT NULL THEN
+         "Compatible with: "_          
+         A[429].Values
+         .IfLike("%Windows%", "PC")
+         .IfLike("%MacOS%", "Mac")
+         .IfLike("%Linux%", "Linux")
+         .IfLike("%Android%", "Android")
+         .IfLike("%Symbian%", "Symbian")
+         .Distinct
+         .FlattenWithAnd()
+         .Prefix("##").Replace(" "," ##")    
+
+ ELSE IF A[603].Values IS NOT NULL THEN
+    "Compatible with: ##"_A[603].Values.FlattenWithAnd().Replace(" "," ##")
+
+ELSE IF $SP-382$ IS NOT NULL
+        THEN "Compatible with: " 
+            _$SP-382$
 ELSE "@@";
 
-IF A[6767].Value IS NOT NULL
-OR A[6294].Where("%Non-slip%").Values IS NOT NULL
-OR A[5945].Where("%Non-slip%").Values IS NOT NULL
-    THEN "Non-slip rubber feet reduce movement and protect your work surface from scratches and scuffs" 
+--[Bullet 6] Encryption
+    --It provides 256-bit AES encryption to protect your data from unauthorized access (https://www.staples.com/SanDisk-Ultra-Flair-64GB-150-Mbps-Read-USB-3-0-Flash-Drive-Silver-SDCZ73-064G-A46/product_IM12R5635)
+    IF A[1997].Where("%-bit AES%").Values IS NOT NULL
+        THEN A[1997].Where("%-bit AES%").Values
+            _" encryption protects your data from unauthorized access" 
 ELSE "@@";
 
-IF A[6294].Where("%removable divider%").Values IS NOT NULL
-    THEN "Removable divider panel for in-drawer organization" 
+    --Crypto-parameters protected with SHA-256 hashing (https://www.staples.com/Apricorn-Aegis-Secure-Key-3-0-30GB-195-162-Mbps-SuperSpeed-USB-3-0-Flash-Drive-Black-ASK3-30GB/product_IM1YB4286)         
+    IF A[1997].Where("%SHA%").Values IS NOT NULL
+        THEN "Crypto parameters: protected with SHA-" 
+            _A[1997].Where("%SHA%").Values.First().ExtractDecimals()
+            _" hashing" 
 ELSE "@@";
 
-IF A[6294].Where("%stackable%").Values IS NOT NULL
-AND $SP-18586$ Like "Letter holder" 
-    THEN $SP-18586$_" is stackable for customized storage" 
-ELSE IF A[5936].Value IS NOT NULL
-AND $SP-18586$ Like "Letter holder" 
-    THEN $SP-18586$_" is stackable for customized storage" 
-ELSE IF A[5945].Where("%stackable%").Values IS NOT NULL
-AND $SP-18586$ Like "Letter holder" 
-    THEN $SP-18586$_" is stackable for customized storage" 
-ELSE IF A[6294].Where("%stackable%").Values IS NOT NULL
-AND $SP-18586$ IS NOT NULL
-    THEN $SP-18586$_" are stackable for customized storage" 
-ELSE IF A[5936].Value IS NOT NULL
-AND $SP-18586$ IS NOT NULL
-    THEN REF["SP-18586"].IfLike("Accessory Tray", "Accessory trays")_" are stackable for customized storage" 
-ELSE IF A[5945].Where("%stackable%").Values IS NOT NULL
-AND $SP-18586$ IS NOT NULL
-    THEN REF["SP-18586"].IfLike("Accessory Tray", "Accessory trays")_" are stackable for customized storage" 
+--[Bullet 7] Security features
+
+    --FIPS 140-2 Level 3 certified to meet the highest security and performance needs of government agencies, military, healthcare, financial services (https://www.staples.com/DataLocker-500GB-5-Gbps-External-Hard-Drive-Black-Silver-MXKB1B500G5001FIPS-E/product_IM11V4740)
+    IF A[1997].Where("FIPS 140-2 Level 3").Values IS NOT NULL
+        THEN 
+            "FIPS 140-2 Level ##3 certified to meet the highest security and performance" 
 ELSE "@@";
 
-IF A[5945].Where("%vertical%horizontal%").Values IS NOT NULL
-    THEN "Organizes your files on the desktop either vertically or horizontally" 
+    --Auto-lock on USB port removal or after predetermined period of inactivity (https://www.staples.com/Apricorn-Aegis-Secure-Key-3-0-480GB-195-Mbps-162-Mbps-USB-3-0-Flash-Drive-Black-ASK3-480GB/product_IM13E7250)
+    IF A[2909].Where("auto-locking").Values IS NOT NULL
+        THEN "Auto-lock on USB port removal or after predetermined period of inactivity" 
 ELSE "@@";
 
-IF COALESCE(A[374].Where("%tilt adjustment%").Values, A[6087].Where("%tilt%").Values) IS NOT NULL
-    THEN "Adjustable tilt customizes viewing angle" 
+    --SanDisk SecureAccess software allows you to create a password-protected folder on your drive to store your private data (https://www.staples.com/product_IM1QY5993)
+    IF A[344].Where("SanDisk SecureAccess").Values IS NOT NULL
+        THEN "SanDisk SecureAccess software allows you to create a password-protected folder on your drive to store your private data" 
+
+    --Password security software to protect sensitive data available for download (https://www.staples.com/Verbatim-Clip-It-8GB-USB-2-0-Flash-Drive-2-Pack-99156/product_1958211)
+   ELSE IF A[2909].Where("password protection").Values IS NOT NULL
+        THEN "Password security software to protect sensitive data" 
 ELSE "@@";
 
-IF COALESCE(A[374].Where("%adjustable height%").Values, A[6087].Where("%height-adjustable%").Values) IS NOT NULL
-    THEN "Adjustable height for comfortable viewing" 
+    --Featuring MerlinSafe encryption software (https://www.staples.com/product_2455155)
+    IF A[344].Where("MerlinSafe").Values IS NOT NULL
+        THEN "Featuring MerlinSafe encryption software" 
 ELSE "@@";
 
---Holds both A4 and letter size paper 
-IF A[181].Where("%letter%", "%legal%").Values.Count = 2
-    THEN "Holds both legal and letter-size paper" 
-ELSE IF A[181].Where("%a4%", "%letter%").Values.Count = 2
-    THEN "Holds both A4 and letter-size paper"    
-ELSE IF A[181].Where("%legal%", "%letter%").Values.Count = 2
-    THEN "Holds both A4 and legal-size paper"    
-ELSE IF A[5925].Where("%letter%", "%legal%").Values.Count = 2
-    THEN "Holds both legal and letter-size paper" 
-ELSE IF A[5925].Where("%a4%", "%letter%").Values.Count = 2
-    THEN "Holds both A4 and letter-size paper"    
-ELSE IF A[5925].Where("%legal%", "%letter%").Values.Count = 2
-    THEN "Holds both A4 and legal-size paper"    
-ELSE IF A[181].Where("%letter%").Values IS NOT NULL
-    THEN "Holds letter size-paper" 
-ELSE IF A[181].Where("%legal%").Values IS NOT NULL
-    THEN "Holds legal size-paper" 
-ELSE IF A[181].Where("%A4%").Values IS NOT NULL
-    THEN "Holds A4 size paper" 
-ELSE IF A[5925].Where("%letter%").Values IS NOT NULL
-    THEN "Holds letter-size paper" 
-ELSE IF A[5925].Where("%legal%").Values IS NOT NULL
-    THEN "Holds legal-size paper" 
-ELSE IF A[5925].Where("%A4%").Values IS NOT NULL
-    THEN "Holds A4 size paper" 
+    --The drive comes with EncryptStick Lite software (https://www.staples.com/product_SS4829038)
+    IF A[344].Where("EncryptStick Lite").Values IS NOT NULL
+        THEN "Flash drive comes with ##EncryptStick ##Lite ##Software" 
 ELSE "@@";
 
-IF A[5945].Where("%wall%mount%").Values IS NOT NULL
-    THEN "Unit can be wall-mounted to save space" 
-ELSE "@@";
+--Additional Bullet (if relevant) (Key Loop)
 
---Use for additional product and/or manufacturer information relevant to the customer buying decision    
-IF A[6294].Where("phone holder").Values IS NOT NULL
-    THEN "Angled platform holds phone at just the right degree for quick and easy dialing and picking up";
+    --The included key loop easily attaches to key chains, so important files are never out of reach (https://www.staples.com/product_2503510)
+    IF A[2909].Where("key ring loop").Values IS NOT NULL
+        THEN "The included key loop easily attaches to key chains, so important files are never out of reach";
 
---Use for additional product and/or manufacturer information relevant to the customer buying decision    
+--Additional Bullet (if relevant) (LED light)
 
---Use for additional product and/or manufacturer information relevant to the customer buying decision    
+    --LED activity light that blinks during file transfer, so you know when the job is done (https://www.staples.com/lexar-jumpdrive-twist-turn-16gb-5-pack/product_24323499)
+    IF A[2909].Where("LED access indicator").Values IS NOT NULL
+        THEN "LED activity light that blinks during file transfer, so you know when the job is done";
 
---Use for additional product and/or manufacturer information relevant to the customer buying decision    
+--Additional Bullet (if relevant) (Opertaing temperature)
 
---Use for additional product and/or manufacturer information relevant to the customer buying decision
+    --Temperature: 0 to 45 deg C (operating) (https://www.staples.com/product_IM12R5634)
+IF A[358].UnitUSM LIKE "%F" 
+    AND A[359].UnitUSM LIKE "%F" 
+        THEN "Temperature: " 
+             _A[358].ValueUSM
+             _" to " 
+             _A[359].ValueUSM
+             _" degrees F (operating)";
 
---Use for additional product and/or manufacturer information relevant to the customer buying decision    
+--[Bullet 8] Languages Supported
+--[Last Bullet] Warranty
 
---Use for additional product and/or manufacturer information relevant to the customer buying decision
-
---Warranty    
- IF A[3574].Value IS NOT NULL 
-    THEN A[3574].Value
-    .Replace(" years", "-year")
-            .Replace("-years", "-year")
-            .Replace(" year","-year")
-            .Replace(" days","-day")            
-            .Replace(" months", "-month")
-            .Erase("limited")
-            .Erase("manufacturer")
-            .Replace("warranty", "")
-            .Postfix(" manufacturer limited warranty")
-            .ToUpperFirstChar()
+IF A[4850].Value LIKE "United States%year%" THEN A[4850].Value.ExtractDecimals().Max().Postfix("-year manufacturer limited warranty")
+ELSE IF A[4850].Value LIKE "United States%month%" THEN A[4850].Value.ExtractDecimals().Max().Postfix("-month manufacturer limited warranty")
+ELSE IF A[430].Value IS NOT NULL THEN 
+            A[430].Value
+                .Replace("limited lifetime", "Lifetime")
+                .Replace(" year","-year")
+                .Replace(" days","-day")
+                .Replace(" years", "-year")
+                .Replace("-years", "-year")
+                .Replace(" months", "-month")
+                .Erase("limited")
+                .Erase("manufacturer")
+                .Replace("warranty", "manufacturer limited warranty")
+                .ToUpperFirstChar()
 ELSE "@@";

@@ -1,15 +1,10 @@
-!(R("SP-24688") is null) || !R("SP-24688").Text.Equals("<NULL>") ? R("SP-24688").Text : 
-    !(R("cnet_common_SP-24688") is null) || !R("cnet_common_SP-24688").Text.Equals("<NULL>") ? R("cnet_common_SP-24688").Text : "";
 
 
 
-!(R("SP-22288") is null) || !R("SP-22288").Text.Equals("<NULL>") ? Coalesce(R("SP-22288").Text) : 
-    !(R("cnet_common_SP-22288") is null) || !R("cnet_common_SP-22288").Text.Equals("<NULL>") ? Coalesce(R("cnet_common_SP-22288").Text) : Coalesce("");
+R("SP-382").HasValue() ? R("SP-382").Text : R("cnet_common_SP-382").HasValue() ? R("cnet_common_SP-382").Text : "";
 
-R("SP-22643").HasValue() ? R("SP-22643").Text : R("cnet_common_SP-22643").HasValue() ? R("cnet_common_SP-22643").Text : "";
-
-R("SP-22643").HasValue() ? R("SP-22643").Replace("<NULL>", "").Text :
-		R("cnet_common_SP-22643").HasValue() ? R("cnet_common_SP-22643").Replace("<NULL>", "").Text : "";
+R("SP-382").HasValue() ? R("SP-382").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-382").HasValue() ? R("cnet_common_SP-382").Replace("<NULL>", "").Text : "";
 
         @"(?<=d) (?=(yd(s)|mm|cm|m|L|mL|gram|cup(s)|qt|MB/s)( |$||))",
         @"(?<=\d) (?=(yd\(s\)|mm|cm|m|L|mL|gram|cup\(s\)|qt|MB\/s)( |$|\|))",

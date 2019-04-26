@@ -1,10 +1,22 @@
-//§§548610392096142211 "USB Flash Drives" "Alex K."
+//§§ 548610392096142211 "USB Flash Drives" "Alex K."
 
 USBFlashDriveCapacityAndType();
 USBDlashDriveDesignColorMaterial();
 USBFlashDriveInterface();
 MaximumReadAndWriteSpeed();
 CompatibleWithOS();
+FlashDrivesEncryptionAES();
+FlashDrivesEncryptionSHA();
+SecurityFeatureFIPS();
+SecurityFeatureAutoLocking();
+SecurityFeatureSecureAccess();
+SecurityFeaturePasswordProtection();
+SecurityFeatureMerlinSafe();
+SecurityFeatureEncryptStickLite();
+AdditionalKeyRingLoop();
+AdditionalLEDAccessIndicator();
+AdditionalOpertaingTemperature();
+// Warranty
 
 // --[FEATURE #1]
 // --USB flash drive capacity & type
@@ -179,8 +191,8 @@ void CompatibleWithOS() {
     var result = "";
     var requiredOS = A[429];
     var compatibility = A[603]; //Deactiveted
-    var compWith = "SP-382";
-    Add(requiredOS.Values.Select(o => o.Value()).FlattenWithAnd());
+    var compWith = R("SP-382").HasValue() ? R("SP-382").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-382").HasValue() ? R("cnet_common_SP-382").Replace("<NULL>", "").Text : "";
     
     if (requiredOS.HasValue()) {
         var formatted = requiredOS.Values.Select(s => s.Value().ToString());
@@ -203,39 +215,140 @@ void CompatibleWithOS() {
 // --[FEATURE #6]
 // --Encryption
 
+void FlashDrivesEncryptionAES() {
+    var result = "";
+    var encryption = A[1997];
+    if (Coalesce(encryption).HasValue("%-bit AES%")) {
+        result = $"{encryption.Where("%-bit AES%").Select(o => o.Value()).FlattenWithAnd()} encryption protects your data from unauthorized access";
+    }
+    if(!String.IsNullOrEmpty(result)) {
+        Add($"FlashDrivesEncryptionAES⸮{result}");
+    }
+}
+
+void FlashDrivesEncryptionSHA() {
+    var result = "";
+    var encryption = A[1997];
+    if (Coalesce(encryption).HasValue("%SHA%")) {
+        result = $"Crypto parameters: protected with {encryption.Where("%SHA%").Select(o => o.Value()).FlattenWithAnd()} hashing";
+    }
+    if(!String.IsNullOrEmpty(result)) {
+        Add($"FlashDrivesEncryptionSHA⸮{result}");
+    }
+}
+
+
 // --[FEATURE #7]
 // --Security features
+void SecurityFeatureFIPS() {
+    var result = "";
+    var security = A[1997];
+    if (Coalesce(security).HasValue("FIPS 140-2 Level 3")) {
+        result = "FIPS 140-2 Level ##3 certified to meet the highest security and performance";
+    }
+    if(!String.IsNullOrEmpty(result)) {
+        Add($"SecurityFeatureFIPS⸮{result}");
+    }
+}
+
+void SecurityFeatureAutoLocking() {
+    var result = "";
+    var security = A[2909];
+    if (Coalesce(security).HasValue("auto-locking")) {
+        result = "Auto-lock on USB port removal or after predetermined period of inactivity";
+    }
+    if(!String.IsNullOrEmpty(result)) {
+        Add($"SecurityFeatureAutoLocking⸮{result}");
+    }
+}
+
+void SecurityFeatureSecureAccess() {
+    var result = "";
+    var security = A[344];
+    if (Coalesce(security).HasValue("SanDisk SecureAccess")) {
+        result = "SanDisk SecureAccess software allows you to create a password-protected folder on your drive to store your private data";
+    }
+    if(!String.IsNullOrEmpty(result)) {
+        Add($"SecurityFeatureSecureAccess⸮{result}");
+    }
+}
+
+void SecurityFeaturePasswordProtection() {
+    var result = "";
+    var security = A[2909];
+    if (Coalesce(security).HasValue("password protection")) {
+        result = "Password security software to protect sensitive data";
+    }
+    if(!String.IsNullOrEmpty(result)) {
+        Add($"SecurityFeaturePasswordProtection⸮{result}");
+    }
+}
+
+void SecurityFeatureMerlinSafe() {
+    var result = "";
+    var security = A[344];
+    if (Coalesce(security).HasValue("MerlinSafe")) {
+        result = "Featuring MerlinSafe encryption software";
+    }
+    if(!String.IsNullOrEmpty(result)) {
+        Add($"SecurityFeatureMerlinSafe⸮{result}");
+    }
+}
+
+void SecurityFeatureEncryptStickLite() {
+    var result = "";
+    var security = A[344];
+    if (Coalesce(security).HasValue("EncryptStick Lite")) {
+        result = "Flash drive comes with EncryptStick Lite Software";
+    }
+    if(!String.IsNullOrEmpty(result)) {
+        Add($"SecurityFeatureEncryptStickLite⸮{result}");
+    }
+}
 
 // --[FEATURE #8]
-// --
+// --Additional Key Loop
+void AdditionalKeyRingLoop() {
+    var result = "";
+    var features = A[2909];
+    if (Coalesce(features).HasValue("key ring loop")) {
+        result = "The included key loop easily attaches to key chains, so important files are never out of reach";
+    }
+    if(!String.IsNullOrEmpty(result)) {
+        Add($"AdditionalKeyRingLoop⸮{result}");
+    }
+}
+
 
 // --[FEATURE #9]
-// --
+// --Additional LED light
+
+void AdditionalLEDAccessIndicator() {
+    var result = "";
+    var features = A[2909];
+    if (Coalesce(features).HasValue("LED access indicator")) {
+        result = "LED activity light that blinks during file transfer, so you know when the job is done";
+    }
+    if(!String.IsNullOrEmpty(result)) {
+        Add($"AdditionalLEDAccessIndicator⸮{result}");
+    }
+}
 
 // --[FEATURE #10]
-// --
-
-// --[FEATURE #11]
-// --
+// --Additional Opertaing temperature
+void AdditionalOpertaingTemperature() {
+    var result = "";
+    var temp1 = A[358];
+    var temp2 = A[359];
+    if (temp1.HasValue() && temp2.HasValue()) {
+        result = $"Temperature: {temp1.FirstValueUsm()} to {temp2.FirstValueUsm()} degrees F (operating)";
+    }
+    if(!String.IsNullOrEmpty(result)) {
+        Add($"AdditionalOpertaingTemperature⸮{result}");
+    }
+}
 
 // --[FEATURE #12]
 // --Languages Supported	Warranty
 
-//§§548610392096142211 end of "USB Flash Drives"
-
-						
-https://www.staples.com/SanDisk-Ultra-Type-C-USB-3-1-Flash-Drive-16GB-Black-Silver-SDCZ450-016G-A46/product_IM17T4312
-USB Type C connector is completely reversible, there’s no wrong way to plug it in
-
-https://www.staples.com/SanDisk-Ultra-Dual-USB-Type-C-USB-3-1-Flash-Drive-32GB-Black-Gray-SDDDC2-032G-A46/product_IM18A5705
-Interface: USB type-C, USB 3.1
-
-//128-bit AES encryption software to protect your files
-https://www.staples.com/sandisk-ultra-usb-3-0-flash-drive-128gb-black-sdcz48-128g-a46/product_1568885?akamai-feo=off
-
-It provides 256-bit AES encryption to protect your data from unauthorized access
-https://www.staples.com/Lexar-S45-64GB-LJDS45-64GABNL/product_2071237?akamai-feo=off
-
-
-https://www.staples.com/SanDisk-iXpand-128GB-Lightning-USB-3-0-Flash-Drive-Silver-Black-SDIX30C-128G-AN6NE/product_IM17M9765
-Encryption: AES 128-bit
+//548610392096142211 end of "USB Flash Drives" §§

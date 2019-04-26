@@ -16,69 +16,79 @@ UniFlowSystem();
 LiquidInkSystem();
 // "Pen Type" "Bullet 1" 
 void PenType() {
-    var penType = "";
+    var result = "";
     var penTypeVal = R("SP-18609").HasValue() ? R("SP-18609").Replace("<NULL>", "").Text : R("cnet_common_SP-18609").HasValue() ? R("cnet_common_SP-18609").Replace("<NULL>", "").Text : "";
-    var penPackSize = R("SP-18666").HasValue() ? R("SP-18666").Replace("<NULL>", "").Text :    R("cnet_common_SP-18666").HasValue() ? R("cnet_common_SP-18666").Replace("<NULL>", "").Text : "";
-    if (!String.IsNullOrEmpty(penTypeVal) && !String.IsNullOrEmpty(penPackSize)) {
-        if (penTypeVal.ToLower().Contains("erasable") && penPackSize.Equals("1")) {
-            penType = ($"{penTypeVal} pen allows you to write, erase and rewrite with no wear-and-tear");
+    var penPackSize = R("SP-18666").HasValue() ? R("SP-18666").Replace("<NULL>", "").Text : R("cnet_common_SP-18666").HasValue() ? R("cnet_common_SP-18666").Replace("<NULL>", "").Text : "";
+    var isPluralPen = "pens";
+    var isAre = "are";
+    if (!String.IsNullOrEmpty(penTypeVal)) {
+
+        if (!String.IsNullOrEmpty(penPackSize) && penPackSize.Equals("1")) {
+            isPluralPen = "pen";
+            isAre = "is";
         }
-        else if (penTypeVal.ToLower().Equals("retractable gel") && penPackSize.Equals("1")) {
-            penType = ($"Retractable gel pen for everyday writing tasks");
+        if (penTypeVal.ToLower().Contains("erasable")) {
+            result = $"{penTypeVal.ToLower().ToUpperFirstChar()} {isPluralPen} allows you to write, erase and rewrite with no wear-and-tear";
         }
-        else if (penTypeVal.ToLower().Contains("retractable") && penPackSize.Equals("1")) {
-            penType = ($"{penTypeVal} pen is ready to write with just a click");
-        }
-        else if (penTypeVal.ToLower().Contains("ballpoint") && penPackSize.Equals("1")) {
-            penType = ($"{penTypeVal} pen for clear, consistent writing");
-        }
-        else if (penTypeVal.ToLower().Contains("ballpoint") && penPackSize.Equals("1")) {
-            penType = ($"{penTypeVal} pen for clear, consistent writing");
-        }
-        else if (penTypeVal.ToLower().Contains("fountain") && penPackSize.Equals("1")) {
-            penType = ($"The everyday {penTypeVal} pen for smooth, expressive writing");
-        }
-        else if (penTypeVal.ToLower().Contains("gel") && penPackSize.Equals("1")) {
-            penType = ($"{penTypeVal} pink pen for any task");
-        }
-        else if (penTypeVal.ToLower().Contains("erasable")) {
-            penType = ($"{penTypeVal} pens allow you to write, erase and rewrite with no wear-and-tear");
-        }
-        else if (penTypeVal.ToLower().Equals("retractable ballpoint")) {
-            penType = ($"Retractable ballpoint pens for ease of use");
+        else if (penTypeVal.ToLower().Equals("retractable gel") ) {
+            result = $"Retractable gel {isPluralPen} for everyday writing tasks";
         }
         else if (penTypeVal.ToLower().Contains("retractable")) {
-            penType = ($"{penTypeVal} pens are ready to write with just a click");
-        }
-        else if (penTypeVal.ToLower().Equals("felt")) {
-            penType = ($"Felt tip draws bold and expressive lines");
+            result = $"{penTypeVal.ToLower().ToUpperFirstChar()} {isPluralPen} {isAre} ready to write with just a click";
         }
         else if (penTypeVal.ToLower().Contains("ballpoint")) {
-            penType = ($"{penTypeVal} pens for clear, consistent writing");
+            result = $"{penTypeVal.ToLower().ToUpperFirstChar()} {isPluralPen} for clear, consistent writing";
+        }
+        else if (penTypeVal.ToLower().Contains("ballpoint")) {
+            result = $"{penTypeVal.ToLower().ToUpperFirstChar()} {isPluralPen} for clear, consistent writing";
         }
         else if (penTypeVal.ToLower().Contains("fountain")) {
-            penType = ($"The everyday {penTypeVal} pens for smooth, expressive writing");
-        }
-        else if (penTypeVal.ToLower().Contains("rollerball")) {
-            penType = ($"Rollerball design delivers a bold ink laydown");
+            result = $"The everyday {penTypeVal} {isPluralPen} for smooth, expressive writing";
         }
         else if (penTypeVal.ToLower().Contains("gel")) {
-            penType = ($"{penTypeVal} ink pens for any task");
+            result = $"{penTypeVal.ToLower().ToUpperFirstChar()} {isPluralPen} for any task";
+        }
+        else if (penTypeVal.ToLower().Contains("erasable")) {
+            result = $"{penTypeVal.ToLower().ToUpperFirstChar()} {isPluralPen} allow you to write, erase and rewrite with no wear-and-tear";
+        }
+        else if (penTypeVal.ToLower().Equals("retractable ballpoint")) {
+            result = $"Retractable ballpoint {isPluralPen} for ease of use";
+        }
+        else if (penTypeVal.ToLower().Contains("retractable")) {
+            result = $"{penTypeVal.ToLower().ToUpperFirstChar()} {isPluralPen} {isAre} ready to write with just a click";
+        }
+        else if (penTypeVal.ToLower().Equals("felt")) {
+            result = $"Felt tip draws bold and expressive lines";
+        }
+        else if (penTypeVal.ToLower().Contains("ballpoint")) {
+            result = $"{penTypeVal.ToLower().ToUpperFirstChar()} {isPluralPen} for clear, consistent writing";
+        }
+        else if (penTypeVal.ToLower().Contains("fountain")) {
+            result = $"The everyday {penTypeVal.ToLower()} {isPluralPen} for smooth, expressive writing";
+        }
+        else if (penTypeVal.ToLower().Contains("rollerball")) {
+            result = $"Rollerball design delivers a bold ink laydown";
+        }
+        else if (penTypeVal.ToLower().Contains("gel")) {
+            result = $"{penTypeVal.ToLower().ToUpperFirstChar()} ink {isPluralPen} for any task";
         }
         else if (penTypeVal.ToLower().Contains("counter top")) {
-            penType = ($"Counter top pen is always handy for your customers");
+            result = $"Counter top {isPluralPen} {isAre} always handy for your customers";
+        }
+        else if (!String.IsNullOrEmpty(penTypeVal)) {
+            result = $"{penTypeVal.ToLower().ToUpperFirstChar()} {isPluralPen}";
         }
     }
-    if (!String.IsNullOrEmpty(penType)) { 
-        Add($"PenType⸮{penType}"); 
+    if (!String.IsNullOrEmpty(result)) { 
+        Add($"PenType⸮{result}"); 
     }
 }
 
 // "Bullet 2"  "Pen Ink True color" 
 void PenInkTrueColor() {
     var penInkTrueColor = "";
-    var trueColor = !(R("SP-22967") is null) || !R("SP-22967").Text.Equals("<NULL>") ? R("SP-22967").Text : 
-    !(R("cnet_common_SP-22967") is null) || !R("cnet_common_SP-22967").Text.Equals("<NULL>") ? R("cnet_common_SP-22967").Text : "";
+    var trueColor = R("SP-22967").HasValue() ? R("SP-22967").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-22967").HasValue() ? R("cnet_common_SP-22967").Replace("<NULL>", "").Text : "";
 
     if (!String.IsNullOrEmpty(trueColor)) {
         switch (trueColor) {
@@ -114,84 +124,90 @@ void PenInkTrueColor() {
 
 //"Bullet 3" "Pen Point Type & Size" 
 void PenPointTypeAndSize() {
-    var penPointTypeAndSize = "";
-    var penPointType = R("SP-18608").Text;
-    var penPointSize = R("SP-16585").Text;
+    var result = "";
+    var penPointType = R("SP-18608").HasValue() ? R("SP-18608").Replace("<NULL>", "").Text :
+        R("cnet_common_SP-18608").HasValue() ? R("cnet_common_SP-18608").Replace("<NULL>", "").Text : "";
+
+    var penPointSize = R("SP-16585").HasValue() ? R("SP-16585").Replace("<NULL>", "").Text :
+        R("cnet_common_SP-16585").HasValue() ? R("cnet_common_SP-16585").Replace("<NULL>", "").Text : "";
+
     var pointTypeIsNotNull = !String.IsNullOrEmpty(penPointType);
     var pointSizeIsNotNull = !String.IsNullOrEmpty(penPointSize);
 
     if (pointTypeIsNotNull 
         && penPointType.ToLower().Equals("micro point")
         && pointSizeIsNotNull) {
-            penPointTypeAndSize = $"{penPointSize} microo-point tip delivers crisp, precise lines";
+            result = $"{penPointSize} microo-point tip delivers crisp, precise lines";
     }
         else if (pointTypeIsNotNull
         && penPointType.ToLower().Contains("ultra micro")
         && pointSizeIsNotNull) {
-            penPointTypeAndSize = $"{penPointType} {penPointSize} is highly precise for crisp writing";
+            result = $"{penPointType} {penPointSize} is highly precise for crisp writing";
     }
         else if (pointTypeIsNotNull
         && penPointType.ToLower().Contains("micro")
         && pointSizeIsNotNull) {
-            penPointTypeAndSize = $"{penPointSize} {penPointType} tip delivers crisp, precise line";
+            result = $"{penPointSize} {penPointType} tip delivers crisp, precise line";
     }
     else if (pointTypeIsNotNull
         && penPointType.ToLower().Contains("micro")) {
-            penPointTypeAndSize = "Micro-point tip delivers crisp, precise lines";
+            result = "Micro-point tip delivers crisp, precise lines";
     }
     else if (pointTypeIsNotNull
         && (
             penPointType.ToLower().Contains("medium") 
             || penPointType.ToLower().Contains("standard"))
         ) {
-            penPointTypeAndSize = $"{penPointType} tip";
+            result = $"{penPointType} tip";
     }
     else if (pointTypeIsNotNull
         && penPointType.ToLower().Contains("fine")
         && pointSizeIsNotNull) {
-            var tmp = penPointType.ToLower().Equals("ultra fine") ? "Ultra-fine" : penPointType;
-            penPointTypeAndSize = $"{tmp} {penPointSize} tip ensures crisp lines with every use";
+            var tmp = penPointType.ToLower().Equals("ultra fine") ? "Ultra-fine" : penPointType.ToLower().ToUpperFirstChar();
+            result = $"{tmp} {penPointSize.ToLower().ToUpperFirstChar()} tip ensures crisp lines with every use";
     }
         else if (pointTypeIsNotNull
         && penPointType.ToLower().Contains("broad")
         && pointSizeIsNotNull) {
-            penPointTypeAndSize = $"{penPointType} {penPointSize} point provides easy readability";
+            result = $"{penPointType.ToLower().ToUpperFirstChar()} {penPointSize} point provides easy readability";
     }
         else if (pointTypeIsNotNull
         && penPointType.ToLower().Contains("broad")) {
-            penPointTypeAndSize = $"{penPointType} point provides easy readability";
+            result = $"{penPointType.ToLower().ToUpperFirstChar()} point provides easy readability";
     }
     else if (pointTypeIsNotNull
         && penPointType.ToLower().Contains("bold")
         && pointSizeIsNotNull) {
-            penPointTypeAndSize = $"{penPointSize} {penPointType} point provides easy readability";
+            result = $"{penPointSize} {penPointType.ToLower()} point provides easy readability";
     }
         else if (pointTypeIsNotNull
         && penPointType.ToLower().Contains("tip")
         && pointSizeIsNotNull) {
-            penPointTypeAndSize = $"{penPointSize} {penPointType} delivers crisp, precise lines";
+            result = $"{penPointSize} {penPointType.ToLower()} delivers crisp, precise lines";
     }
     else if (pointTypeIsNotNull
         && penPointType.ToLower().Contains("tip")) {
-            penPointTypeAndSize = $"{penPointType} delivers crisp, precise lines";
+            result = $"{penPointType.ToLower().ToUpperFirstChar()} delivers crisp, precise lines";
     }
     else if (pointTypeIsNotNull && pointSizeIsNotNull) {
-        penPointTypeAndSize = $"{penPointSize} {penPointType} tip delivers crisp, precise lines";
+        result = $"{penPointSize} {penPointType.ToLower()} tip delivers crisp, precise lines";
     }
     else if (pointTypeIsNotNull || pointSizeIsNotNull) {
         var tmp = pointTypeIsNotNull ? penPointType : penPointSize;
-        penPointTypeAndSize =$"{tmp} tip delivers crisp, precise lines";
+        result =$"{tmp.ToLower().ToUpperFirstChar()} tip delivers crisp, precise lines";
     }
-    if (!String.IsNullOrEmpty(penPointTypeAndSize)) {
-        Add($"PenPointTypeAndSize⸮{penPointTypeAndSize}");
+    if (!String.IsNullOrEmpty(result)) {
+        Add($"PenPointTypeAndSize⸮{result}");
     }
 }
 
     // "Bullet 4" "Pen Barrel Color & Barrel Material" 
 void PenBarrelColorAndBarrelMaterial () {
     var penBarrelColorAndBarrelMaterial = "";
-    var penBarrelColor = R("SP-18606").Text;
-    var barrelMaterial = R("SP-4882").Text;
+    var penBarrelColor = R("SP-18606").HasValue() ? R("SP-18606").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-18606").HasValue() ? R("cnet_common_SP-18606").Replace("<NULL>", "").Text : "";
+    var barrelMaterial = R("SP-4882").HasValue() ? R("SP-4882").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-4882").HasValue() ? R("cnet_common_SP-4882").Replace("<NULL>", "").Text : "";
     var colorIsNotNull = !String.IsNullOrEmpty(penBarrelColor);
     var materialIsNotNull = !String.IsNullOrEmpty(barrelMaterial);
     if (colorIsNotNull && (penBarrelColor.ToLower().Contains("translucent")
@@ -215,21 +231,24 @@ void PenBarrelColorAndBarrelMaterial () {
  // Bullet 5 "Pack size" (if more then one)
 
 void PenGrip() {
-    var penGrip = R("SP-350752").Text;
+    var penGrip = R("SP-350752").HasValue() ? R("SP-350752").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-350752").HasValue() ? R("cnet_common_SP-350752").Replace("<NULL>", "").Text : "";
     if (!String.IsNullOrEmpty(penGrip) && penGrip.ToLower().Equals("yes")) {
         Add("AdditionalPenGrip⸮Comfort grip for superior control");
     }
 }
 
 void PenPocketClip() {
-    var penClip = R("SP-4878").Text;
+    var penClip = R("SP-4878").HasValue() ? R("SP-4878").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-4878").HasValue() ? R("cnet_common_SP-4878").Replace("<NULL>", "").Text : "";
     if (!String.IsNullOrEmpty(penClip) && penClip.ToLower().Equals("yes")) {
         Add("AdditionalPenClip⸮Features pocket clip for convenient carrying");
     }
 }
 
 void PenRefillable() {
-    var penRefillable = R("SP-4878").Text;
+    var penRefillable = R("SP-12520").HasValue() ? R("SP-12520").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-12520").HasValue() ? R("cnet_common_SP-12520").Replace("<NULL>", "").Text : "";
     if (!String.IsNullOrEmpty(penRefillable) && penRefillable.ToLower().Equals("yes")) {
         Add("AdditionalPenRefillable⸮Refillable ink allows pens to be reused instead of being replaced to save money");
     }
@@ -237,7 +256,8 @@ void PenRefillable() {
 
 void BarrelShape() {
     var resBarrelShape = "";
-    var barrelShape = R("SP-350746").Text;
+    var barrelShape = R("SP-350746").HasValue() ? R("SP-350746").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-350746").HasValue() ? R("cnet_common_SP-350746").Replace("<NULL>", "").Text : "";
     if (!String.IsNullOrEmpty(barrelShape) && barrelShape.ToLower().Equals("hexagonal")) {
         resBarrelShape = "Features roll-proof, hexagon-shaped barrel, so it would not roll off surfaces";
     }
@@ -260,8 +280,9 @@ void BarrelShape() {
 
 void InkLevelViewingWindow() {
     var window =  Coalesce(A[5996].HasValue("ink level viewing window"));  
-    var barrelColor = Coalesce(R("SP-18606").Text); 
-    var clearColor = barrelColor.ToLower().In("%translucent%", "%transparent%");
+    var barrelColor = R("SP-18606").HasValue() ? R("SP-18606").Replace("<NULL>", "").Text :
+		R("cnet_common_SP-18606").HasValue() ? R("cnet_common_SP-18606").Replace("<NULL>", "").Text : "";
+    var clearColor = Coalesce(barrelColor).ToLower().In("%translucent%", "%transparent%");
     if (window) {
         var tmp = clearColor ? "Barrel windows reveal the amount of remaining ink" : "Visible ink supply, so you never run out unexpectedly";
         Add($"AdditionalPenInkLevelViewingWindow⸮{tmp}");
@@ -296,4 +317,4 @@ void LiquidInkSystem() {
     }
 }
 
-//§§1114953110001 end of  "Pens" 
+//1114953110001 end of  "Pens" §§

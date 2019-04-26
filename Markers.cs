@@ -49,7 +49,7 @@ void MarkerTypeAndUse() {
                     result = "These paint markers are perfect for adding a bold touch of color to any project";
                     break;
                 case "permanent":
-                    result = "Permanent ink formula is designed to last";
+                    result = "Make long-lasting signs and write notes with these permanent markers";
                     break;
                 case "sketch":
                     result = "Sketch markers are used by manga artists, designers, and architects worldwide";
@@ -80,16 +80,14 @@ void MarkerTypeAndUse() {
 // "Bullet 2" "Marker ink color";
 void MarkerInkColor() {
     var result = "";
-    var trueColor = R("SP-23267").HasValue() ? R("SP-23267").Replace("<NULL>", "").Text :
-		R("cnet_common_SP-23267").HasValue() ? R("cnet_common_SP-23267").Replace("<NULL>", "").Text : "";
-
-    if (!String.IsNullOrEmpty(trueColor) && trueColor.ToLower().Equals("assorted")) {
-        result = "Comes in assorted colors";
+    var trueColor = A[5977];
+    if (Coalesce(trueColor).HasValue("%assorted%")) {
+        result = $"Comes in {trueColor.Where("%assorted%").First().Value()}";
     }
-    else if (!String.IsNullOrEmpty(trueColor) && !trueColor.ToLower().Equals("<null>")) {
-        result = $"Ink comes in {trueColor.ToLower()}";
+    else if (trueColor.HasValue()) {
+        result = $"Comes in {trueColor.Values.Flatten(", ")}";
     }
-    if (!String.IsNullOrEmpty(trueColor)) {
+    if (!String.IsNullOrEmpty(result)) {
         Add($"MarkerInkColor⸮{result}");
     }
 }
