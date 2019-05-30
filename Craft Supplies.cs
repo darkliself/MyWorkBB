@@ -5,7 +5,11 @@ CraftSuppliesDesign();
 // Dimentions
 // pack size
 PackageContentCraftSupplies();
-//
+// Acid Free
+CraftSuppliesArchivalSafe();
+CraftSuppliesRubberBase();
+CraftSuppliesSelfAdhesive();
+// GlueGlueSticksNonToxic
 
 // --[FEATURE #1]
 // --Type of Craft Supply and Primary Use
@@ -73,19 +77,34 @@ void PackageContentCraftSupplies() {
 }
 
 // --[FEATURE #7]
-// --Additional
+// --Additional Acid Free
 
 // --[FEATURE #8]
-// --
+// Additional Archival Safe 
+void CraftSuppliesArchivalSafe() { 
+    if (A[6189].HasValue("archival safe")) {
+        Add($"CraftSuppliesArchivalSafe⸮Archival-safe for long-lasting protection");
+    }
+}
 
 // --[FEATURE #9]
-// --
+// Additional Rubber Base
+void CraftSuppliesRubberBase() { 
+    if (A[6189].HasValue("rubber base") || A[6189].HasValue("rubber feet")) {
+        Add($"CraftSuppliesRubberBase⸮Rubber base keeps punches steady on your tabletop");
+    }
+}
 
 // --[FEATURE #10]
-// --
+// Additional Self Adhesive 
+void CraftSuppliesSelfAdhesive() { 
+    if (A[6189].HasValue("self-adhesive")) {
+        Add($"CraftSuppliesSelfAdhesive⸮Self-adhesive for quick application");
+    }
+}
 
 // --[FEATURE #11]
-// --
+// --Additional GlueGlueSticksNonToxic
 
 // --[FEATURE #12]
 // --
