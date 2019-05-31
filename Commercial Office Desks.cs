@@ -19,34 +19,34 @@ AdditionalLockCore();
 void CommercialOfficeDeskTypeAndUse() {
     var result = "";
     //Workstations|Corner|Executive|U-Shaped|Returns|Hutch|Double Pedestal|Single Pedestal|File Drawer Pedestal|L-Shaped|Straight Base|Bow Front|Table Desk
-    var commercialOfficeDeskType = GetReference("SP-18204");
+    var commercialOfficeDeskType = REQ.GetVariable("SP-18204").HasValue() ? REQ.GetVariable("SP-18204") : R("SP-18204").HasValue() ? R("SP-18204") : R("cnet_common_SP-18204");
     
     if (!String.IsNullOrEmpty(commercialOfficeDeskType)) {
-        if (commercialOfficeDeskType.ToLower().Equals("bow front")) {
-            result = "The bow front desk expands your workspace";
+        if (commercialOfficeDeskType.HasValue("bow front")) {
+            Add($"CommercialOfficeDeskTypeAndUse⸮The bow front desk expands your workspace");
         }
-        else if (commercialOfficeDeskType.ToLower().Equals("corner")) {
-            result = "Corner desk provides plenty of room to work but fits in compact office spaces";
+        else if (commercialOfficeDeskType.HasValue("corner")) {
+            Add($"CommercialOfficeDeskTypeAndUse⸮Corner desk provides plenty of room to work but fits in compact office spaces");
         }
-        else if (commercialOfficeDeskType.ToLower().Equals("double pedestal") 
-        || commercialOfficeDeskType.ToLower().Equals("single pedestal")) {
-            result = $"{commercialOfficeDeskType.ToLower().ToUpperFirstChar()} is desk ideal for multiple office solutions";
+        else if (commercialOfficeDeskType.HasValue("double pedestal") 
+        || commercialOfficeDeskType.HasValue("single pedestal")) {
+            Add($"CommercialOfficeDeskTypeAndUse⸮{commercialOfficeDeskType.ToLower().ToUpperFirstChar()} is desk ideal for multiple office solutions");
         }
-        else if (commercialOfficeDeskType.ToLower().Equals("hutch")) {
-            result = "Add more storage and organization to your workspace with the hutch";
+        else if (commercialOfficeDeskType.HasValue("hutch")) {
+            Add($"CommercialOfficeDeskTypeAndUse⸮Add more storage and organization to your workspace with the hutch");
         }
-        else if (commercialOfficeDeskType.ToLower().Equals("l-shaped")) {
-            result = "An 'L' configuration desk adds ample work space to your office";
+        else if (commercialOfficeDeskType.HasValue("l-shaped")) {
+            Add($"CommercialOfficeDeskTypeAndUse⸮An 'L' configuration desk adds ample work space to your office");
         }
-        else if (commercialOfficeDeskType.ToLower().Equals("U-shaped")) {
-            result = "An 'U' configuration desk adds ample work space to your office";
+        else if (commercialOfficeDeskType.HasValue("U-shaped")) {
+           Add($"CommercialOfficeDeskTypeAndUse⸮An 'U' configuration desk adds ample work space to your office");
         }
-        else if (commercialOfficeDeskType.ToLower().Equals("workstations")
-        || commercialOfficeDeskType.ToLower().Equals("returns")) {
-            result = $"{commercialOfficeDeskType.ToLower().ToUpperFirstChar()} configuration desks add ample work space to your office";
+        else if (commercialOfficeDeskType.HasValue("workstations")
+        || commercialOfficeDeskType.HasValue("returns")) {
+           Add($"CommercialOfficeDeskTypeAndUse⸮{commercialOfficeDeskType.ToLower().ToUpperFirstChar()} configuration desks add ample work space to your office");
         }
         else {
-            result = $"{commercialOfficeDeskType.ToLower().ToUpperFirstChar()} configuration desk adds ample work space to your office";
+            Add($"CommercialOfficeDeskTypeAndUse⸮{commercialOfficeDeskType.ToLower().ToUpperFirstChar()} configuration desk adds ample work space to your office");
         }
     }
     if (!String.IsNullOrEmpty(result)) {
@@ -59,24 +59,24 @@ void CommercialOfficeDeskTypeAndUse() {
 void FurnishingMaterialAndFurnishingTrueColor() {
     var result = "";
     //Workstations|Corner|Executive|U-Shaped|Returns|Hutch|Double Pedestal|Single Pedestal|File Drawer Pedestal|L-Shaped|Straight Base|Bow Front|Table Desk
-    var commercialOfficeDeskType = GetReference("SP-18204");
-    var furnishingMaterial = GetReference("SP-18963");
-    var trueColor = GetReference("SP-22967");
+    var commercialOfficeDeskType = REQ.GetVariable("SP-18204").HasValue() ? REQ.GetVariable("SP-18204") : R("SP-18204").HasValue() ? R("SP-18204") : R("cnet_common_SP-18204");
+    var furnishingMaterial = REQ.GetVariable("SP-18963").HasValue() ? REQ.GetVariable("SP-18963") : R("SP-18963").HasValue() ? R("SP-18963") : R("cnet_common_SP-18963");
+    var trueColor = REQ.GetVariable("SP-22967").HasValue() ? REQ.GetVariable("SP-22967") : R("SP-22967").HasValue() ? R("SP-22967") : R("cnet_common_SP-22967");
     var harvest = Coalesce(A[7262], A[7209]).HasValue("harvest");
     var laminate = Coalesce(A[7263], A[7261]).HasValue("%laminate");
     if (harvest && laminate) {
         result = "Harvest finished laminate worksurface for a contemporary look";
     }
-    else if (trueColor.ToLower().Equals("mahogany")
-    && furnishingMaterial.ToLower().EndsWith("laminate")
-    && commercialOfficeDeskType.ToLower().Equals("workstations")) {
-        result = "Give your office a style overhaul with the addition of this mahogany-finished laminate workstation";
+    else if (trueColor.HasValue("mahogany")
+    && furnishingMaterial.HasValue("%laminate")
+    && commercialOfficeDeskType.HasValue("workstations")) {
+         Add("FurnishingMaterialAndFurnishingTrueColor⸮Give your office a style overhaul with the addition of this mahogany-finished laminate workstation");
     }
-    else if (!String.IsNullOrEmpty(trueColor) && !String.IsNullOrEmpty(furnishingMaterial)) {
-        result = $"{trueColor.ToLower().ToUpperFirstChar()}-finished {furnishingMaterial.ToLower(true)} work surface for a contemporary look";
+    else if (trueColor.HasValue() && furnishingMaterial.HasValue()) {
+         Add($"FurnishingMaterialAndFurnishingTrueColor⸮{trueColor.ToLower().ToUpperFirstChar()}-finished {furnishingMaterial.ToLower(true)} work surface for a contemporary look");
     }
     else if (!String.IsNullOrEmpty(trueColor)) {
-        result = $"{trueColor.ToLower().ToUpperFirstChar()}-finished work surface for a contemporary look";
+         Add($"FurnishingMaterialAndFurnishingTrueColor⸮{trueColor.ToLower().ToUpperFirstChar()}-finished work surface for a contemporary look");
     }
     if (!String.IsNullOrEmpty(result)) {
         Add($"FurnishingMaterialAndFurnishingTrueColor⸮{result}");
@@ -89,68 +89,52 @@ void FurnishingMaterialAndFurnishingTrueColor() {
 // --[FEATURE #4]
 // --Furnishing style
 void FurnishingStyle() {
-    var result = "";
-    var commercialOfficeDeskType = GetReference("SP-18046");
-    if (!String.IsNullOrEmpty(commercialOfficeDeskType)) {
-        if (commercialOfficeDeskType.ToLower().Equals("contemporary")) {
-            result = "Clean contemporary styling designed with your needs in mind to provide years of practical solutions";
+    var commercialOfficeDeskType = REQ.GetVariable("SP-18046").HasValue() ? REQ.GetVariable("SP-18046") : R("SP-18046").HasValue() ? R("SP-18046") : R("cnet_common_SP-18046");
+    if (commercialOfficeDeskType.HasValue()) {
+        if (commercialOfficeDeskType.HasValue("contemporary")) {
+             Add("FurnishingStyle⸮Clean contemporary styling designed with your needs in mind to provide years of practical solutions");
         }
-        else if (commercialOfficeDeskType.ToLower().Equals("industrial")) {
-            result = "Brings a touch of the modern industrial style to your space";
+        else if (commercialOfficeDeskType.HasValue("industrial")) {
+             Add("FurnishingStyle⸮Brings a touch of the modern industrial style to your space");
         }
         else {
-            result = $"{commercialOfficeDeskType} styling designed with your needs in mind to provide years of practical solutions";
+             Add($"FurnishingStyle⸮{commercialOfficeDeskType.ToLower().ToUpperFirstChar()} styling designed with your needs in mind to provide years of practical solutions");
         }
-    }
-    if (!String.IsNullOrEmpty(result)) {
-        Add($"FurnishingStyle⸮{result}");
     }
 }
 
 // --[FEATURE #5]
 // --# of drawers
 void OfficeDesksNumOfDrawers() {
-    var result = "";
-
-    var numOfDrawers = GetReference("SP-12515");
-    var numOfFileDrawers = GetReference("SP-1046");
+    var numOfDrawers = REQ.GetVariable("SP-12515").HasValue() ? REQ.GetVariable("SP-12515") : R("SP-12515").HasValue() ? R("SP-12515") : R("cnet_common_SP-12515");
+    var numOfFileDrawers = REQ.GetVariable("SP-1046").HasValue() ? REQ.GetVariable("SP-1046") : R("SP-1046").HasValue() ? R("SP-1046") : R("cnet_common_SP-1046");
     var drawer = "drawer";
     var fileDrawer = "drawer";
     
-    if (!String.IsNullOrEmpty(numOfDrawers) && Coalesce(numOfDrawers).ExtractNumbers().First() > 1) {
+    if (numOfDrawers.HasValue() && numOfDrawers.ExtractNumbers().First() > 1) {
         drawer = "drawers";
     }
-    if (!String.IsNullOrEmpty(numOfFileDrawers) && Coalesce(numOfFileDrawers).ExtractNumbers().First() > 1) {
+    if (numOfFileDrawers.HasValue() && numOfFileDrawers.ExtractNumbers().First() > 1) {
        fileDrawer = "drawers";
     }
     
-    if (!String.IsNullOrEmpty(numOfDrawers) && !String.IsNullOrEmpty(numOfFileDrawers)) {
-        result = $"Contains {numOfDrawers} {drawer} for office supplies and {numOfFileDrawers} file {fileDrawer} for documents";
+    if (numOfDrawers.HasValue() && numOfFileDrawers.HasValue()) {
+        Add($"OfficeDesksNumOfDrawers⸮Contains {numOfDrawers} {drawer} for office supplies and {numOfFileDrawers} file {fileDrawer} for documents");
     }
-    else if (!String.IsNullOrEmpty(numOfDrawers)) {
-        result = $"Contains {numOfDrawers} {drawer} for office supplies";
+    else if (numOfDrawers.HasValue()) {
+        Add($"OfficeDesksNumOfDrawers⸮Contains {numOfDrawers} {drawer} for office supplies");
     }
-    else if (!String.IsNullOrEmpty(numOfFileDrawers)) {
-        result = $"Contains {numOfFileDrawers} file {fileDrawer} for documents";
-    }
-    if (!String.IsNullOrEmpty(result)) {
-        Add($"OfficeDesksNumOfDrawers⸮{result}");
+    else if (numOfFileDrawers.HasValue()) {
+        Add($"OfficeDesksNumOfDrawers⸮Contains {numOfFileDrawers} file {fileDrawer} for documents");
     }
 }
-
 
 // --[FEATURE #6]
 // --Drawer dimensions
 void OfficeDesksDrawerDimensions() {
-    var result = "";
-    var drawerDimentions = GetReference("SP-4272");
-    
-    if (!String.IsNullOrEmpty(drawerDimentions)) {
-        result = $"{drawerDimentions.Replace(", ", "; ")}";
-    }
-    
-    if (!String.IsNullOrEmpty(result)) {
-        Add($"OfficeDesksDrawerDimensions⸮{result}");
+    var drawerDimentions = REQ.GetVariable("SP-4272").HasValue() ? REQ.GetVariable("SP-4272") : R("SP-4272").HasValue() ? R("SP-4272") : R("cnet_common_SP-4272");
+    if (drawerDimentions.HasValue()) {
+        Add($"OfficeDesksDrawerDimensions⸮{drawerDimentions.Replace(", ", "; ")}");
     }
 }
 
@@ -158,29 +142,23 @@ void OfficeDesksDrawerDimensions() {
 // --If drawer holds files, what file size does it hold
 // OOS
 
-
 // --[FEATURE #8]
 // --Weight capacity (lbs.)
 void OfficeDesksWeightCapacity() {
-    var result = "";
-    var weight = A[7171];
-    if (weight.HasValue()) {
-        if (weight.Units.First().NameUSM.HasValue("lbs")) {
-            result = $"Weight capacity: {weight.Values.First().ValueUSM} lbs";
+    if (A[7171].HasValue()) {
+        if (A[7171].Units.First().NameUSM.HasValue("lbs")) {
+            Add($"OfficeDesksWeightCapacity⸮Weight capacity: {A[7171].Values.First().ValueUSM} lbs");
         }
-        else if (weight.Units.First().NameUSM.HasValue("oz")) {
-            result = $"Weight capacity: {Math.Round(weight.Values.First().ValueUSM.ExtractNumbers().First() * 0.0625, 2)} lbs";
+        else if (A[7171].Units.First().NameUSM.HasValue("oz")) {
+            Add($"OfficeDesksWeightCapacity⸮Weight capacity: {Math.Round(A[7171].Values.First().ValueUSM.ExtractNumbers().First() * 0.0625, 2)} lbs");
           
         }
-        else if (weight.Units.First().Name.HasValue("g")) {
-            result = $"Weight capacity: {Math.Round(weight.Values.First().ValueUSM.ExtractNumbers().First() * 0.00220462, 2)} lbs";
+        else if (A[7171].Units.First().Name.HasValue("g")) {
+           Add($"OfficeDesksWeightCapacity⸮Weight capacity: {Math.Round(A[7171].Values.First().ValueUSM.ExtractNumbers().First() * 0.00220462, 2)} lbs");
         }
-        else if (weight.Units.First().Name.HasValue("kg")) {
-            result = $"Weight capacity: {Math.Round(weight.Values.First().ValueUSM.ExtractNumbers().First() * 2.20462, 2)} lbs";
+        else if (A[7171].Units.First().Name.HasValue("kg")) {
+            Add($"OfficeDesksWeightCapacity⸮Weight capacity: {Math.Round(A[7171].Values.First().ValueUSM.ExtractNumbers().First() * 2.20462, 2)} lbs");
         }
-    }
-    if (!String.IsNullOrEmpty(result)) {
-        Add($"OfficeDesksWeightCapacity⸮{result}");
     }
 }
 
@@ -194,18 +172,12 @@ void OfficeDesksWeightCapacity() {
 // --[FEATURE #11]
 // --Additional Modesty panel
 void AdditionalModestyPanel(){ 
-    var result = ""; 
-    var fullHeight = A[7278];
-    var modestyPanel = A[7275];
-    if (modestyPanel.HasValue("modesty panel") && fullHeight.HasValue("full-height")) {
-        result = "Full-height modesty panel provides valuable privacy below the worksurface";
+    if (A[7275].HasValue("modesty panel") && A[7278].HasValue("full-height")) {
+        Add($"AdditionalModestyPanel⸮Full-height modesty panel provides valuable privacy below the worksurface");
     }
-    else if (modestyPanel.HasValue("modesty panel")) {
-        result = "Modesty panel provides valuable privacy below the worksurface";
+    else if (A[7275].HasValue("modesty panel")) {
+         Add($"AdditionalModestyPanel⸮Modesty panel provides valuable privacy below the worksurface");
     }
-    if(!String.IsNullOrEmpty(result)){ 
-        Add($"AdditionalModestyPanel⸮{result}"); 
-    } 
 }
 
 // --[FEATURE #12]

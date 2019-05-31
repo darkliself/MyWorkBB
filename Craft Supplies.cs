@@ -56,7 +56,11 @@ void CraftSuppliesDesign() {
     if (A[7607].HasValue()) {
         Add($"CraftSuppliesDesign⸮Designed in the shape of {A[7607].Values.Select(o => o.Value()).FlattenWithAnd()}");
     }
+    else if (A[7084].HasValue()) {
+        Add($"CraftSuppliesDesign⸮{A[7084].Values.Select(o => o.Value()).FlattenWithAnd()} pattern design");
+    }
 }
+
 
 // --[FEATURE #3]
 // --Material (including True color/Finish)
