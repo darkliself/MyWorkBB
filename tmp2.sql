@@ -1,122 +1,61 @@
-----Floor mat type & Use    
-    --Anti-Fatigue|Anti-Static|Carpet|Dissipative/Anti-Static|Entrance|Indoor|Indoor/Outdoor|Safety|Scraper
-IF $SP-17785$ LIKE "Anti-Fatigue" 
-THEN "Anti-fatigue mat provides maximum comfort when you stand on it" 
-
-ELSE IF $SP-17785$ LIKE "Scraper" 
-THEN "Protect your carpet or floor from accidental damage by using scraper mat" 
-
-ELSE IF $SP-17785$ LIKE "Anti-Static" 
-THEN "Anti-static mat designed to absorb static electricity" 
-
-ELSE IF $SP-17785$ LIKE "Entrance" 
-THEN "Entrance mat designed to help prevent dirt and moisure entering the home or office on footwear" 
-
-ELSE IF $SP-17785$ LIKE "Floor mat" 
-THEN "Floor mat offers stylish comfort and support at a great value" 
-
-ELSE IF $SP-17785$ IS NOT NULL
-THEN $SP-17785$_" mat offers stylish comfort and support at a great value" 
-
+--Compatibility
+IF MS.CompatibleProducts IS NOT NULL THEN MS.CompatibleProducts.Values.FlattenWithAnd().Shorten(75).Erase("[...]").Replace("Single-sided", "single-sided").Replace("Dual Sided", "dual- sided").Prefix("Compatible with ").Postfix(" printers").Replace(" "," ##")
+ELSE IF A[4782].Values IS NOT NULL THEN A[4782].Values.FlattenWithAnd().Shorten(75).Erase("[...]").Prefix("Compatible with ").Postfix(" printers").Replace(" "," ##")
 ELSE "@@";
 
-----Dimensions (in Inches): L x W    
-
---SP-20400 - L
---SP-21044 - W
-
-IF $SP-20400$ IS NOT NULL
-    AND $SP-21044$ IS NOT NULL
-        THEN "Dimensions: "_$SP-20400$_"""L x "_$SP-21044$_"""W" 
-ELSE IF $SP-20400$ IS NOT NULL
-        THEN "Dimensions: "_$SP-20400$_"""L" 
-ELSE IF $SP-21044$ IS NOT NULL
-        THEN "Dimensions: "_$SP-21044$_"""W" 
+--Printer color (Black, Blue, Black/Red, etc.)
+IF A[494].Count = 1 AND A[4760].Value LIKE "%ribbon" AND A[494].Values.Where("%black") IS NOT NULL THEN
+"Black printer ribbon provides crisp, cost-effective printing suitable for a commercial environment" 
+ELSE IF A[494].Count = 1 AND A[494].Values.Where("color (%") IS NOT NULL THEN
+"Gives full color prints" 
+ELSE IF A[494].Count = 1 AND A[494].Values.Where("multicolor") IS NOT NULL THEN
+"Gives multicolor prints" 
+ELSE IF A[494].Count = 4 AND A[494].Values.Where("black") IS NOT NULL AND A[494].Values.Where("cyan") IS NOT NULL AND A[494].Values.Where("magenta") IS NOT NULL AND A[494].Values.Where("yellow") IS NOT NULL THEN
+"Gives full-color prints" 
 ELSE "@@";
 
-----Product true color & floor mat shape        
-    ---Rectangle|Square|Semi-Circle
-    IF $SP-21073$ LIKE "Rectangle" 
-    AND $SP-22967$ LIKE "%black%" 
-        THEN $SP-22967$_" rectangular design is unobtrusive and masks dirt and foot prints" 
-    ELSE IF $SP-21073$ IS NOT NULL
-    AND $SP-22967$ IS NOT NULL
-        THEN $SP-22967$_" "_$SP-21073$_" design" 
-    ELSE "@@"; 
+--Dimensions
 
-----Floor mat material & Backing material        
-
-IF $SP-21074$ IS NOT NULL 
-AND $SP-21077$ IS NOT NULL 
-    THEN "Made of "_$SP-21074$_" with "_$SP-21077$_" backing" 
-ELSE IF $SP-21074$ IS NOT NULL 
-    THEN "Made of "_$SP-21074$
+IF $SP-21130$ IS NOT NULL AND A[2165].Unit LIKE "mm" THEN "Dimensions: "_A[2165].Value.ExtractDecimals().Max().MultiplyBy(0.03937008).ToText("F2").RegexReplace("(?<=\.\d)0", "").Erase(".0")_"""W x "_$SP-21130$_"'L" 
+ELSE IF $SP-21130$ IS NOT NULL AND A[2165].Unit LIKE "cm" THEN "Dimensions: "_A[2165].Value.ExtractDecimals().Max().MultiplyBy(0.3937008).ToText("F2").RegexReplace("(?<=\.\d)0", "").Erase(".0")_"""W x "_$SP-21130$_"'L" 
+ELSE IF $SP-21130$ IS NOT NULL AND A[2165].Unit LIKE "m" THEN "Dimensions: "_A[2165].Value.ExtractDecimals().Max().MultiplyBy(39.37008).ToText("F2").RegexReplace("(?<=\.\d)0", "").Erase(".0")_"""W x "_$SP-21130$_"'L" 
+ELSE IF $SP-21130$ IS NOT NULL THEN 
+"Dimension: "_$SP-21130$_"'L" 
 ELSE "@@";
 
-----Floor mat shape    ---OOS?
-
-----Suitable setting        
-        --Indoor|Outdoor|Indoor and outdoor|Hot and cold environments    
-
-IF $SP-23630$ LIKE "Indoor and outdoor" 
-    THEN"Perfect for indoor and outdoor use"    
-ELSE IF $SP-23630$ LIKE "Indoor" 
-    THEN"Indoor mat designed to help prevent dirt and moisture" 
-ELSE IF $SP-23630$ LIKE "Outdoor" 
-    THEN"Outdoor mat that provides excellent moisture and dirt removal" 
+--Pack size 
+IF Request.Data["TX_UOM"] LIKE "Each" THEN "Includes one "_A[4760].Value.IfLike("printer fabric ribbon", "fabric printer ribbon")
+ELSE IF Request.Data["TX_UOM"] LIKE "%/%/%" THEN throw new MissingProductDataException("check TX_UOM")
+ELSE IF Request.Data["TX_UOM"] LIKE "%/%" THEN Request.Data["TX_UOM"].Split("/").First().Postfix(" ribbons per ")_Request.Data["TX_UOM"].Split("/").Last().ToLower()
+ELSE IF Request.Data["TX_UOM"] IS NOT NULL THEN throw new MissingProductDataException("check TX_UOM")
 ELSE "@@";
 
-----NFSI Certification    ---OOS
+--[Additional Bullet]
 
-----Post Consumer Content (%)        
+--https://www.staples.com/zebra-true-colours-ix-ribbon-cartridge-ymcko-200-cards/product_IM1GT0174
+IF A[4785].Value IN ("% images","% pages") THEN "Prints "_A[4785].Value_" to maximize productivity and savings";
 
-----Recycled Content (%)        
-        --Typically contains 50% or more recycled resin
-IF $SP-21623$ IS NOT NULL
-AND $SP-21623$>0
-    THEN "Typically contains "_$SP-21623$_"% or more recycled material" 
+--example: Prints up to 8 million characters
+--Prints up to 8 million characters for fewer ribbon changes
+IF A[4785].Value LIKE "%characters" THEN A[4785].Value.Prefix("Prints up to ").Postfix(" for fewer ribbon changes");
+
+--[Type of Product/Use]
+--example: Epson ribbon cartridge for thermal transfer printing
+IF A[4760].Value LIKE "re-inking ribbon" THEN
+"Re-ink printer ribbon for adding ink to compatible printers";
+
+--Printing Technology
+IF A[4782].Count = 1 AND MS.CompatibleProducts IS NOT NULL THEN
+A[4782].Values.Flatten().ToUpperFirstChar().Postfix(" print technology offers high-quality prints");
+
+IF A[4760].Value LIKE "%with cleaning roller" THEN 
+"Comes with cleaning roller";
+
+--remanufactured
+IF A[5312].Value LIKE "remanufactured" THEN
+"Remanufactured to reduce environmental impact";
+
+--warranty
+IF A[430].Value LIKE "% warranty" THEN
+A[430].Value.Replace(" months warranty","-month").Replace(" month warranty","-month").Replace(" years warranty","-year").Replace(" year warranty","-year").Replace(" days warranty","-day").Replace(" day warranty","-day").Postfix(" manufacturer limited warranty")
 ELSE "@@";
-----Use for additional product and/or manufacturer information relevant to the customer buying decision        
-
-IF A[7383].Where("grease-resistant").Values IS NOT NULL 
-    THEN "Grease-resistant material of this mat keeps it looking like new";
-IF A[7383].Where("tapered edges").Values IS NOT NULL 
-    THEN "Tapered edges allow easier floor to mat transition";
-IF A[7383].Where("rounded corners").Values IS NOT NULL 
-    THEN "Rounded Corners prevent tripping";
-    ----rounded corners help keep mat flat
-IF A[7383].Where("gripper back").Values IS NOT NULL 
-    THEN "Gripper backing reduces mat movement";
-    --- Gripper back for use on carpets.
-    --- gripper back for stability on carpeted flooring
-    --- Gripper back to protect flooring from general wear
-IF A[7383].Where("dirt trapping").Values IS NOT NULL 
-    THEN "This mat stops the dirt, keeping your floors clean";
-
-IF A[7383].Where("moisture-resistant").Values IS NOT NULL 
-AND A[7383].Where("stain-resistant").Values IS NOT NULL
-    THEN "Moisture- and stain-resistant to cut cleaning and maintenance time by half";
-
-----Use for additional product and/or manufacturer information relevant to the customer buying decision
-
-IF A[380].Values.Where("Greentrax") IS NOT NULL THEN
-    "GreenTrax program recommended and approved as a part of ""green cleaning environments"" project";
-
-----Warranty information        
-    IF $SP-21932$ LIKE "%lifetime%" 
-        THEN "Lifetime manufacturer limited warranty" 
-    ELSE IF A[7241].Value IS NOT NULL 
-        THEN A[7241].Value
-            .Replace(" year","-year")
-            .Replace(" days","-day")
-            .Replace(" years", "-year")
-            .Replace("-years", "-year")
-            .Replace(" months", "-month")
-            .Erase("limited")
-            .Erase("manufacturer")
-            .Replace("warranty", "manufacturer limited warranty")
-            .ToUpperFirstChar()
-    ELSE "@@";
-
-
-The cord-grounded design gives this Crown floor mat maximum static dissipation to help keep you safe on the job.
