@@ -1,61 +1,170 @@
---Compatibility
-IF MS.CompatibleProducts IS NOT NULL THEN MS.CompatibleProducts.Values.FlattenWithAnd().Shorten(75).Erase("[...]").Replace("Single-sided", "single-sided").Replace("Dual Sided", "dual- sided").Prefix("Compatible with ").Postfix(" printers").Replace(" "," ##")
-ELSE IF A[4782].Values IS NOT NULL THEN A[4782].Values.FlattenWithAnd().Shorten(75).Erase("[...]").Prefix("Compatible with ").Postfix(" printers").Replace(" "," ##")
+--<Type and Caffeine>
+--$SP-17863$ - Caffeinated, Decaffeinated
+
+--https://www.quill.com/green-mountain-dark-magic-coffee-96-count-##Keurig-k-cup-pods-dark-roast-96-carton-gmt4061ct/cbs/51820371.html?promoCode=&Effort_Code=901&Find_Number=04061CT&m=0&isSubscription=False --Gourmet extra bold dark roast coffee ##K-Cups for ##Keurig brewers.
+
+IF $SP-17882$ LIKE "Coffee" AND $SP-17863$ LIKE "Caffeinated" 
+THEN "Caffeinated coffee ##K-Cups for ##Keurig brewers" 
+ELSE IF $SP-17882$ LIKE "Coffee" AND $SP-17863$ LIKE "Decaffeinated" 
+THEN "Decaffeinated coffee ##K-Cups for ##Keurig brewers" 
+ELSE IF $SP-17882$ LIKE "Tea" AND $SP-17863$ LIKE "Caffeinated" 
+THEN "Caffeinated "_A[6721].Values.FlattenWithAnd()_" tea ##K-Cups for ##Keurig brewers" 
+ELSE IF $SP-17882$ LIKE "Tea" AND $SP-17863$ LIKE "Decaffeinated" 
+THEN "Decaffeinated "_A[6721].Values.FlattenWithAnd()_" tea ##K-Cups for ##Keurig brewers" 
+ELSE IF $SP-17882$ LIKE "Hot Chocolate" AND $SP-17863$ LIKE "Caffeinated" 
+THEN "Caffeinated hot chocolate ##K-Cups for ##Keurig brewers" 
+ELSE IF $SP-17882$ LIKE "Hot Chocolate" AND $SP-17863$ LIKE "Decaffeinated" 
+THEN "Decaffeinated hot chocolate ##K-Cups for ##Keurig brewers" 
+ELSE IF $SP-17882$ LIKE "Seasonal" AND $SP-17863$ LIKE "Caffeinated" 
+THEN "Caffeinated seasonal ##K-Cups for ##Keurig brewers" 
+ELSE IF $SP-17882$ LIKE "Seasonal" AND $SP-17863$ LIKE "Decaffeinated" 
+THEN "Decaffeinated seasonal ##K-Cups for ##Keurig brewers" 
+ELSE IF $SP-17882$ IS NULL THEN NULL 
+
+ELSE IF $SP-17882$ IS NOT NULL
+AND $SP-17863$ IS NOT NULL THEN
+    $SP-17863$_" "_$SP-17882$_" ##K-Cups for ##Keurig brewers" 
+
+ELSE IF $SP-17882$ IS NULL THEN NULL 
+ELSE IF $SP-17882$ IS NOT NULL THEN
+    $SP-17882$_"##K-Cups for ##Keurig brewers" 
 ELSE "@@";
 
---Printer color (Black, Blue, Black/Red, etc.)
-IF A[494].Count = 1 AND A[4760].Value LIKE "%ribbon" AND A[494].Values.Where("%black") IS NOT NULL THEN
-"Black printer ribbon provides crisp, cost-effective printing suitable for a commercial environment" 
-ELSE IF A[494].Count = 1 AND A[494].Values.Where("color (%") IS NOT NULL THEN
-"Gives full color prints" 
-ELSE IF A[494].Count = 1 AND A[494].Values.Where("multicolor") IS NOT NULL THEN
-"Gives multicolor prints" 
-ELSE IF A[494].Count = 4 AND A[494].Values.Where("black") IS NOT NULL AND A[494].Values.Where("cyan") IS NOT NULL AND A[494].Values.Where("magenta") IS NOT NULL AND A[494].Values.Where("yellow") IS NOT NULL THEN
-"Gives full-color prints" 
+--<Roast and Flavor>
+
+IF $SP-17870$ NOT IN (NULL, "Variety Pack")
+AND $SP-17872$ LIKE "French roast" 
+AND $SP-17882$ LIKE "Coffee" THEN
+    $SP-17870$_" roast coffee with ##French-roast flavor" 
+
+ELSE IF $SP-17870$ NOT IN (NULL, "Variety Pack")
+AND $SP-17872$ NOT IN (NULL, "Variety Pack")
+AND $SP-17882$ LIKE "Coffee" THEN
+    $SP-17870$_" roast coffee with ##"_
+    $cnet_flavoring$_" flavor" 
+
+ELSE IF $SP-17882$ LIKE "Seasonal" AND A[6726].Values.Where("brown sugar").Where("%apple%") IS NOT NULL
+THEN "Fresh, juicy goodness of sweet orchard apples with a hint of brown sugar" 
+
+ELSE IF COALESCE($SP-17870$, A[6731].Value) IS NOT NULL
+AND A[6725].Values.Where("%vanila%", "%caramel%") IS NOT NULL AND $SP-17882$ LIKE "Coffee" THEN
+    "A smooth, "_COALESCE($SP-17870$, A[6731].Value)_
+    " roasted coffee with "_
+    A[6725].Values.Where("%vanila%", "%caramel%").First().Prefix("##")_
+    " flavor to satisfy sweet cravings" 
+
+ELSE IF COALESCE($SP-17870$, A[6731].Value) IS NOT NULL
+AND $SP-17872$ IN ("Vanilla","Caramel") AND $SP-17882$ LIKE "Coffee" THEN
+    "A smooth, "_COALESCE($SP-17870$, A[6731].Value)_
+    " roasted coffee with ##"_
+    $SP-17872$_
+    " flavor to satisfy sweet cravings" 
+
+ELSE IF COALESCE($SP-17870$, A[6731].Value) IS NOT NULL
+AND A[6725].Values IS NOT NULL AND $SP-17882$ LIKE "Coffee" THEN
+     COALESCE($SP-17870$, A[6731].Value.ToUpperFirstChar())_" roast coffee with "_
+     A[6725].Values.Prefix("##").FlattenWithAnd()_" flavor" 
+
+ELSE IF COALESCE($SP-17870$, A[6731].Value) IS NOT NULL
+AND $SP-17872$ NOT IN (NULL, "Variety Pack") AND $SP-17882$ LIKE "Coffee" THEN
+    A[6731].Value.ToUpperFirstChar()_"-roast coffee with ##"_
+     $cnet_flavoring$_" flavor" 
+
+ELSE IF A[6725].Values IS NOT NULL AND $SP-17882$ LIKE "Coffee" THEN
+    "A great tasting Coffee with "_
+    A[6725].Values.ToUpperFirstChar().Prefix("##").FlattenWithAnd()_
+    " flavoring" 
+
+ELSE IF $SP-17872$ NOT IN (NULL, "Variety Pack") AND $SP-17882$ LIKE "Coffee" THEN
+    "A great tasting Coffee with ##"_
+    $cnet_flavoring$_
+    " flavoring" 
+
+ELSE IF COALESCE($SP-17870$, A[6731].Value) LIKE "dark" AND $SP-17882$ LIKE "Coffee" THEN
+    "A great tasting dark roast coffee" 
+
+ELSE IF COALESCE($SP-17870$, A[6731].Value) LIKE "medium" AND $SP-17882$ LIKE "Coffee" THEN
+    "The medium roast gives you a strong coffee taste that isn't overpowering" 
+
+ELSE IF COALESCE($SP-17870$, A[6731].Value) LIKE "Medium Dark" AND $SP-17882$ LIKE "Coffee" THEN
+    "A hearty, full-bodied blend of medium and dark roasts" 
+
+ELSE IF COALESCE($SP-17870$, A[6731].Value) LIKE "light" AND $SP-17882$ LIKE "Coffee" THEN
+    "A lighter roasted coffee is buttery and sweet" 
+
+ELSE IF $SP-17870$ NOT IN (NULL, "Variety Pack")
+AND $SP-17882$ LIKE "Coffee" THEN
+    $SP-17870$_" roast coffee" 
+
+ELSE IF $SP-17872$ NOT IN (NULL, "Variety Pack")
+AND $SP-17882$ LIKE "Tea" THEN
+    $cnet_flavoring$_" tea" 
+
+ELSE IF A[6721].Value IS NOT NULL
+AND $SP-17882$ LIKE "Tea" THEN
+    A[6721].Values.FlattenWithAnd().ToUpperFirstChar().Postfix(" tea") 
+
+ELSE IF $SP-17872$ NOT IN (NULL, "Variety Pack", "%Chocolate%") AND $SP-17882$ LIKE "%Chocolate" THEN
+    "Hot Chocolate with ##"_
+    $cnet_flavoring$_" flavor" 
+
+ELSE IF $SP-17872$ NOT IN (NULL, "Variety Pack") AND $SP-17882$ LIKE "Seasonal" THEN
+    "Seasonal ##K-Cups with ##"_
+    $cnet_flavoring$_" flavor" 
+
 ELSE "@@";
 
---Dimensions
+--<Container Size>
+--https://www.staples.com/product_465103    24 ##K-Cups per pack 
 
-IF $SP-21130$ IS NOT NULL AND A[2165].Unit LIKE "mm" THEN "Dimensions: "_A[2165].Value.ExtractDecimals().Max().MultiplyBy(0.03937008).ToText("F2").RegexReplace("(?<=\.\d)0", "").Erase(".0")_"""W x "_$SP-21130$_"'L" 
-ELSE IF $SP-21130$ IS NOT NULL AND A[2165].Unit LIKE "cm" THEN "Dimensions: "_A[2165].Value.ExtractDecimals().Max().MultiplyBy(0.3937008).ToText("F2").RegexReplace("(?<=\.\d)0", "").Erase(".0")_"""W x "_$SP-21130$_"'L" 
-ELSE IF $SP-21130$ IS NOT NULL AND A[2165].Unit LIKE "m" THEN "Dimensions: "_A[2165].Value.ExtractDecimals().Max().MultiplyBy(39.37008).ToText("F2").RegexReplace("(?<=\.\d)0", "").Erase(".0")_"""W x "_$SP-21130$_"'L" 
-ELSE IF $SP-21130$ IS NOT NULL THEN 
-"Dimension: "_$SP-21130$_"'L" 
+IF Request.Data["TX_UOM"] LIKE "Each" 
+THEN "##K-Cups are sold individually" 
+ELSE IF Request.Data["TX_UOM"] NOT IN (NULL, "None")
+THEN Request.Data["TX_UOM"].ExtractDecimals().First()_" ##K-Cups per "_Request.Data["TX_UOM"].Split("/").Last()
 ELSE "@@";
 
---Pack size 
-IF Request.Data["TX_UOM"] LIKE "Each" THEN "Includes one "_A[4760].Value.IfLike("printer fabric ribbon", "fabric printer ribbon")
-ELSE IF Request.Data["TX_UOM"] LIKE "%/%/%" THEN throw new MissingProductDataException("check TX_UOM")
-ELSE IF Request.Data["TX_UOM"] LIKE "%/%" THEN Request.Data["TX_UOM"].Split("/").First().Postfix(" ribbons per ")_Request.Data["TX_UOM"].Split("/").Last().ToLower()
-ELSE IF Request.Data["TX_UOM"] IS NOT NULL THEN throw new MissingProductDataException("check TX_UOM")
+--<Nutritional Information (if available)>
+
+IF A[11359].Values.Where("%serving") IS NOT NULL AND A[11248].Values IS NOT NULL
+THEN "Each ##K-Cup includes "_A[11248].Match(11248, 11249).Values.UseSeparators(" (").Postfix(")").Erase(" (<>)").WhereNot("%(0 %").FlattenWithAnd().Replace("(1 g)", "(1 gram)").Replace(
+" g)", " grams)").Replace(" mg)", "mg)").Replace(" ", " ##").Prefix("##")
+
 ELSE "@@";
 
---[Additional Bullet]
+--<Free Trade information (if available)>
+--https://www.staples.com/product_GMT6783CT        Fair Trade Certified™ flavored [type] ##K-Cups for ##Keurig brewers. 
 
---https://www.staples.com/zebra-true-colours-ix-ribbon-cartridge-ymcko-200-cards/product_IM1GT0174
-IF A[4785].Value IN ("% images","% pages") THEN "Prints "_A[4785].Value_" to maximize productivity and savings";
+IF A[6585].Value LIKE "Yes" 
+THEN "Fair ##Trade ##Certified™ flavored "_$SP-17882$_" ##K-Cups for ##Keurig brewers" 
+ELSE "@@";
 
---example: Prints up to 8 million characters
---Prints up to 8 million characters for fewer ribbon changes
-IF A[4785].Value LIKE "%characters" THEN A[4785].Value.Prefix("Prints up to ").Postfix(" for fewer ribbon changes");
+--<Use for additional product and/or manufacturer information relevant to the customer buying decision>
+IF $SP-17884$ LIKE "Yes" 
+THEN "The product is kosher";
 
---[Type of Product/Use]
---example: Epson ribbon cartridge for thermal transfer printing
-IF A[4760].Value LIKE "re-inking ribbon" THEN
-"Re-ink printer ribbon for adding ink to compatible printers";
+--<Use for additional product and/or manufacturer information relevant to the customer buying decision>
+IF A[6739].Where("USDA Organic").Values IS NOT NULL
+THEN "Meets or exceeds USDA ##Organic standard";
 
---Printing Technology
-IF A[4782].Count = 1 AND MS.CompatibleProducts IS NOT NULL THEN
-A[4782].Values.Flatten().ToUpperFirstChar().Postfix(" print technology offers high-quality prints");
+--<Use for additional product and/or manufacturer information relevant to the customer buying decision>
+--Only Arabica
+--https://www.staples.com/product_2710071        Made with 100% Arabica coffee 
 
-IF A[4760].Value LIKE "%with cleaning roller" THEN 
-"Comes with cleaning roller";
+IF $SP-350824$ LIKE "Arabica" 
+THEN "Made with 100% arabica coffee" 
 
---remanufactured
-IF A[5312].Value LIKE "remanufactured" THEN
-"Remanufactured to reduce environmental impact";
+ELSE IF $SP-350824$ LIKE "Espresso" 
+THEN "Offers the rich aromatics and flavor qualities of espresso, tailored specifically for the unique brewing parameters of a K-Cup portion pack";
 
---warranty
-IF A[430].Value LIKE "% warranty" THEN
-A[430].Value.Replace(" months warranty","-month").Replace(" month warranty","-month").Replace(" years warranty","-year").Replace(" year warranty","-year").Replace(" days warranty","-day").Replace(" day warranty","-day").Postfix(" manufacturer limited warranty")
+--<Use for additional product and/or manufacturer information relevant to the customer buying decision>
+IF A[6739].Values.Where("gluten-free") IS NOT NULL
+THEN "Gluten-free";
+
+--<Use for additional product and/or manufacturer information relevant to the customer buying decision>
+--It contains no sugar, so it won't break your low-carb diet    https://www.staples.com/5-Hour-Energy-Berry-Drinks-1-93-oz-Bottles-12-Pack/product_897444
+IF A[6739].Values.Where("sugar-free") IS NOT NULL
+THEN "It contains no sugar, so it won't break your low-carb diet";
+
+IF SKU.ProductId IN ("20658244", "20658237")
+THEN "Blend of decaffeinated green tea and decaffeinated ##Bai ##Mu ##Dan white tea" 
 ELSE "@@";

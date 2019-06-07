@@ -5,6 +5,7 @@ PrinterTrueColor();
 // --Dimensions
 // --Pack size
 AdditionalDutyCycle();
+AdditionalPrintedCharacters();
 AdditionalTypeOfUse();
 //Printing Technology
 AdditionalCleaningRoller();
@@ -49,16 +50,25 @@ void AdditionalDutyCycle() {
 }
 
 // --[FEATURE #6]
+// --Additional Printed Characters
+void  AdditionalPrintedCharacters() {
+    if (A[4785].HasValue("%characters")) {
+        Add($"AdditionalPrintedCharacters⸮Prints up to {A[4785].FirstValue()} for fewer ribbon changes");
+    }
+}
+
+
+// --[FEATURE #7]
 // --Additional Type of Product/Use
 void AdditionalTypeOfUse() {
     if (A[4760].HasValue("re-inking ribbon")) {
         Add($"AdditionalTypeOfUse⸮Re-ink printer ribbon for adding ink to compatible printers");
     }
 }
-// --[FEATURE #7]
+// --[FEATURE #8]
 // --Additional Printing Technology
 
-// --[FEATURE #8]
+// --[FEATURE #9]
 // --Additional Cleaning Roller
 
 void AdditionalCleaningRoller() {
@@ -66,14 +76,14 @@ void AdditionalCleaningRoller() {
         Add($"AdditionalCleaningRoller⸮Comes with cleaning roller");
     }
 }
-// --[FEATURE #9] 
+// --[FEATURE #10] 
 // --Additional remanufactured
 void AdditionalRemanufactured() {
     if (A[5312].HasValue("remanufactured")) {
         Add($"AdditionalRemanufactured⸮Remanufactured to reduce environmental impact");
     }
 }
-// --[FEATURE #10]
+// --[FEATURE #11]
 // --Additional warranty
 
 //§§1241158330102 end of "Printer Ribbons"
