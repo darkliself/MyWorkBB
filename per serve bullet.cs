@@ -1,6 +1,20 @@
 
 // Working SKU 20647837
 
+
+
+var a = A[11248].Values.Match(11248, 11359, 11249).Values(" x ").Where(s => s.NotIn("% x 0%"));
+if(a.Any()){
+    var b = a.Select(
+        s => (A[11249].HasValue(s.Text.Split(" x ").Last()) && A[11359].HasValue("%serving%")) ? 
+        $"{s.Text.Split(" x ").First()} ({s.Text.Split(" x ").Last()} {A[11249].Units.First().Name})".Flatten("").Replace(" g", " grams", " mg", "mg", "1 grams", "1 gram") : 
+        s.Replace(" x <NULL>", "", " x per serving", ""));
+    Add($"NutritionalInformation⸮Each ##K-Cup includes {b.FlattenWithAnd()}");
+}
+
+
+
+
 NutritionalInformation();
 void NutritionalInformation() {
     if (A[11359].HasValue("%serving") && A[11248].HasValue() && A[11249].HasValue()) {
@@ -76,4 +90,43 @@ if(a.Any()){
         $"{s.Text.Split(" x ").First()} ({s.Text.Split(" x ").Last()} {A[11249].Units.First().Name})".Flatten("").Replace(" g)", " grams)") : 
         s.Replace(" x <NULL>", ""));
     Add($"Each ##K-Cup includes {b.FlattenWithAnd()}");
+}
+
+
+// --[FEATURE #4]
+// --Nutritional Information (if available)
+void NutritionalInformation() {
+    var repeatingSets = new []{A[11248], A[11359], A[11249]};
+    var separators = new []{" ", " ("};
+    var d = new Dictionary<int, string>();
+    int i = 0;
+    int j = -1;
+    string v="";
+    foreach (var attr in repeatingSets){
+        if (attr.HasValue()){
+            foreach (var attrValue in attr.GetValuesWithUnits()){
+                i = attrValue.Value.SetNo;
+                v = (attrValue.Value.ValueUSM==""?attrValue.Value.Value():attrValue.Value.ValueUSM)+""+(attrValue.Unit.NameUSM!=""?attrValue.Unit.NameUSM:attrValue.Unit.Name);
+                if(d.ContainsKey(i))
+                {
+                    d[i]=d[i]+(j>=0?separators[j]:"")+ v;
+                }
+                else
+                {
+                    d.Add(i, v);
+                }
+            }
+        }
+        j=j+1;
+    }
+    var some = d.Values.Where(
+            o => (Coalesce(o).ExtractNumbers().Any() && Coalesce(o).ExtractNumbers().First() > 0)
+                || !Coalesce(o).ExtractNumbers().Any()
+                ).FlattenWithAnd()
+                .Replace("per serving ", "", " ,", ",", "per serving", "")
+                .RegexReplace("([(][0-9]+g|[(][0-9]+mg)", "$1)")
+                .Replace("g)", " grams)", "(1 grams", "(1 gram", "m grams", "mg");
+    if (some != "") {
+        Add($"NutritionalInformation⸮Each ##K-Cup contains {some}");
+    }
 }
