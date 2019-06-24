@@ -1,123 +1,120 @@
--- Hanging File Folders
-
--- 1 - True Color and File Folder Material (including Stock/Weight #)
-
--- Durable 11 pt. folders in assorted bright colors (violet, yellow,red, blue, green) hold up to wear ##and tear
-
-IF $SP-22967$ Like "Assorted" 
-    THEN "Durable "_REF["SP-18596"].Replace("paper-stock", "paper stock")_" folders in assorted bright colors, hold up to wear ##and tear" 
-
--- Red 11 pt. folders hold up to wear and tear
-ELSE IF $SP-22967$ IS NOT NULL
-    THEN "Folders are made of "_$SP-22967$_" "_REF["SP-18596"].Replace("paper-stock", "paper stock") 
+--Computer cleaning type & use
+IF $SP-18424$ LIKE "Cleaning Kit" 
+   THEN "Cleaning kit provides safe and gentle cleaning for all your mobile and electronic devices" 
+ELSE IF $SP-18424$ LIKE "Laser Lens Cleaners" 
+   THEN "Cleaning kit allow each brush to retract into a recess to avoid knocking laser lens out of alignment" 
+ELSE IF $SP-18424$ LIKE "Repair Kit" 
+   THEN "Tool kit is ideal for electronics, computer maintenance and home repairs" 
+ELSE IF $SP-18424$ LIKE "CD/DVD Cleaners" 
+   THEN "CD/DVD cleaner cleans up to 99% of all scratched ##DVDs, ##CDs, game discs, ##VCDs" 
+ELSE IF $SP-18424$ LIKE "Vacuum" 
+   THEN "Vacuum computer cleaning system is designed to remove dust, dirt and debris from computer systems" 
+ELSE IF $SP-18424$ LIKE "Air Duster" 
+   THEN "Air duster is perfect for removing dust or debris from sensitive electronic devices" 
+ELSE IF $SP-18424$ LIKE "Screen Cleaner Sprays" 
+   THEN "Cleaning spray is suitable for cleaning notebook ##PCs, touchscreens, keyless pads and phones" 
+ELSE IF $SP-18424$ LIKE "Wipes/Cloths" 
+   THEN "Screen wipes provide safe cleaning to any tablet, laptop, monitor, or cell phone screen" 
+ELSE IF $SP-18424$ LIKE "Wipes/Duster Combo" 
+   THEN "Duster is ideal for cleaning keyboard or CPU and wipes are safe to use on notebooks" 
+ELSE IF $SP-18424$ LIKE "Cleaning Card" 
+   THEN "Cleans card reader with one easy swipe" 
+ELSE IF $SP-18424$ LIKE "Keyboard Guard" 
+   THEN "Guard protect your keyboard from dust and spills" 
+ELSE IF $SP-18424$ LIKE "Printer Cleaning Kit" 
+   THEN "Printer cleaning kit offers a safe, easy way to clean printers, copiers and fax machines" 
 ELSE "@@";
 
--- 2 - Hanging File attachments details/Construction
+--Odor or scent--OOS
 
--- Durable coated hangers for easy sliding
-IF A[5945].Values.Where("coated hanger") IS NOT NULL
-    THEN "Durable coated hangers for easy sliding" 
+CASE $SP-4886$
+WHEN "Bitterant" THEN "Contains bitterant to help discourage inhalant abuse" 
+WHEN "Slight Ethereal" THEN "Slightly ethereal scent" 
+WHEN "Clean scent" THEN "Clean scent for pleasant effect" 
+WHEN "Unscented" THEN "Unscented to cause less irritation" 
+ELSE "@@" 
+END;
 
--- Long plastic hooks with built-in tension springs to grip rails
-ELSE IF A[5945].Values.Where("built-in tension springs") IS NOT NULL
-    THEN "Long plastic hooks with built-in tension springs to grip rails" 
-
--- Durable steel frame provides long-lasting use 
-ELSE IF A[6547].Values.Where("%frame%") IS NOT NULL
-    THEN A[6547].Values.Where("%frame%")_" provides long-lasting use" 
-
-ELSE IF A[5945].Values.Where("lowered top rail") IS NOT NULL
-    THEN "Lowered top rail edge eliminates need for separate file folder tabs" 
-
-    --reinforced gusset
-ELSE IF A[5945].Values.Where("reinforced gusset") IS NOT NULL 
-    THEN "Reinforced gusset provides extra strength at critical points" 
+--Capacity
+IF $SP-21132$ IS NOT NULL
+THEN "Has a "_$SP-21132$_" oz. capacity" 
 ELSE "@@";
 
--- 3 - Number of Tabs/Location
-
-IF A[5945].Where("5 tab positions").Values IS NOT NULL
-AND A[5945].Where("%built%in%5%tab%").Values IS NOT NULL THEN
-   "Tabs included for placement in 5 tab positions" 
-
--- Movable tabs go anywhere across the range of the folders for customization   
-ELSE IF A[5945].Values.Where("Easy Slide tab") IS NOT NULL
-    THEN "Movable tabs go anywhere across the range of the folders for customization " 
-
---tab positions
-ELSE IF A[5945].Values.Where("%tab positions%") IS NOT NULL 
-    THEN A[5945].Values.Where("%tab positions%").First()
-    _" allow you to customize your files" 
+--Key ingredient
+IF $SP-24202$ LIKE "%Ozone Safe%" THEN "The 100% ozone-safe formula" 
+ELSE IF $SP-24202$ LIKE "%microfiber%" THEN "Manufactured using microfiber for added safety" 
+ELSE IF $SP-24202$ LIKE "%streak free%" AND $SP-24202$ LIKE "%alcohol-free%" THEN "Streak free and alcohol free" 
+ELSE IF $SP-24202$ LIKE "%antimicrobial finish%" THEN "Antimicrobial protection keeps product cleaner" 
+ELSE IF $SP-24202$ LIKE "%, %" THEN "Key ingredients: "_$SP-24202$
+ELSE IF $SP-24202$ IS NOT NULL THEN "Key ingredient: "_$SP-24202$
 ELSE "@@";
 
--- 4 - Paper Size
+--Computer cleaning pack size
+IF $SP-22606$ LIKE "Each" THEN NULL
+    ELSE IF $SP-22606$ > 1 
+THEN "Contains "_$cnet_cleaning_pack$_" "_COALESCE(A[371].Value.Pluralize().IfLike("s",""), A[7520].Value.Pluralize().IfLike("s",""),
+A[6780].Value.Pluralize().IfLike("s",""), A[7520].Value.Pluralize().IfLike("s",""),
+A[1047].Values.First().Pluralize().IfLike("s",""))_" per "_Request.Data["TX_UOM"].Split("/").Last().ToLower().Replace("each","pack")
+    ELSE "@@";
 
--- Accommodates letter sized papers and files
-IF $SP-12517$ IS NOT NULL
-AND $SP-12517$ Not Like "Other" 
-    THEN "Accommodates "_$SP-12517$_"-size papers and files" 
+--Certification & standards
+IF $SP-21659$ IS NOT NULL
+THEN "Meets or exceeds "_$SP-21659$_" standards" 
 ELSE "@@";
 
--- 5 - Scoring/File Folder Expansion Inches
+--Use for additional product and/or manufacturer information relevant to the customer buying decision--Dimensions/Size
+IF $SP-20654$ IS NOT NULL --H
+AND $SP-21044$ IS NOT NULL --W
+AND $SP-20657$ IS NOT NULL --D
+    THEN "Dimensions: "_$SP-20654$_"""H x "_$SP-21044$_"""W x "_$SP-20657$_"""D" 
+ELSE IF $SP-21044$ IS NOT NULL --W
+AND COALESCE($SP-20657$, $SP-20654$) IS NOT NULL --L
+    THEN "Dimensions: "_$SP-21044$_"""W x "_COALESCE($SP-20657$,$SP-20654$)_"""L" 
+ELSE IF A[6185].ValueUSM IS NOT NULL THEN A[6185].ValueUSM.Replace(" in", """");
 
--- Scored for 3/4 to hold several pages at once
-IF $SP-23627$ > 0
-    THEN "Scored for "_$SP-23627$_""" expansion to hold several pages at once" 
-ELSE "@@";
+--Use for additional product and/or manufacturer information relevant to the customer buying decision
+IF A[374].Values.Flatten() LIKE "%anti-static%" THEN "Anti-static formula cleans and protects" 
+ELSE IF A[5810].Values.Flatten() LIKE "%anti-static%" THEN "Anti-static formula cleans and protects" 
+ELSE IF A[6786].Values.Flatten() LIKE "%anti-static%" THEN "Anti-static formula cleans and protects";
 
--- 6 - Recycled Content % (If Applicable)
-IF $SP-21623$ LIKE $SP-21624$
-AND $SP-21623$ IS NOT NULL
-    THEN "Made from "_$SP-21623$_"% post-consumer recycled material" 
-ELSE IF $SP-21623$  IS NOT NULL
-AND $SP-21624$ = 100
-THEN "Made from "_$SP-21623$_"% recycled material with "_$SP-21624$_"% post-consumer material" 
-ELSE IF $SP-21623$  IS NOT NULL
-AND $SP-21624$ IS NOT NULL
-    THEN "Made from "_$SP-21623$_"% recycled material with at least "_$SP-21624$_"% post-consumer material" 
-ELSE IF $SP-21623$  IS NOT NULL
-    THEN "Made from "_$SP-21623$_"% recycled material" 
-ELSE IF $SP-21624$ = 100 
-    THEN "Made from "_$SP-21624$_"% post-consumer material" 
-ELSE IF $SP-21624$ IS NOT NULL 
-    THEN "Made from at least "_$SP-21624$_"% post-consumer material" 
-ELSE "@@";
+IF COALESCE(A[374].Values.Where("%alcohol%free%"), 
+A[6970].Values.Where("%alcohol%free%")) IS NOT NULL 
+AND COALESCE(A[374].Values.Where("%streak%free%"), 
+A[6970].Values.Where("%streak%free%")) IS NOT NULL 
+    THEN "Streak- and alcohol-free" 
+ELSE IF COALESCE(A[374].Values.Where("%alcohol%free%"), 
+A[6970].Values.Where("%alcohol%free%")) IS NOT NULL 
+    THEN "Alcohol-free solution is safe for all screens" 
+ELSE IF COALESCE(A[374].Values.Where("%streak%free%"), 
+A[6970].Values.Where("%streak%free%")) IS NOT NULL 
+    THEN "Streak-free";
 
--- 7 - Hanging File Folder Pack Size
+IF A[374].Where("%antimicrobial finish%").Values IS NOT NULL THEN "Antimicrobial protection keeps product cleaner";
 
--- Contains 25 folders per pack
-IF Request.Data["TX_UOM"] IS NOT NULL
-AND Request.Data["TX_UOM"] Not Like "Each" 
-    THEN "Contains "_Request.Data["TX_UOM"].Replace("/", " folders per ")
-ELSE "@@";
+IF A[374].Where("%dust-resistant%spill-resistant").Values IS NOT NULL THEN "Protect from dust and spills";
 
--- 8-12(5) - Use for additional product and/or manufacturer information relevant to the customer buying decision
+--Use for additional product and/or manufacturer information relevant to the customer buying decision
+IF A[5795].Value LIKE "%transparent%" THEN "Clear color";
 
--- Water resistant for durability
-IF A[5945].Values.Where("waterproof") IS NOT NULL
-    THEN "Water-resistant for durability";
+--Use for additional product and/or manufacturer information relevant to the customer buying decision
+CASE COALESCE(A[371].Value, A[7520].Value)
+    WHEN NULL THEN NULL
+    WHEN "%air%" THEN "Canned air is perfect for getting crumbs out of your keyboard";
 
-IF A[6984].Value Like "No" 
-    THEN "No assembly required";
+--Use for additional--package content(if each)
+IF $SP-22606$ LIKE "Each" AND COALESCE(A[4868].Values, A[4846].Values, A[7521].Values, A[7094].Values, A[6958].Values) IS NOT NULL
+    THEN "Package contains "_COALESCE(A[4868].Values.Replace(" oz "," oz. ").EraseTextSurroundedBy("()").FlattenWithAnd(), 
+A[4846].Values.Replace(" oz "," oz. ").EraseTextSurroundedBy("()").FlattenWithAnd(), 
+A[7521].Values.Replace(" oz "," oz. ").EraseTextSurroundedBy("()").FlattenWithAnd(), 
+A[6958].Values.Replace(" oz "," oz. ").EraseTextSurroundedBy("()").FlattenWithAnd(), 
+A[7094].Values.Replace(" oz "," oz. ").EraseTextSurroundedBy("()").FlattenWithAnd()); 
 
--- Hanging File Pockets will fit in a file drawer or desktop filing system
-IF A[5921].Value Like "%Hanging File%" 
-    THEN "##"_A[5921].Value.ToUpperFirstChar()_" fits in a file drawer or desktop filing system" 
-ELSE IF A[5922].Value Like "%Hanging File%" 
-    THEN "##"_A[5922].Value.ToUpperFirstChar()_" fits in a file drawer or desktop filing system";
+--Use for additional product and/or manufacturer information relevant to the customer buying decision
+IF COALESCE(A[4846].Where("%extension tube%").Values, A[4925].Where("%extension tube%").Values, A[4868].Where("%extension tube%").Values, A[7521].Where("%extension tube%").Values) 
+IS NOT NULL THEN "Includes an extension tube for pin point cleaning";
 
---swing hooks
-IF A[5945].Values.Where("%Swing hooks") IS NOT NULL 
-    THEN "Swing hooks fold in or swing out as needed for use as a hanging file or a regular expanding pocket";
+--Use for additional product and/or manufacturer information relevant to the customer buying decision
+IF A[374].Values.Flatten() LIKE "%washable cloth%" THEN "Cleaning cloth comes in washable design for simple cleanup and cleans without causing any damages to delicate surfaces";
 
---Tabs and inserts included for placement in 5 tab positions
-IF A[5945].Where("%tab positions").Values IS NOT NULL
-    THEN "Tabs and inserts are included for placement in "_A[5945].Where("%tab positions").Values.First();
-
--- Staples Reinforced Box-Bottom Hanging File Folders are ideal for large files
-IF A[5945].Where("box bottom").Values IS NOT NULL
-    THEN "Box-bottom hanging file folders are ideal for large files";
-
-IF A[3574].Value IS NOT NULL 
-    THEN "##"_A[3574].Value.Replace(" years", "-year").Replace(" months", "-month").Replace(" days", "-day").Replace(" year", "-year").Erase("limited").Erase("manufacturer").Erase("warranty").ToUpperFirstChar()_" manufacturer limited warranty" 
-ELSE "@@";
+IF A[374].Values.Where("anti-scratch") IS NOT NULL THEN
+    "Devices will not scratch";

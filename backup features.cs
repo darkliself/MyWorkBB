@@ -253,3 +253,151 @@ void CoffeCapacity() {
         Add($"CoffeCapacity⸮Capacity: {capacity}oz.");
     }
 }
+
+
+// "Bullet 2" "Post-it Size & Post-it color Collection" 
+void PostItSizeColorCollection()
+{
+    var postItSizeColorCollection = "";
+    var size = !(R("SP-18403") is null) || !R("SP-18403").Text.Equals("<NULL>") ? R("SP-18403").Text :
+    !(R("cnet_common_SP-18403") is null) || !R("cnet_common_SP-18403").Text.Equals("<NULL>") ? R("cnet_common_SP-18403").Text : "";
+    var width = !(R("SP-21044") is null) || !R("SP-21044").Text.Equals("<NULL>") ? R("SP-21044").Text :
+    !(R("cnet_common_SP-21044") is null) || !R("cnet_common_SP-21044").Text.Equals("<NULL>") ? R("cnet_common_SP-21044").Text : "";// width in inches 
+    var length = !(R("SP-20400") is null) || !R("SP-20400").Text.Equals("<NULL>") ? R("SP-20400").Text :
+    !(R("cnet_common_SP-20400") is null) || !R("cnet_common_SP-20400").Text.Equals("<NULL>") ? R("cnet_common_SP-20400").Text : ""; // length in inches 
+    var hasWidthAndLength = (!String.IsNullOrEmpty(width) && !String.IsNullOrEmpty(length));
+    var colorCollection = R("SP-350290").Text;
+    var paperColor = A[6022];
+    if (!String.IsNullOrEmpty(size) && size.ToLower().Equals("other")
+    && hasWidthAndLength)
+    {
+        postItSizeColorCollection = $"{width}\"W x {length}\"L sticky notes";
+    }
+    else if (!String.IsNullOrEmpty(colorCollection) && paperColor.HasValue("canary yellow")
+    && colorCollection.Equals("Assorted")
+    && (String.IsNullOrEmpty(size) || !size.ToLower().Equals("other"))
+    && hasWidthAndLength)
+    {
+        postItSizeColorCollection = $"{width}\"W x {length}\"L, Canary Yellow + assorted color notes";
+    }
+    else if (paperColor.HasValue("%canary yellow%") && hasWidthAndLength)
+    {
+        postItSizeColorCollection = $"{width}\"W x {length}\"L notes in the canary yellow attach without staples, paperclips, or tape";
+    }
+    else if (!String.IsNullOrEmpty(colorCollection) && colorCollection.ToLower().Equals("bora bora")
+    && hasWidthAndLength)
+    {
+        postItSizeColorCollection = $"{width}\"W x {length}\"L notes in the Bora Bora Collection hold stronger and longer than other notes";
+    }
+    else if (!String.IsNullOrEmpty(colorCollection) && colorCollection.ToLower().Equals("bali") && hasWidthAndLength)
+    {
+        postItSizeColorCollection = $"{width}\"W x {length}\"L notes in the Bali Collection hold stronger and longer than other notes";
+    }
+    else if (!String.IsNullOrEmpty(colorCollection) && colorCollection.ToLower().Equals("helsinki") && hasWidthAndLength)
+    {
+        postItSizeColorCollection = $"{width}\"W x {length}\"L Helsinki Collection notes are just the right size to carry around or keep on your desk";
+    }
+    else if (!String.IsNullOrEmpty(colorCollection) && colorCollection.ToLower().Equals("jaipur") && hasWidthAndLength)
+    {
+        postItSizeColorCollection = $"{width}\"W x {length}\"L Jaipur Collection notes stand out from the crowd to give you peace of mind";
+    }
+    else if (!String.IsNullOrEmpty(colorCollection) && colorCollection.ToLower().Equals("miami") && hasWidthAndLength)
+    {
+        postItSizeColorCollection = $"{width}\"W x {length}\"L notes in the Miami Collection are a simple tool to keep your everyday organized";
+    }
+    else if (!String.IsNullOrEmpty(colorCollection) && colorCollection.ToLower().Equals("rio de janeiro") && hasWidthAndLength)
+    {
+        postItSizeColorCollection = $"Eye-catching {width}\"W x {length}\"L Rio de Janeiro notes";
+    }
+    else if (!String.IsNullOrEmpty(colorCollection) && colorCollection.ToLower().Equals("rio de janeiro"))
+    {
+        postItSizeColorCollection = $"Grab even the busiest person's attention with the Rio de Janeiro Collection";
+    }
+    else if (!String.IsNullOrEmpty(colorCollection) && colorCollection.ToLower().Equals("marrakesh") && hasWidthAndLength)
+    {
+        postItSizeColorCollection = $"{width}\"W x {length}\"L notes in the Marrakesh Collection keep your messages visible";
+    }
+    else if (!String.IsNullOrEmpty(colorCollection) && colorCollection.ToLower().Equals("new york") && hasWidthAndLength)
+    {
+        postItSizeColorCollection = $"{width}\"W x {length}\"L New York notes include colors inspired by the skyline, stone and steel";
+    }
+    else if (!String.IsNullOrEmpty(colorCollection) && colorCollection.ToLower().Equals("new york"))
+    {
+        postItSizeColorCollection = $"New York Collection includes colors inspired by the skyline, stone and steel";
+    }
+    else if (!String.IsNullOrEmpty(colorCollection) && colorCollection.ToLower().Equals("marseille") && hasWidthAndLength)
+    {
+        postItSizeColorCollection = $"{width}\"W x {length}\"L notes in the Marseille Collection are a simple tool to keep you organized";
+    }
+    else if (!String.IsNullOrEmpty(colorCollection) && hasWidthAndLength)
+    {
+        postItSizeColorCollection = $"{width}\"W x {length}\"L notes in the {colorCollection.Replace(@"Assorted", @"ass_orted")} Collection are a simple tool to keep you organized";
+    }
+    else if (colorCollection.ToLower().Contains("assorted"))
+    {
+        postItSizeColorCollection = "Assorted colors notes";
+    }
+    else if (!String.IsNullOrEmpty(colorCollection))
+    {
+        postItSizeColorCollection = $"{colorCollection} Collection notes are a simple tool to keep your everyday organized";
+    }
+    else if (!String.IsNullOrEmpty(size))
+    {
+        postItSizeColorCollection = $"{Coalesce(size).RegexReplace(@"(\d*"")(\sx\s)(\d*"")", "$1W$2$3L")} sticky notes";
+    }
+
+    if (!String.IsNullOrEmpty(postItSizeColorCollection))
+    {
+        Add($"PostItSizeColorCollection⸮{postItSizeColorCollection}");
+    }
+}
+
+
+
+// "Bullet 3" "Sheet Count/Pads per Pack" 
+void SheetCountPadsPack() {
+    var result = "";
+    var padsPerPack = GetReferenceBase("SP-350416");
+    var pads_x_sheets = Coalesce(A[6110]);
+    var pagesSheetsQty = A[6021];
+    var TX_UOM = Coalesce(REQ.GetVariable("TX_UOM"));
+    var size = TX_UOM.HasValue("Dozen") ? 12 : TX_UOM.ExtractNumbers().Any() ? TX_UOM.ExtractNumbers().First() : 0;
+    var pack = TX_UOM.HasValue() ? TX_UOM.ToString().Split("/").Last() : "";
+    var sheets = 0;
+    var colorCollection = GetReferenceBase("SP-350290");
+    if (pads_x_sheets.HasValue()) {
+        sheets = pads_x_sheets.FirstValueOrDefault().ToString().Split("x").Count() == 2 ? pads_x_sheets.FirstValueOrDefault().ExtractNumbers().Last() : 0;
+    }
+    if (padsPerPack.HasValue() && !padsPerPack.HasValue("1")) {
+         if (padsPerPack.HasValue("12")) {
+            if (colorCollection.HasValue("assorted")) {
+                result = "12 per pack";
+            }
+            else {
+                result = "Dozen per pack";
+            }
+        }
+        result = $"{padsPerPack} per pack";
+    }
+    if (pads_x_sheets.HasValue() && pads_x_sheets.FirstValueOrDefault().ToString().Split("x").Count() == 2
+    && size != 0 && sheets != 0) {
+        result = $"{sheets} notes per pad; {size} pads per pack";
+    }
+    else if (pagesSheetsQty.HasValue()) {
+        result = $"They come in a pack of {pagesSheetsQty.FirstValueOrDefault()}";
+    }
+    else if (size != 0) {
+        if (TX_UOM.HasValue("Dozen")) {
+            if (colorCollection.HasValue("assorted")) {
+                result = "12 per pack";
+            }
+            else {
+                result = "Dozen per pack";
+            }
+        }
+        result = $"{size} per {pack.ToLower()}";
+    }
+    if (!String.IsNullOrEmpty(result)) {
+        Add($"SheetCountPadsPack⸮{result}");
+    }
+}
