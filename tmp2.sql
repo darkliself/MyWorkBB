@@ -1,157 +1,276 @@
--- [FEATURE #1]
--- Laminating machine type, Color, Compatibility (also for pouches/rolls) & Use
+--Pocket Folder Type, True Color & Pocket Folder Material
 
--- White thermal and cold personal laminator for occasional home and hobbyist use 
--- Thermal and cold laminating machine, thermal lamination for 3-mil or 5-mil and cold setting for self-adhesive pouches 
--- For use with thermal laminating pouches
---  Perfect for all personal lamination needs
--- 3M Scotch® 9'' Thermal laminator in gray color laminates item up to 5 mil thick and helps to protect documents.
--- The GBC Ultima 65 27-inch thermal roll laminator makes it easy to protect and preserve the important documents.
+--SP-22708 - Type
+--SP-22967 - True Color 
+--SP-22709 - Material
 
-IF $SP-22967$ IS NOT NULL
-AND $SP-18633$ IS NOT NULL
-AND A[6899].Values.Flatten() IS NOT NULL
-THEN $SP-22967$_" "_REF["SP-18633"].Replace("&","and")_" laminator for use with laminating "_A[6899].Values.Flatten().Replace("pouch", "pouches").Replace("roll", "rolls")_" to protect documents" 
-ELSE IF $SP-22967$ IS NOT NULL
-AND $SP-18633$ IS NOT NULL
-THEN $SP-22967$_" "_$SP-18633$_" laminator makes it easy to protect and preserve the important documents" 
-ELSE IF $SP-18633$ IS NOT NULL
-AND A[6899].Values.Flatten() IS NOT NULL
-THEN REF["SP-18633"].Replace("&","and")_" laminator for use with laminating "_A[6899].Values.Flatten().Replace("pouch", "pouches").Replace("roll", "rolls")_" to protect documents" 
-ELSE IF $SP-18633$ IS NOT NULL 
-THEN $SP-18633$_" laminator makes it easy to protect and preserve the important documents" 
+--2-pocket folder with fastener is made of poly material in assorted colors (blue, green, yellow, red) 
+IF $SP-22708$ IS NOT NULL
+AND $SP-22967$ LIKE "Assorted" 
+AND $SP-22709$ IS NOT NULL
+    THEN REF["SP-22708"].IfLike("Fasteners", "Fastener").IfLike("Heavy duty", "Heavy-duty")
+         _" folders are made of " 
+         _$SP-22709$_" material" 
+         _" in assorted colors" 
+
+ELSE IF $SP-22708$ IS NOT NULL AND $SP-22708$ LIKE "%pocket folder" 
+AND $SP-22967$ LIKE "Multicolor" 
+AND $SP-22709$ IS NOT NULL
+    THEN "Multicolor " 
+         _$SP-22708$
+         _" is made of " 
+         _$SP-22709$_" material" 
+
+ELSE IF $SP-22708$ IS NOT NULL
+AND $SP-22967$ LIKE "Multicolor" 
+AND $SP-22709$ IS NOT NULL
+    THEN "Multicolor " 
+         _REF["SP-22708"].IfLike("Fasteners", "Fastener").IfLike("Heavy duty", "Heavy-duty")
+         _" folders are made of " 
+         _$SP-22709$_" material" 
+
+--Clear polypropylene for easy viewing and durability (https://www.staples.com/Report-Covers/cat_CL130501)
+ELSE IF $SP-22708$ IS NOT NULL
+AND $SP-22967$ LIKE "Clear" 
+AND $SP-22709$ IS NOT NULL
+    THEN REF["SP-22708"].IfLike("Fasteners", "Fastener").IfLike("Heavy duty", "Heavy-duty")
+         _" folders are made of clear " 
+         _$SP-22709$
+         _" material for easy viewing and durability" 
+
+--JAM Paper® Blue Plastic Two Pocket 3 Hole Punched Presentation School Folders are crafted from heavy duty plastic          
+ELSE IF $SP-22708$ IS NOT NULL
+AND $SP-22709$ LIKE "Plastic" 
+AND $SP-22967$ IS NOT NULL
+    THEN $SP-22967$_" "_REF["SP-22708"].IfLike("Fasteners", "Fastener").IfLike("Heavy duty", "Heavy-duty")
+_" folder is crafted from plastic" 
+
+--Esselte Oxford 2-Pocket folder in yellow color made of sturdy leatherette stock resists tearing
+ELSE IF $SP-22708$ IS NOT NULL
+AND $SP-22709$ LIKE "Leatherette Stock" 
+AND $SP-22967$ IS NOT NULL
+    THEN REF["SP-22708"].IfLike("Fasteners", "Fastener").IfLike("Heavy duty", "Heavy-duty")
+         _" folder comes in " 
+         _$SP-22967$
+         _" and made of sturdy leatherette stock resists tearing" 
+
+--This blue Staples poly folder with prong fasteners is made of poly material for durability and is resistant to tearing as well as water. (https://www.staplesadvantage.com/shop/StplShowItem?catalogId=4&item_id=1213096&langId=-1&currentSKUNbr=431484&storeId=10101&itemType=1&addWE1ToCart=true&documentID=665429ac8ca3b64b1611200b5cc44499d565ada7)
+
+ELSE IF $SP-22708$ IS NOT NULL
+AND $SP-22709$ LIKE "Poly" 
+AND $SP-22967$ IS NOT NULL AND $SP-22708$ LIKE "%Pocket folder" 
+    THEN $SP-22967$_" "_$SP-22708$_"s are made of poly material for durability" 
+
+ELSE IF $SP-22708$ IS NOT NULL
+AND $SP-22709$ LIKE "Poly" 
+AND $SP-22967$ IS NOT NULL
+    THEN $SP-22967$_" "_REF["SP-22708"].IfLike("Fasteners", "Fastener").IfLike("Heavy duty", "Heavy-duty")
+_" folders are made of poly material for durability" 
+
+--Made of dark blue standard embossed paper stock for a professional appearance
+ELSE IF A[5945].Where("embossed").Values IS NOT NULL
+AND $SP-22708$ IS NOT NULL
+AND $SP-22709$ LIKE "Paper Stock" 
+AND $SP-22967$ IS NOT NULL
+    THEN REF["SP-22708"].IfLike("Fasteners", "Fastener").IfLike("Heavy duty", "Heavy-duty")
+         _" folders are made of " 
+         _$SP-22967$
+         _" embossed paper stock" 
+
+--Red Esselte Oxford recycled two-pocket folders made from high-quality stock paper for durability (https://www.staplesadvantage.com/shop/StplShowItem?catalogId=4&item_id=25987526&langId=-1&currentSKUNbr=479457&storeId=10101&itemType=1&addWE1ToCart=true&documentID=804ed4368e4d58e26f5a08de91d1fa1055fb13f7)    
+
+ELSE IF $SP-22708$ IS NOT NULL
+AND $SP-22709$ LIKE "Paper Stock" 
+AND $SP-22967$ IS NOT NULL  AND $SP-22708$ LIKE "%Pocket folder" 
+    THEN REF["SP-22708"].IfLike("Fasteners", "Fastener").IfLike("Heavy duty", "Heavy-duty")
+         _" folder is made from high-quality " 
+         _$SP-22967$
+         _" paper stock" 
+
+ELSE IF $SP-22708$ IS NOT NULL
+AND $SP-22709$ LIKE "Paper Stock" 
+AND $SP-22967$ IS NOT NULL
+    THEN REF["SP-22708"].IfLike("Fasteners", "Fastener").IfLike("Heavy duty", "Heavy-duty")
+         _" folders are made from high-quality " 
+         _$SP-22967$
+         _" paper stock" 
+
+--These folders are made from smooth 100lb cardstock and have a shiny glossy finish
+ELSE IF $SP-22708$ IS NOT NULL
+AND $SP-22709$ LIKE "Cardstock" 
+AND $SP-22967$ IS NOT NULL
+AND A[5945].Where("%gloss finish").Values IS NOT NULL
+    THEN REF["SP-22708"].IfLike("Fasteners", "Fastener").IfLike("Heavy duty", "Heavy-duty")
+         _" folders are made from " 
+         _$SP-22967$
+         _" smooth cardstock and have a shiny finish" 
+
+--These folders are made of 80lb cardstock so it is durable, yet still lightweight (https://www.staplesadvantage.com/shop/StplShowItem?catalogId=4&item_id=73158243&langId=-1&currentSKUNbr=263440&storeId=10101&itemType=1&addWE1ToCart=true&documentID=0739d3f585b585bdccbeec94ad706a9eac0bed41)         
+ELSE IF $SP-22708$ IS NOT NULL
+AND $SP-22709$ LIKE "Cardstock" 
+AND $SP-22967$ IS NOT NULL
+    THEN REF["SP-22708"].IfLike("Fasteners", "Fastener").IfLike("Heavy duty", "Heavy-duty")
+         _" folders are made from " 
+         _$SP-22967$
+         _" cardstock so they are durable, yet still lightweight" 
+
+ELSE IF $SP-22708$ IS NOT NULL
+AND $SP-22709$ IS NOT NULL
+AND $SP-22967$ IS NOT NULL
+    THEN REF["SP-22708"].IfLike("Fasteners", "Fastener").IfLike("Heavy duty", "Heavy-duty")
+         _" folder in " 
+         _$SP-22967$
+         _" color is made of "_$SP-22709$_" material" 
+
+ELSE IF $SP-22709$ IS NULL
+AND $SP-22967$ LIKE "Clear" 
+AND $SP-22708$ IS NOT NULL
+    THEN "Clear "_REF["SP-22708"].IfLike("Fasteners", "Fastener").IfLike("Heavy duty", "Heavy-duty")_" folder for easy viewing" 
+
+ELSE IF $SP-22709$ IS NULL
+AND $SP-22967$ IS NOT NULL
+AND $SP-22708$ IS NOT NULL
+    THEN REF["SP-22708"].IfLike("Fasteners", "Fastener").IfLike("Heavy duty", "Heavy-duty")
+         _" folder in " 
+         _$SP-22967$
+
+ELSE IF $SP-22709$ IS NOT NULL
+AND $SP-22967$ IS NULL
+AND $SP-22708$ IS NOT NULL
+    THEN REF["SP-22708"].IfLike("Fasteners", "Fastener").IfLike("Heavy duty", "Heavy-duty")
+         _" folders are made of " 
+         _$SP-22709$_" material" 
 ELSE "@@";
 
--- [FEATURE #2]
--- Construction (includes no. of rollers), Heat-up Time (includes special tech) & Laminating Speed
+--# of Pockets
 
--- Fusion® 7000L Laminator provides faster-than-ever lamination with a 1-minute warm-up time and superior laminating speed.
--- -- It laminates at variable speeds of up to 10'' per minute. 
+--Divide It Up folder with four pockets for easier organization of documents(https://www.staples.com/Oxford-Divide-It-Up-Poly-4-Pocket-Folder-Black/product_936907)  
+IF $SP-22710$ LIKE "4 Pockets" 
+    THEN "Folder with four pockets for easier organization of documents" 
 
-IF $SP-12512$ LIKE "1" 
-AND $SP-12674$ IS NOT NULL
-THEN "Provides lamination with "_$SP-12512$_" minute warm-up time and "_$SP-12674$_""" per minute laminating speed" 
-ELSE IF $SP-12512$ IN ("2","3","4","5","6","7","8","9")   
-AND $SP-12674$ IS NOT NULL
-THEN "Provides lamination with "_$SP-12512$_" minutes warm-up time and "_$SP-12674$_""" per minute laminating speed" 
-ELSE IF $SP-12512$ IS NOT NULL
-AND $SP-12674$ IS NOT NULL
-THEN "Provides lamination with "_$SP-12512$_"-minutes warm-up time and "_$SP-12674$_""" per minute laminating speed" 
-ELSE IF $SP-12512$ LIKE "1" 
-THEN "Laminator provides lamination with "_$SP-12512$_" minute warm-up time" 
-ELSE IF $SP-12512$ IN ("2","3","4","5","6","7","8","9")   
-THEN "Laminator provides lamination with "_$SP-12512$_" minutes warm-up time" 
-ELSE IF $SP-12512$ IS NOT NULL
-THEN "Laminator provides lamination with "_$SP-12512$_"-minutes warm-up time" 
-ELSE IF $SP-12674$ IS NOT NULL
-THEN "Laminates at variable speeds of up to "_$SP-12674$_""" per minute" 
+ELSE IF $SP-22710$ LIKE "1 Pocket" 
+    THEN "One interior pocket provides storage space for papers, brochures and more" 
+
+ELSE IF $SP-22710$ IN ("2 Pockets", "3 Pockets")
+    THEN "Feature "_$SP-22710$_" to store papers, brochures, and more" 
+
+ELSE IF $SP-22710$ IS NOT NULL
+    THEN $SP-22710$_" allow for detailed organization" 
 ELSE "@@";
 
--- [FEATURE #3]
--- Throat Width & Input (Type & Size)
+--Paper Size
 
--- 27'' wide throat supports input up to 27'' wide or letter-sized documents 
-IF $SP-22453$ IS NOT NULL
-AND $SP-23995$ IS NOT NULL
-THEN $SP-22453$_""" wide throat supports input up to "_$SP-23995$_""" wide" 
+--Comfortably holding standard letter-size paper (8 1/2'' x 11'')(https://www.quill.com/jam-paper-plastic-eco-two-pocket-clasp-school-folders-prong-clip-fasteners-black-6-pack-382ecbld/cbs/50835132.html?promoCode=&Effort_Code=901&Find_Number=1434009JAM&m=0&isSubscription=False)
+IF $SP-12517$ LIKE "Letter" 
+    THEN "Holds standard letter-size paper (8.5"" x 11"")" 
+
+--These folders provide an efficient and durable way to collect and store all types of legal-sized documents (https://www.staplesadvantage.com/shop/StplShowItem?catalogId=4&item_id=52264825&langId=-1&currentSKUNbr=807787&storeId=10101&itemType=1&addWE1ToCart=true&documentID=e4ec4a56a00ea94fafc4273ad6326db63115ad37)
+ELSE IF $SP-12517$ LIKE "Legal" 
+     THEN "These folders provide an efficient and durable way to collect and store all types of legal-sized documents" 
 ELSE "@@";
 
--- [FEATURE #4]
--- Dimensions
+--Expandable Folder (If Applicable)
 
--- Dimensions: 5.5''H x 16.8''W x 8.25''D 
-IF $SP-20654$ IS NOT NULL
-AND $SP-21044$ IS NOT NULL
-AND $SP-20657$ IS NOT NULL
-THEN "Dimensions: "_$SP-20654$_"""H x "_$SP-21044$_"""W x "_$SP-20657$_"""D" 
+--Expands 3/4'' for greater storage capacity
+IF A[8552].UnitUSM LIKE "in" 
+    THEN "Expands " 
+         _A[8552].ValueUSM.ExtractDecimals()
+         .ToText("F2").RegexReplace("(?:(\.\d*?[1-9]+)|\.)0*$", "$1")
+         _""" for greater storage capacity" 
+ELSE IF A[8552].UnitUSM LIKE "ft" 
+    THEN "Expands " 
+         _A[8552].ValueUSM.ExtractDecimals().First().MultiplyBy(12).ToText("F2").RegexReplace("(?:(\.\d*?[1-9]+)|\.)0*$", "$1")
+         _""" for greater storage capacity" 
+ELSE IF A[8552].Unit LIKE "cm" 
+    THEN "Expands " 
+         _A[8552].Value.ExtractDecimals().First().MultiplyBy(0.393701).ToText("F2").RegexReplace("(?:(\.\d*?[1-9]+)|\.)0*$", "$1")
+         _""" for greater storage capacity" 
+ELSE IF A[8552].Unit LIKE "m" 
+    THEN "Expands " 
+         _A[8552].Value.ExtractDecimals().First().MultiplyBy(39.3701).ToText("F2").RegexReplace("(?:(\.\d*?[1-9]+)|\.)0*$", "$1")
+         _""" for greater storage capacity" 
+ELSE IF A[8552].Unit LIKE "mm" 
+    THEN "Expands " 
+         _A[8552].Value.ExtractDecimals().First().MultiplyBy(0.0393701).ToText("F2").RegexReplace("(?:(\.\d*?[1-9]+)|\.)0*$", "$1")
+         _""" for greater storage capacity" 
 ELSE "@@";
 
--- [FEATURE #5]
--- Functionality (includes special tech & ADF) & Anti-jam features
-
--- Pouch Thickness Detection automatically determines optimal settings
--- Rapid 1-minute warm-up with InstaHeat Technology 
--- Auto Reverse mode reverses document flow for easy removal
--- Reverse jam prevention ensures smooth operation 
-IF A[4282].Where("Flash Heat Technology").Values.Flatten()  IS NOT NULL
-THEN "Rapid warm-up with Flash-Heat Technology" 
-ELSE IF A[4282].Where("auto pouch thickness detection") IS NOT NULL
-THEN "Pouch Thickness Detection automatically determines optimal settings" 
-ELSE IF A[4282].Where("reverse button") IS NOT NULL
-THEN "Reverses jam prevention ensures smooth operation" 
-ELSE IF A[4282].Where("auto reverse function") IS NOT NULL
-THEN "Auto-reverse mode reverses document flow for easy removal" 
-
-ELSE IF A[6904].Value LIKE "Anti-jam system" 
-THEN "Anti-jam system for efficient laminating" 
+--Pocket Folder Pack Size (If more than 1)
+IF Request.Data["TX_UOM"] LIKE "Each" THEN NULL
+ELSE IF Request.Data["TX_UOM"].ExtractDecimals().First() < 11
+    THEN Request.Data["TX_UOM"].ExtractDecimals().First()
+         _" folders per "_Request.Data["TX_UOM"].Split("/").Last().ToLower() 
+--25 folders per box is enough for almost any project (11-49)
+ELSE IF Request.Data["TX_UOM"].ExtractDecimals().First() < 50
+    THEN Request.Data["TX_UOM"].ExtractDecimals().First()
+         _" folders per " 
+         _Request.Data["TX_UOM"].Split("/").Last().ToLower() 
+--50 pack size for economy and long use (> 50)
+ELSE IF Request.Data["TX_UOM"].ExtractDecimals().First() IS NOT NULL
+     THEN Request.Data["TX_UOM"].ExtractDecimals().First()
+          _" folders per " 
+         _Request.Data["TX_UOM"].Split("/").Last().ToLower()
 ELSE "@@";
 
--- [FEATURE #6]
---Controls/Settings (includes UI) & Indicators (includes display type)
+--Recycled Content % (If Applicable)
 
-IF $SP-1080$ IS NOT NULL
-AND $SP-1080$ NOT LIKE "1" 
-AND $CNET_MKT$ LIKE "%Premium design includes easy-to-use LED touch controls and button that turns green when machine is ready%" 
-THEN REF["SP-1080"].Erase(" settings")_" temperature settings allow for customized use; premium design includes easy-to-use LED touch controls and button that turns green when machine is ready" 
+--60% total recycled content with 30% postconsumer content, making these environmentally friendly
+IF $SP-21623$ > 0
+AND $SP-21624$ > 0
+    THEN $SP-21623$_"% total recycled content with " 
+         _$SP-21624$_"% postconsumer content, making these environmentally friendly" 
 
-ELSE IF $CNET_MKT$ LIKE "%Advanced temperature control ensures heat is carefully monitored for smooth, consistent results every time.%" 
-THEN "Advanced temperature control ensures smooth, consistent results" 
+--Made of 100% recycled content, these files are ideal for the environmentally conscious office
+ELSE IF $SP-21623$ LIKE "100" 
+    THEN "Made of 100% recycled content, these files are ideal for the environmentally conscious office" 
+
+--Contains 50 percent postconsumer recycled content for environmental sustainability
+ELSE IF $SP-21624$ > 0
+    THEN "Contain "_$SP-21624$
+         _" percent postconsumer recycled content for environmental sustainability" 
 ELSE "@@";
 
--- [FEATURE #7]
---Design (includes integrated features, storage options & carrier-free operation)
-IF $CNET_MKT$ LIKE "%Stylish and ultra compact for storage, it laminates a single document from in under a minute%" 
-THEN "Compact design for easy storage" 
+--Additional Bullet (if relevant) (Business card holder)
 
-ELSE IF $CNET_MKT$ LIKE "%Built-in carrying handle and cord wrap allows for neat storage no matter where you go%" 
-THEN "Built-in carrying and cord-wrap handle for easy portability" 
+--A business card holder adds an extra professional touch to each folder(https://www.staples.com/Avery-R-Two-Pocket-Folders-47985-Dark-Blue-Box-of-25/product_811820)
+IF A[5965].Where("business card%").Values IS NOT NULL
+    THEN "A business card holder adds an extra professional touch to each folder";
 
-ELSE IF $CNET_MKT$ LIKE "%Includes hidden built-in cord storage and foldable input tray%" 
-THEN "Hidden built-in cord storage and foldable input tray for easy portability" 
+--Additional Bullet (if relevant) (Closed sides)
 
-ELSE IF $CNET_MKT$ LIKE "%Stylish and compact for storage, the Fusion 1000L laminates%" 
-THEN "Compact design for easy storage" 
-ELSE "@@";
+--Closed sides keep materials safe and secure(https://www.staplesadvantage.com/shop/StplShowItem?catalogId=4&item_id=73629&langId=-1&currentSKUNbr=757666&storeId=10101&itemType=1&addWE1ToCart=true&documentID=3122652577fdd888de9746fb232558420347d5e1)
+IF A[5945].Where("closed sides").Values IS NOT NULL
+    THEN "Closed sides keep materials safe and secure";
 
--- [FEATURE #8]
---Safety Features
-IF $SP-1128$ LIKE "Yes" 
-THEN "For added safety, HeatGuard technology traps heat inside the laminator, so the outside is comfortable to touch" 
-ELSE "@@";
+--Additional Bullet (if relevant) (Capacity)
 
--- [FEATURE #9]
---Power Management 
---Power: 100 - 240 VAC, 50/60 Hz nominal voltage, 55 W (maximum), 23 W (typical), less than 0.3 W (standby) power consumption
+--30 sheet capacity allows for convenient organization of loose papers (https://www.staplesadvantage.com/shop/StplShowItem?catalogId=4&item_id=52338241&langId=-1&currentSKUNbr=811822&storeId=10101&itemType=1&addWE1ToCart=true&documentID=4acada1aa6b2aed6b57772cb18c16e087ca072ae)
+IF A[6576].Value IS NOT NULL
+    THEN A[6576].Value
+         _A[6576].Unit.IfLike("sheets", "sheet").IfLike("pages", "page").Prefix("-")
+         _" capacity allows for convenient organization of loose papers";
 
-IF A[4236].Value IS NOT NULL 
-AND A[3548].Value IS NOT NULL
-THEN "Power: "_A[4236].Value.Erase(" V").Postfix("##V nominal voltage and ")_A[3548].Value.Postfix("##W maximum power consumption")
+--Additional Bullet (if relevant) (Tang fasteners)
 
-ELSE IF A[4236].Value IS NOT NULL 
-THEN "Power: "_A[4236].Value.Erase(" V").Postfix("##V nominal voltage ") 
+--Include stitched-in gussets with three double-tang fasteners to bind punched sheets (https://www.staplesadvantage.com/shop/StplShowItem?catalogId=4&item_id=80438&langId=-1&currentSKUNbr=898320&storeId=10101&itemType=1&addWE1ToCart=true&documentID=d7e51d485eb299e56f6e7cff94bba37c4f7a082b)
+IF A[5950].Value LIKE "3 double-tang fasteners" 
+    THEN "Includes stitched-in gussets with three double-tang fasteners to bind punched sheets";
 
-ELSE IF A[3548].Value IS NOT NULL
-THEN "Power: "_A[3548].Value.Postfix("##W maximum power consumption")
-ELSE "@@";
+--Additional Bullet (if relevant) (CD slots)
 
---[FEATURE #10]
---Maintenance - OOS
+--Some have slots for CDs too, making them great for presentations and press kits (https://www.staples.com/JAM-Paper-Plastic-Heavy-Duty-Two-Pocket-Folders-Clear-108-pack-3383HCLB/product_263474)
+IF A[5965].Where("%CD pocket%").Values IS NOT NULL
+    THEN "Has slots for CDs too, making it great for presentations and press kits";
 
--- EXTRA
--- Auto Shut off save energy and prevents overheating 
-IF $SP-736$ LIKE "Yes" 
-THEN "Auto Shut off save energy and prevents overheating" 
-ELSE "@@";
+--Additional Bullet (if relevant) (Hole punched)
 
---Additional
-IF A[9500].Values.WhereNot("laminator") IS NOT NULL
-    THEN A[9500].Values.WhereNot("laminator").Flatten(", ").Prefix("Package includes: ");
+--Folder is 3-hole punched for greater ease and is ideal for office use (https://www.staplesadvantage.com/shop/StplShowItem?catalogId=4&item_id=51811536&langId=-1&currentSKUNbr=513645&storeId=10101&itemType=1&addWE1ToCart=true&documentID=41e59a7fd2036e268e64c4fa83b6b98bc82bf9ec)
+IF A[6548].Value = 3
+OR A[5940].Value LIKE "3 holes" 
+    THEN "Folder is 3-hole punched for greater ease and is ideal for office use";
 
---[FEATURE #11]
---Warranty Information
-IF A[3574].Value LIKE "%lifetime%" 
-    THEN "Lifetime manufacturer limited warranty" 
-ELSE IF A[3574].Value IS NOT NULL 
-    THEN A[3574].Value.Replace(" years","-year").Replace(" year","-year").Replace(" days","-day").Replace(" day","-day")
-    .Replace(" months", "-month").Replace(" month", "-month").Postfix(" manufacturer limited warranty")
-ELSE "@@";
+--Additional Bullet (if relevant) (Cover clap)
+
+--Get the extra capacity of a file pocket with the added security of a protective cover flap
+IF A[5939].Where("%flap%").Values IS NOT NULL
+    THEN "Get the extra capacity of a file pocket with the added security of a protective cover flap";
