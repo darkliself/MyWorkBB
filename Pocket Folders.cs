@@ -1,6 +1,6 @@
 //§§135391203140674 "Pocket Folders" "Alex K."
 
-//  - All
+FolderMaterialColorDurability();
 // NumberOfPockets - All
 // FileFoldersPaperSize - All
 // Expansion - All
@@ -16,10 +16,38 @@ Additional3Holes();
 AdditionalCoverFlap();
 //
 
-
 // --[FEATURE #1]
 // --Pocket Folder Type, Color & Pocket Folder Material
-
+void PocketFolderTypeMaterialColor(){
+    // Tri-Fold|Envelope|Paper Handler|Document Carrier|School|Portfolio|Presentation|Heavy Duty|Laminated|Fasteners
+    var type = GetReferenceBase("SP-22708");
+    var material = GetReferenceBase("SP-18596");
+    var trueColor = GetReferenceBase("SP-22967");
+    if (trueColor.HasValue(material.Text) && material.HasValue()){
+        trueColor = trueColor.Replace(material, "").RegexReplace(@"[/\,]$", "").RegexReplace(@"^[/\,]", "");
+    }
+    if (trueColor.HasValue()){
+        trueColor = trueColor.Replace("/", ", ");
+    }
+    if (trueColor.HasValue("Assorted") && material.HasValue() && type.HasValue("Fasteners")){
+        Add($"PocketFolderTypeMaterialColor⸮Fasteners are made of {material.ToLower(true)} in assorted colors");
+    }
+    else if (trueColor.HasValue("Assorted") && material.HasValue() && type.HasValue()){
+        Add($"PocketFolderTypeMaterialColor⸮{type.ToLower().ToUpperFirstChar()} folder is made of {material.ToLower(true)} in assorted colors");
+    }
+    else if (trueColor.HasValue("Assorted") && type.HasValue("Fasteners")){
+        Add($"PocketFolderTypeMaterialColor⸮Fasteners come in assorted colors");
+    }
+    else if (trueColor.HasValue("Assorted") && type.HasValue()){
+        Add($"PocketFolderTypeMaterialColor⸮{type.ToLower().ToUpperFirstChar()} folder comes in assorted colors");
+    }
+    else if (material.HasValue() && type.HasValue("Fasteners")) {
+        Add($"PocketFolderTypeMaterialColor⸮Fasteners are made of {material.ToLower(true)}");
+    }
+    else if (material.HasValue() && type.HasValue()) {
+        Add($"PocketFolderTypeMaterialColor⸮{type.ToLower().ToUpperFirstChar()} folder is made of {material.ToLower(true)}");
+    }
+}
 
 // --[FEATURE #2]
 // --# of Pockets

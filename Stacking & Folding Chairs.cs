@@ -6,6 +6,7 @@ TrueColorAndUpholsteryMaterial();
 // Pack Size
 // ArmType -- all
 CapacityTime();
+// TypeOfSupportAndErgonomic
 // Assembly required -- all
 // Standards
 // { Addional features from Design
@@ -101,6 +102,7 @@ void CapacityTime() {
 
 // --[FEATURE #9]
 // -- Type of support and Ergonomic Construction/Design
+// All
 
 // --[FEATURE #10]
 // -- Assembly required

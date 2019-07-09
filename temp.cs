@@ -1,161 +1,114 @@
 /*
-Letter & Desktop Trays
-    0E (Filing & Storage)
-    MD (AV Furniture)
+--Packing tape type & Use    
+        --Acrylic
+        IF $SP-21708$ LIKE "Acrylic" 
+            THEN "Acrylic tape designed for moving and storage needs" 
 
-Specialty Envelopes
-    1A (Envelopes & Shipping Boxes)
-    0E (Filing & Storage)
-    1A (Envelopes & Shipping Boxes)
-    CJ (Storage Accessories)
+        --Carton Sealing
+        ELSE IF $SP-21708$ LIKE "Carton Sealing" 
+            THEN "Carton sealing tape adheres instantly to most surfaces including cartons" 
 
-Business Envelopes
-    1A (Envelopes & Shipping Boxes)
+        --Fashion
+        ELSE IF $SP-21708$ LIKE "Cellophane" 
+            THEN "Cellophane tape offers excellent adhesion, dispensing and handling properties" 
 
-Report Covers
-    0E (Filing & Storage)
+        --Flatback
+        ELSE IF $SP-21708$ LIKE "Flatback" 
+            THEN "Flatback tape is designed to minimize carton-sealing failures and prevent pilferage" 
 
-Hanging File Folders
-    0E (Filing & Storage)
+        --Hot Melt
+        ELSE IF $SP-21708$ LIKE "Hot Melt" 
+            THEN "Hot melt adhesive tape holds strong for your shipping needs" 
 
-Paper Towels & Dispensers
-    2D (Hygiene)
-    2B (Cleaning Tools)
+        --Label Protection
+        ELSE IF $SP-21708$ LIKE "Label Protection" 
+            THEN "Provides excellent label protection" 
 
-Bubble Mailers
-    1A (Envelopes & Shipping Boxes)
-    1C (Packaging Materials)
+        --Paper Tape
+        ELSE IF $SP-21708$ LIKE "Paper Tape" 
+            THEN "Paper tape provides secure closure for inner packing and lightweight packaging" 
 
-File Folders
-    0E (Filing & Storage)
+        --Pre-Printed Message
+        ELSE IF $SP-21708$ LIKE "Pre-Printed Message" 
+            THEN "Pre-Printed Message" 
 
-Bath Tissue & Dispensers
-    2D (Hygiene)
+        --PVC/Bag Sealing
+        ELSE IF $SP-21708$ LIKE "PVC/Bag Sealing" 
+            THEN "PVC/Bag Sealing tape offers excellent adhesion, dispensing and handling properties" 
 
-Pocket Folders
-    0E (Filing & Storage)
-    DJ (Input Accessories)
+        --Reinforced
+        ELSE IF $SP-21708$ LIKE "Reinforced" 
+            THEN "Reinforced strapping tape is ideal for heavy tasks and bundling" 
 
-File Storage
-    0E (Filing & Storage)
-    4C (Storage Furniture)
-    ME (Carrying Cases)
+        --Standard
+        ELSE IF $SP-21708$ LIKE "Standard" 
+            THEN "Standard tape offers excellent adhesion, dispensing and handling properties" 
 
-Napkins & Dispensers 
-    2D (Hygiene)
-    SJ (Tableware)
+        --Strapping/Filament
+        ELSE IF $SP-21708$ LIKE "Strapping/Filament" 
+            THEN "Strapping/Filament tape offers excellent adhesion, dispensing and handling properties" 
 
-Clasp & Catalog Envelopes
-    1A (Envelopes & Shipping Boxes)
-    0E (Filing & Storage)
+        --Water Activated
+        ELSE IF $SP-21708$ LIKE "Water Activated" 
+            THEN "Water activated adhesive bonds to corrugated even in dusty conditions" 
 
-Post-it & Sticky Notes
-    0A (Books & Pads)
+        --Moving
+        ELSE IF $SP-21708$ LIKE "Moving" 
+            THEN "Moving tape offers excellent adhesion, dispensing and handling properties" 
 
-Floor Mats
-    4D (Decoration)
-
-Accordion Folders
-    0E (Filing & Storage)
-
-Classification Folders
-    0E (Filing & Storage)
-
-Hanging File Folders
-    0E (Filing & Storage)
-
-Binder Accessories
-    EI (Printer Consumables)
-    0E (Filing & Storage)
-    0F (Presentation)
-    CJ (Storage Accessories)
-    VB (Photo Albums & Archival Storage)
-    0A (Books & Pads)
-    1C (Packaging Materials)
-
-Binders
-    0E (Filing & Storage)
-    0F (Presentation)
-    ME (Carrying Cases)
-
----------------------------------------
-
-    0E (Filing & Storage) -- 11306
-    MD (AV Furniture) -- OOS
-    1A (Envelopes & Shipping Boxes) -- 11306
-    CJ (Storage Accessories) -- OOS
-    2D (Hygiene) -- OOS
-    2B (Cleaning Tools) -- OOS
-    1C (Packaging Materials) -- OOS
-    DJ (Input Accessories) -- OOS
-    4C (Storage Furniture) -- OOS
-    ME (Carrying Cases) -- OOS
-    SJ (Tableware) -- OOS
-    4D (Decoration) -- OOS
-    EI (Printer Consumables) -- OOS
-    0F (Presentation) -- OOS
-    VB (Photo Albums & Archival Storage) -- OOS
-    0A (Books & Pads) -- 11306
-
-    IF A[11306].Value IS NOT NULL
-THEN A[11306].Value
-ELSE IF DC.Ksp.Values.Where("%post-consumer content%").Replace(" post-consumer content","_post-consumer_content").First().Split(" ").Where("%_post-consumer_content%").ExtractDecimals() IS NOT NULL 
-THEN DC.Ksp.Values.Where("%post-consumer content%").Replace(" post-consumer content","_post-consumer_content").First().Split(" ").Where("%_post-consumer_content%").ExtractDecimals()
-ELSE IF DC.Ksp.Values.Where("%post consumer content%").Replace(" post_consumer content","_post_consumer_content").First().Split(" ").Where("%_post_consumer_content%").ExtractDecimals() IS NOT NULL 
-THEN DC.Ksp.Values.Where("%post consumer content%").Replace(" post_consumer content","_post_consumer_content").First().Split(" ").Where("%_post_consumer_content%").ExtractDecimals();
-
-}
+        --Cellophane
+        ELSE IF $SP-21708$ LIKE "Cellophane" 
+            THEN "Cellophane tape offers excellent adhesion, dispensing and handling properties" 
+                ELSE "@@";
 */
 
-var postCont = A[11306];
 
-if (postCont.HasValue()) {
-    Add(postCont.FirstValue());
-} else {
-    var arr = new List<string>() {
-        DC.KSP.GetLines().Flatten(" ").ToString(),
-        DC.MKT.GetLines().Flatten(" ").ToString(), 
-        DC.WIB.GetLines().Flatten(" ").ToString(),
-        DC.FEAT.GetLines().Flatten(" ").ToString(), 
-        REQ.GetVariable("CNET_SD").ToString(),
-        REQ.GetVariable("CNET_HL").ToString() 
-    };
-    
-    if (DC.KSP.HasValue()) {
-        arr.Add(DC.KSP.GetString());
+void  PackingTapeTypeAndUse(){
+    // Pre-Printed Message|Paper Tape|Reinforced|PVC/Bag Sealing|Acrylic|Standard|Cellophane|Water Activated|Carton Sealing|Strapping/Filament|Flatback|Fashion|Moving|Label Protection|Hot Melt
+    var type = GetReferenceBase("SP-21708");
+    if (type.HasValue("Acrylic")) {
+        Add($"PackingTapeTypeAndUse⸮Acrylic tape designed for moving and storage needs");
     }
-    if (DC.MKT.HasValue()) {
-        arr.Add(DC.MKT.GetString());
+    else if (type.HasValue("Carton Sealing")) {
+        Add($"PackingTapeTypeAndUse⸮Carton sealing tape adheres instantly to most surfaces including cartons");
     }
-    if (DC.WIB.HasValue()) {
-        arr.Add(DC.WIB.GetString());
+    else if (type.HasValue("Cellophane")) {
+        Add($"PackingTapeTypeAndUse⸮Cellophane tape offers excellent adhesion, dispensing and handling properties");
     }
-    if (DC.FEAT.HasValue()) {
-        arr.Add(DC.FEAT.GetString());
+    else if (type.HasValue("Flatback")) {
+        Add($"PackingTapeTypeAndUse⸮Flatback tape is designed to minimize carton-sealing failures and prevent pilferage");
     }
-    if (REQ.GetVariable("CNET_SD").HasValue()) {
-        arr.Add(DC.KSP.GetString());
+    else if (type.HasValue("Hot Melt")) {
+        Add($"PackingTapeTypeAndUse⸮Hot melt adhesive tape holds strong for your shipping needs");
     }
-    if (REQ.GetVariable("CNET_HL").HasValue()) {
-        arr.Add(DC.KSP.GetString());
+    else if (type.HasValue("Label Protection")) {
+        Add($"PackingTapeTypeAndUse⸮Provides excellent label protection");
     }
-    // parcing every element in arr
-    var result = new List<int>();
-    foreach (var item in arr) {
-        var tmp = Coalesce(item);
-        if (!(item is null) && item.Contains(" post-consumer content")) {
-            foreach (var subItem in item.Replace(" post-consumer content", "_post-consumer_content").Split(" ")) {
-                if (subItem.Contains("_post-consumer_content")) {
-                    var checkNum = Coalesce(subItem);
-                    if(checkNum.ExtractNumbers().Any()) {
-                        result.Add(int.Parse(checkNum.ExtractNumbers().First()));
-                    }
-                }
-            }    
-        }
+    else if (type.HasValue("Paper Tape")) {
+        Add($"PackingTapeTypeAndUse⸮Paper tape provides secure closure for inner packing and lightweight packaging");
     }
-
-    if (result.Count > 0) {
-           Add(result.First());
+    else if (type.HasValue("Pre-Printed Message")) {
+        Add($"PackingTapeTypeAndUse⸮Pre-printed message");
     }
-};
+    else if (type.HasValue("PVC/Bag Sealing")) {
+        Add($"PackingTapeTypeAndUse⸮PVC/Bag Sealing tape offers excellent adhesion, dispensing and handling properties");
+    }
+    else if (type.HasValue("Reinforced")) {
+        Add($"PackingTapeTypeAndUse⸮Reinforced strapping tape is ideal for heavy tasks and bundling");
+    }
+    else if (type.HasValue("Standard")) {
+        Add($"PackingTapeTypeAndUse⸮Standard tape offers excellent adhesion, dispensing and handling properties");
+    }
+    else if (type.HasValue("Strapping/Filament")) {
+        Add($"PackingTapeTypeAndUse⸮Strapping/Filament tape offers excellent adhesion, dispensing and handling properties");
+    }
+    else if (type.HasValue("Water Activated")) {
+        Add($"PackingTapeTypeAndUse⸮Water activated adhesive bonds to corrugated even in dusty conditions");
+    }
+    else if (type.HasValue("Moving")) {
+        Add($"PackingTapeTypeAndUse⸮Moving tape offers excellent adhesion, dispensing and handling properties");
+    }
+    else if (type.HasValue("Cellophane")) {
+        Add($"PackingTapeTypeAndUse⸮Cellophane tape offers excellent adhesion, dispensing and handling properties");
+    }
+}

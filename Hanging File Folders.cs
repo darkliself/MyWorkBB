@@ -1,6 +1,6 @@
 //§§135391203140599 "Hanging File Folders" "Alex K."
 
-// true color and material
+// FileFoldersTrueColorMaterial
 // FileFoldersTabPostion
 HangingFileFolderFeature();
 // Expansion
@@ -12,6 +12,9 @@ HangingFileDetailsConstruction();
 AdditionalWaterproof();
 // AssemblyInformation
 AdditionalHangingFileSwingHooks();
+AdditionalHangingFileTabPositions();
+AdditionalHangingFileBoxBottom();
+// Warranty
 
 // --[FEATURE #1]
 // --<Folder Material>, <True Color> & <Folder Durability (If Standard = Leave blank); Including stock & weight #
@@ -80,7 +83,7 @@ void AdditionalWaterproof() {
 // --[FEATURE #11]
 // --Additional AssemblyInformation
 
-// --[FEATURE #13]
+// --[FEATURE #12]
 // -- Additional Hanging File Fits
 void AdditionalHangingFileFits() {
     if (A[5921].HasValue("%Hanging File%")) {
@@ -90,14 +93,14 @@ void AdditionalHangingFileFits() {
         Add($"AdditionalHangingFileFits⸮{A[5922].FirstValueOrDefault().ToUpperFirstChar()} fits in a file drawer or desktop filing system");
     }
 }
-// --[FEATURE #14]
+// --[FEATURE #13]
 // -- Additional Hanging File Swing Hooks
 void AdditionalHangingFileSwingHooks() {
     if (A[5945].HasValue("%Swing hooks")) {
         Add($"AdditionalHangingFileSwingHooks⸮Swing hooks fold in or swing out as needed for use as a hanging file or a regular expanding pocket");
     }
 }
-// --[FEATURE #15]
+// --[FEATURE #14]
 // -- Additional Hanging File Tab Positions
 void AdditionalHangingFileTabPositions() {
     if (A[5945].HasValue("%tab positions")) {
@@ -105,7 +108,7 @@ void AdditionalHangingFileTabPositions() {
     }
 }
 
-// --[FEATURE #16]
+// --[FEATURE #15]
 // -- Additional Additional Hanging File Box Bottom
 void AdditionalHangingFileBoxBottom() {
     if (A[5945].HasValue("box bottom")) {

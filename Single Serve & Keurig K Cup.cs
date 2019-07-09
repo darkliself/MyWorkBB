@@ -33,8 +33,6 @@ void TypeAndCaffeine() {
 }
 // --[FEATURE #2]
 // --Roast and Flavor
-
-
 void RoastAndFlavorKCup() {
     //Cookie|Arabica|Black Silk|Seasonal|Morning Blend|Sumatra Reserve|Our Blend|Cinnamon|Mudslide|Butter Toffee|Colombia Select|Breakfast Blend|Caramel Vanilla|Pecan|Classic Roast|French Roast|Veranda Blend|Mocha Nut Fudge|French Vanilla|Hazelnut|Colombian|Other|Chai Latt�|Unflavored|Pumpkin Spice|Full|Blueberry|Chocolate|Fruit Brew|Caramel|Mocha|Coconut|Cinnamon|Sweet|Gingerbread|Cappuccino|Dark Roast|Hawaiian Blend|Coconut Mocha|Organic Blend|Original Blend|Italian Roast|Vanilla|Jamaica Me Crazy|Guatemalan|Ultra Roast|Mild|Costa Rican|Caf� Almond Biscotti|Bold|Variety Pack|Green|Black|Sumatra|Herbal|Peach|Extra Bold|Espresso|Kahlua|Original Roast|Nantucket Blend|Lemon|Donut Blend|Pike Place|Creme Brulee|Caff� Verona|Caribou Blend|Buffalo Soldier|Dark Italian Roast|Country Blend|Special Blend|House Blend|Variety Pack|Dark Caffe Verona Blend|Signature Blend
     var flavoring = REQ.GetVariable("SP-17872").HasValue() ? REQ.GetVariable("SP-17872") : R("SP-17872").HasValue() ? R("SP-17872") : R("cnet_common_SP-17872"); // Cnet_flavoring

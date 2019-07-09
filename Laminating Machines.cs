@@ -11,6 +11,7 @@ LaminatingMachinePowerManagement();
 // Maintenance OOS
 AdditionalAutoShutOff();
 AdditionalPackageIncludes();
+// Warranty
 
 
 // --[FEATURE #1]
