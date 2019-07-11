@@ -1,125 +1,116 @@
---Dimensions: Width (in Inches) x Length (in Yards); Width is how wide is the tape and Length is the total length on the roll    
-        IF $SP-22586$ IS NOT NULL AND $SP-22585$ IS NOT NULL
-            THEN "Dimensions: "_$SP-22586$_"""W x "_$SP-22585$_" yds. ##L" 
-        ELSE IF $SP-22586$ IS NOT NULL 
-            THEN "Dimensions: "_$SP-22586$_"""W" 
-        ELSE IF $SP-22585$ IS NOT NULL 
-            THEN "Dimensions: "_$SP-22585$_" yds. ##L" 
-                ELSE "@@";
-
---Thickness (millimeters)    
-
-        IF $SP-22042$ <2.7  THEN $SP-22042$_"mm thick tape stands up to rough handling" 
-        ELSE IF $SP-22042$ >2.6  THEN $SP-22042$_"mm thickness for durable strength" 
-                ELSE "@@";
-
---Packing tape type & Use    
-        --Acrylic
-        IF $SP-21708$ LIKE "Acrylic" 
-            THEN "Acrylic tape designed for moving and storage needs" 
-
-        --Carton Sealing
-        ELSE IF $SP-21708$ LIKE "Carton Sealing" 
-            THEN "Carton sealing tape adheres instantly to most surfaces including cartons" 
-
-        --Fashion
-        ELSE IF $SP-21708$ LIKE "Cellophane" 
-            THEN "Cellophane tape offers excellent adhesion, dispensing and handling properties" 
-
-        --Flatback
-        ELSE IF $SP-21708$ LIKE "Flatback" 
-            THEN "Flatback tape is designed to minimize carton-sealing failures and prevent pilferage" 
-
-        --Hot Melt
-        ELSE IF $SP-21708$ LIKE "Hot Melt" 
-            THEN "Hot melt adhesive tape holds strong for your shipping needs" 
-
-        --Label Protection
-        ELSE IF $SP-21708$ LIKE "Label Protection" 
-            THEN "Provides excellent label protection" 
-
-        --Paper Tape
-        ELSE IF $SP-21708$ LIKE "Paper Tape" 
-            THEN "Paper tape provides secure closure for inner packing and lightweight packaging" 
-
-        --Pre-Printed Message
-        ELSE IF $SP-21708$ LIKE "Pre-Printed Message" 
-            THEN "Pre-Printed Message" 
-
-        --PVC/Bag Sealing
-        ELSE IF $SP-21708$ LIKE "PVC/Bag Sealing" 
-            THEN "PVC/Bag Sealing tape offers excellent adhesion, dispensing and handling properties" 
-
-        --Reinforced
-        ELSE IF $SP-21708$ LIKE "Reinforced" 
-            THEN "Reinforced strapping tape is ideal for heavy tasks and bundling" 
-
-        --Standard
-        ELSE IF $SP-21708$ LIKE "Standard" 
-            THEN "Standard tape offers excellent adhesion, dispensing and handling properties" 
-
-        --Strapping/Filament
-        ELSE IF $SP-21708$ LIKE "Strapping/Filament" 
-            THEN "Strapping/Filament tape offers excellent adhesion, dispensing and handling properties" 
-
-        --Water Activated
-        ELSE IF $SP-21708$ LIKE "Water Activated" 
-            THEN "Water activated adhesive bonds to corrugated even in dusty conditions" 
-
-        --Moving
-        ELSE IF $SP-21708$ LIKE "Moving" 
-            THEN "Moving tape offers excellent adhesion, dispensing and handling properties" 
-
-        --Cellophane
-        ELSE IF $SP-21708$ LIKE "Cellophane" 
-            THEN "Cellophane tape offers excellent adhesion, dispensing and handling properties" 
-                ELSE "@@";
-
---True color    
-        IF $SP-22967$ LIKE "Clear" 
-        THEN "High-clarity clear tape" 
-
-        ELSE IF $SP-22967$ IS NOT NULL
-            THEN "Comes in "_$SP-22967$
-                ELSE "@@";
-
---Label adhesive    
-        IF $SP-2779$ LIKE "Non-Adhesive" THEN "Non-Adhesive" 
-        ELSE IF $SP-2779$ LIKE "Permanent" THEN A[6449].Value.Erase("paper").IfLike("%kraft%","Kraft tape is made for permanent adhesion").IfLike("", "Tape is made for permanent adhesion")
-        ELSE IF $SP-2779$ LIKE "Permanent Self-Adhesive" THEN "Permanent Self-Adhesive" 
-        ELSE IF $SP-2779$ LIKE "Removable" THEN "Removable" 
-                ELSE "@@";
-
---Pack Size (If more than 1)    
-IF Request.Data["TX_UOM"] NOT IN ("each","roll")
-    THEN "Comes in "_Request.Data["TX_UOM"].RegexReplace("(\S+)[\/](\S+)", "$2 of $1")
+--Battery backup or UPS device type & Use 
+IF $SP-22341$ IN ("Battery Backup UPS","Mini Tower UPS", "UPS")
+    THEN $SP-22341$_" protects electronic equipment and prevents data loss during a power outage"    
+ELSE IF $SP-22341$ LIKE "Standby UPS" 
+    THEN $SP-22341$_" protects your equipment in case of power outages or power fluctuations" 
+ELSE IF $SP-22341$ IN ("%replacement battery%", "battery") 
+    THEN $SP-22341$_" helps restore the runtime of UPS for better performance" 
+ELSE IF $SP-22341$ IN ("Extended Battery Module", "UPS Battery Module")
+    THEN $SP-22341$_" for expanded runtime and faster restoration of full backup power" 
+ELSE IF $SP-22341$ IN ("Extended Battery Cabinet", "UPS Battery Cabinet")
+    THEN $SP-22341$_" is used for additional run time" 
+ELSE IF $SP-22341$ LIKE "Display Module" 
+    THEN $SP-22341$_" allows the user to locally view information" 
+ELSE IF    $SP-22341$ IN ("%power module") 
+    THEN $SP-22341$_" ensures that systems continue to operate smoothly during power outages" 
+ELSE IF $SP-22341$ LIKE "Power Conditioner" 
+    THEN $SP-22341$_" extends the life of the equipment and keeps it in working state in all conditions" 
+ELSE IF $SP-22341$ LIKE "Step-Down Transformer" 
+    THEN "Step-down transformer avoids inrush current and saturation eliminating need to oversize transformer" 
+ELSE IF $SP-22341$ LIKE "network management card" 
+    THEN $SP-22341$_" offers remote monitoring and control of UPS" 
+ELSE IF $SP-22341$ LIKE "UPS Management Adapter" 
+    THEN $SP-22341$_" offers remote monitoring and control" 
+ELSE IF $SP-22341$ LIKE "intelligence module" 
+    THEN $SP-22341$_" is designed to proactively identify and correct problems before downtime occur" 
+ELSE IF $SP-22341$ LIKE "DC Power Supply" 
+    THEN $SP-22341$_" ensures that you always have a reliable source of electricity" 
+ELSE IF $SP-22341$ LIKE "%cable" 
+    THEN $SP-22341$_" ensures easy connectivity between devices" 
+ELSE IF $SP-22341$ IN ("%kit", "%kits")
+    THEN $SP-22341$_" aids for easy installation of equipment" 
 ELSE "@@";
 
---Tensile strength rating (If Applicable)    
+--Joule rating    
+IF $SP-397$ IS NOT NULL 
+    THEN "Surge energy rating: "_$SP-397$_" Joules" 
+ELSE "@@";
 
-IF $SP-22050$ > 0 THEN
-$SP-22050$_"  lbs. of tensile strength per inch of width" 
-     ELSE "@@";
+--Outlet count 
+IF $SP-22340$ IS NOT NULL 
+    THEN "Equipped with "_$SP-22340$_" outlets for seamless connectivity" 
+ELSE "@@"; 
 
-    --OOS
+--USB connectivity    
+IF $SP-460$ IS NOT NULL 
+    THEN "Provides USB connectivity for maximum flexibility" 
+ELSE "@@";
 
---Certifications (If Applicable)    
-        IF A[380].Values IS NOT NULL
-            THEN A[380].Values.Prefix("##").FlattenWithAnd().Prefix("Meets or exceeds ").Postfix(" standards")
-                ELSE "@@";
+--Cord length (ft.) 
+IF $SP-21372$ IS NOT NULL 
+    THEN $SP-21372$_"' cord allows you to set up your system at a comfortable distance" 
+ELSE "@@";
 
---Use for additional product and/or manufacturer information relevant to the customer buying decision
+--Battery recharge time  
+IF $SP-22233$ IS NOT NULL 
+    THEN "Recharge time: "_$SP-22233$_" hours" 
+ELSE "@@";
 
-IF A[6457].Where("heavy-duty").Values IS NOT NULL 
-    THEN "Heavy-duty tape for tough jobs";
+--Output voltage capacity    
+IF $SP-22337$ IS NOT NULL
+    THEN "Output voltage of "_$SP-22337$_" to ensure adequate power supply" 
+ELSE IF A[387].Value IS NOT NULL
+    THEN "Output voltage of "_A[387].Value_A[387].Unit_" to ensure adequate power supply" 
+ELSE "@@";
 
---Use for additional product and/or manufacturer information relevant to the customer buying decision
-IF A[6457].Where("tear-resistant").Values IS NOT NULL 
-    AND  A[6457].Where("break-resistant").Values IS NOT NULL 
-        THEN "Resists breaking or tearing even if nicked or punctured during handling";
+-- Port of Interface
+IF $SP-22335$ IS NOT NULL
+    THEN REF["SP-22335"].Split(", ").FlattenWithAnd().Replace(" "," ##").Replace("x ", "")
+ELSE "@@";
 
---Use for additional product and/or manufacturer information relevant to the customer buying decision
-IF A[6457].Where("Frustration Free").Values IS NOT NULL 
-    THEN "Frustration-Free technology";
+--Battery backup or UPS form factor    
+IF $SP-22339$ IS NOT NULL 
+    THEN $SP-22339$_" form makes it convenient to install and use" 
+ELSE "@@";
 
---Use for additional product and/or manufacturer information relevant to the customer buying decision
+--Type of battery
+IF $SP-22342$ LIKE "Lead Acid Battery" 
+THEN "Lead acid battery ensures efficient performance" 
+ELSE IF $SP-22342$ NOT IN (NULL, "Other", "%battery%") 
+    THEN $SP-22342$_" ensures efficient performance" 
+ELSE "@@";
+
+--Safety Features (lightning protection) 
+IF A[3469].Values.Where("lightning protection") IS NOT NULL 
+OR DC.Ksp.Values.Where("%lightning protection%") IS NOT NULL
+    THEN "Lightning protection ensures your investments are safe from potentially irreversible damage" 
+ELSE "@@";
+
+--Additional-charg USB
+IF A[374].Where("%USB%charging%").Values IS NOT NULL
+    THEN "USB charging port let you charge smartphones or tablets" 
+ELSE "@@"; 
+
+--remote    
+IF $SP-22341$ IN ("network management card", "UPS Management Adapter")
+    THEN "Allows you to reboot your equipment through remote access without any manual help" 
+ELSE "@@";    
+
+--Additional(Certifications & Standards)
+IF $SP-21834$ IS NOT NULL 
+    THEN "Meets or exceeds "_REF["SP-21834"].Split(", ").Erase(" Certified").Prefix("##").Replace(" "," ##").FlattenWithAnd()_" standards" 
+ELSE "@@";
+
+--Dimensions
+IF $SP-20654$ IS NOT NULL --H
+AND $SP-21044$ IS NOT NULL --W
+AND $SP-20657$ IS NOT NULL --D
+    THEN "Dimensions: "_$SP-20654$_"""H x "_$SP-21044$_"""W x "_$SP-20657$_"""D" 
+ELSE "@@"; 
+
+--Warranty
+IF A[430].Value Like "%lifetime%" 
+    THEN "Lifetime manufacturer limited warranty" 
+ELSE IF A[430].Value Like "%year%" 
+    THEN A[430].Value.Erase("Warranty").Erase("limited").ExtractDecimals().Postfix("-year manufacturer limited warranty")
+ELSE "@@";
