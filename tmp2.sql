@@ -1,382 +1,195 @@
+--Name tag/badge type & Use
 
---Product Type, Integrated Functionality, Modem & Transmission Speed
+--Fasten this ID badge holder to clothing, bags and more to keep your hands free (https://www.staples.com/product_511100) - ID Badge Holder
+IF $SP-18516$ LIKE "ID Badge Holder" 
+    THEN "Fasten this ##ID badge holder to clothing, bags and more to keep your hands free" 
 
----EXAMPLES: 
---Fax machine with print/copy functionality and a 33.6 kbps fax modem for quick transmission of files
+--ID reel connects easily to any ID card or name badge (not included) with clear badge holder (https://www.staples.com/Swivel-Back-Clip-On-Retractable-ID-Reel-with-Badge-Holder-Black-12-PK/product_890413) - ID reel
+ELSE IF $SP-18516$ LIKE "Badge Reels" 
+    THEN "Badge reel connects easily to any ID card or name badge" 
 
---BULLET 1. Product Type, Integrated Functionality, Modem & Transmission Speed
+--Lanyard to hang identification badge around your neck (https://www.staples.com/product_662776?akamai-feo=off)
+ELSE IF $SP-18516$ LIKE "Lanyards" 
+    THEN "Lanyard to hang identification badge around your neck" 
 
---only fax machine
+--Name Tag is ideal for meetings, seminars, special events, conventions and more (https://www.staples.com/Avery-Self-Laminating-Name-Tags-with-Clips-2-x-3-1-4/product_612648)
+ELSE IF $SP-18516$ LIKE "Sticker Name Tags/Labels" 
+    THEN "Name tag is ideal for meetings, seminars, special events, conventions and more" 
 
-IF A[4386].Values.Where("fax") IS NOT NULL
-    AND A[4386].Values.Where("copier", "printer", "scanner") IS NULL
-    AND $SP-23948$ IS NOT NULL
-    THEN REF["SP-18058"].Postfix(" ")_"Fax machine"_" and a "_$SP-23948$_"Kbps fax modem for quick transmission of files" 
-    
-ELSE IF A[4386].Values.Where("fax") IS NOT NULL
-        AND A[4386].Values.Where("copier", "printer", "scanner") IS NULL
-        AND $SP-23948$ IS NULL
-    THEN REF["SP-18058"].Postfix(" ")_"Fax machine and fax modem for quick transmission of files" 
+ELSE IF $SP-18516$ LIKE "ID Cards" 
+    THEN "ID Cards for everyday use" 
 
---fax copier
-
-ELSE IF A[4386].Values.Where("fax") IS NOT NULL
-        AND A[4386].Values.Where("copier") IS NOT NULL
-        AND A[4386].Values.Where("printer", "scanner") IS NULL
-        AND $SP-23948$ IS NOT NULL
-    THEN REF["SP-18058"].Postfix(" ")_"Fax machine with copy functionality"_" and a "_$SP-23948$_"Kbps fax modem for quick transmission of files" 
-ELSE IF A[4386].Values.Where("fax") IS NOT NULL
-        AND A[4386].Values.Where("copier") IS NOT NULL
-        AND A[4386].Values.Where("printer", "scanner") IS NULL
-        AND $SP-23948$ IS NULL
-    THEN REF["SP-18058"].Postfix(" ")_"Fax machine with copy functionality and fax modem for quick transmission of files" 
-
---fax printer
-
-ELSE IF A[4386].Values.Where("fax") IS NOT NULL
-        AND A[4386].Values.Where("printer") IS NOT NULL
-        AND A[4386].Values.Where("copier", "scanner") IS NULL
-        AND $SP-23948$ IS NULL
-    THEN REF["SP-18058"].Postfix(" ")_"Fax machine with print functionality and fax modem for quick transmission of files" 
-ELSE IF A[4386].Values.Where("fax") IS NOT NULL
-        AND A[4386].Values.Where("printer") IS NOT NULL
-        AND A[4386].Values.Where("copier", "scanner") IS NULL
-        AND $SP-23948$ IS NOT NULL
-    THEN REF["SP-18058"].Postfix(" ")_"Fax machine with print functionality"_" and a "_$SP-23948$_"Kbps fax modem for quick transmission of files" 
-
---fax scanner
-
-ELSE IF A[4386].Values.Where("fax") IS NOT NULL
-        AND A[4386].Values.Where("scanner") IS NOT NULL
-        AND A[4386].Values.Where("copier", "printer") IS NULL
-        AND $SP-23948$ IS NULL
-    THEN REF["SP-18058"].Postfix(" ")_"Fax machine with scan functionality and fax modem for quick transmission of files" 
-ELSE IF A[4386].Values.Where("fax") IS NOT NULL
-        AND A[4386].Values.Where("scanner") IS NOT NULL
-        AND A[4386].Values.Where("copier", "printer") IS NULL
-        AND $SP-23948$ IS NOT NULL
-    THEN REF["SP-18058"].Postfix(" ")_"Fax machine with scan functionality"_" and a "_$SP-23948$_"Kbps fax modem for quick transmission of files" 
-
---fax copier printer
-
-ELSE IF A[4386].Values.Where("fax") IS NOT NULL
-        AND A[4386].Values.Where("copier") IS NOT NULL
-        AND A[4386].Values.Where("printer") IS NOT NULL
-        AND A[4386].Values.Where("scanner") IS NULL
-        AND $SP-23948$ IS NULL
-    THEN REF["SP-18058"].Postfix(" ")_"Fax machine with copy/print functionality and fax modem for quick transmission of files" 
-ELSE IF A[4386].Values.Where("fax") IS NOT NULL
-        AND A[4386].Values.Where("copier") IS NOT NULL
-        AND A[4386].Values.Where("printer") IS NOT NULL
-        AND A[4386].Values.Where("scanner") IS NULL
-        AND $SP-23948$ IS NOT NULL
-    THEN REF["SP-18058"].Postfix(" ")_"Fax machine with copy/print functionality"_" and a "_$SP-23948$_"Kbps fax modem for quick transmission of files" 
-
---fax copier scanner
-
-ELSE IF A[4386].Values.Where("fax") IS NOT NULL
-        AND A[4386].Values.Where("copier") IS NOT NULL
-        AND A[4386].Values.Where("scanner") IS NOT NULL
-        AND A[4386].Values.Where("printer") IS NULL
-        AND $SP-23948$ IS NULL
-    THEN REF["SP-18058"].Postfix(" ")_"Fax machine with copy/scan functionality and fax modem for quick transmission of files" 
-ELSE IF A[4386].Values.Where("fax") IS NOT NULL
-        AND A[4386].Values.Where("copier") IS NOT NULL
-        AND A[4386].Values.Where("scanner") IS NOT NULL
-        AND A[4386].Values.Where("printer") IS NULL
-        AND $SP-23948$ IS NOT NULL
-    THEN REF["SP-18058"].Postfix(" ")_"Fax machine with copy/scan functionality"_" and a "_$SP-23948$_"Kbps fax modem for quick transmission of files" 
-
---fax printer scanner
-
-ELSE IF A[4386].Values.Where("fax") IS NOT NULL
-        AND A[4386].Values.Where("printer") IS NOT NULL
-        AND A[4386].Values.Where("scanner") IS NOT NULL
-        AND A[4386].Values.Where("copier") IS NULL
-        AND $SP-23948$ IS NULL
-    THEN REF["SP-18058"].Postfix(" ")_"Fax machine with print/scan functionality and fax modem for quick transmission of files" 
-ELSE IF A[4386].Values.Where("fax") IS NOT NULL
-        AND A[4386].Values.Where("printer") IS NOT NULL
-        AND A[4386].Values.Where("scanner") IS NOT NULL
-        AND A[4386].Values.Where("copier") IS NULL
-        AND $SP-23948$ IS NOT NULL
-    THEN REF["SP-18058"].Postfix(" ")_"Fax machine with print/scan functionality"_" and a "_$SP-23948$_"Kbps fax modem for quick transmission of files" 
-
---fax copier printer scanner
-
-ELSE IF A[4386].Values.Where("fax") IS NOT NULL
-        AND A[4386].Values.Where("printer") IS NOT NULL
-        AND A[4386].Values.Where("scanner") IS NOT NULL
-        AND A[4386].Values.Where("copier") IS NOT NULL
-        AND $SP-23948$ IS NULL
-    THEN REF["SP-18058"].Postfix(" ")_"Fax machine with print/scan/copy functionality and fax modem for quick transmission of files" 
-ELSE IF A[4386].Values.Where("fax") IS NOT NULL
-        AND A[4386].Values.Where("printer") IS NOT NULL
-        AND A[4386].Values.Where("scanner") IS NOT NULL
-        AND A[4386].Values.Where("copier") IS NOT NULL
-        AND $SP-23948$ IS NOT NULL
-    THEN REF["SP-18058"].Postfix(" ")_"Fax machine with print/scan/copy functionality"_" and a "_$SP-23948$_"Kbps fax modem for quick transmission of files" 
+--Plastic ID badge holders for everyday use (https://www.staples.com/Avery-2921-Horizontal-Name-Tag-Holders-Clear-50-Pack/product_576409)
+ELSE IF $SP-18516$ LIKE "Plastic Name Tags/ID Cards" 
+    THEN "Plastic Name Tags for everyday use" 
 ELSE "@@";
 
+--Attachment style
 
+--Pin securely holds badge in place  (https://www.staples.com/product_SS941254)
+IF $SP-21608$ LIKE "Pin" 
+    THEN "Pin securely holds badge in place" 
 
---Memory (Transmission & Reception)    
---EXAMPLES: 
---Faxing memory stores up to 512 pages
+--Secures to clothing with metal clip (https://www.staples.com/Staples-Vinyl-Straps-with-Two-Hole-Clips-Clear-100-Pack-18914-1122897/product_573105)
+ELSE IF A[6086].Where("metal clip").Values IS NOT NULL
+OR A[6121].Where("metal clip").Values IS NOT NULL
+    THEN "Secures to clothing with metal clip" 
 
---2747, 2748
+--Clip secures badge to clothing (https://www.staples.com/C-line-Reusable-Clear-Plastic-Name-Tag-Holders/product_76611)    
+ELSE IF A[6086].Where("clip").Values IS NOT NULL
+OR A[6121].Where("clip").Values IS NOT NULL
+    THEN "Clip secures badge to clothing" 
 
-IF COALESCE (A[2747].Value, A[2748].Value) IS NOT NULL
-    THEN "Faxing memory stores up to "_COALESCE (A[2747].Value, A[2748].Value)_" pages" 
+--Belt clip model hooks on pants belt     (https://www.staples.com/product_458940)    
+ELSE IF A[6121].Where("belt carabiner", "belt clip").Values IS NOT NULL
+    THEN "Belt clip model hooks on pants belt" 
+
+--Bulldog clip fastens to clothing, bags and more (https://www.staples.com/Swingline-GBC-1122897-ID-Badge-Clip-Clear-Strap-Silver-Clip/product_857505)
+ELSE IF $SP-21608$ LIKE "Bulldog Clip" 
+    THEN "Bulldog clip fastens to clothing, bags and more" 
+
+--Integrated swivel clip helps prevent damage to garments (https://www.staples.com/Avery-74536-Garment-Friendly-Clip-Style-Name-Badges-White-3-x-4-50-Pack/product_461274)    
+ELSE IF $SP-21608$ LIKE "Swivel Clip" 
+    THEN "Integrated swivel clip helps prevent damage to garments" 
+
+--Swivel hook to attach ID cards securely (https://www.staples.com/1344043BAC31-36-Visitor-Pre-Designed-Lanyards-with-Breakaway-Release-Red-10-Pack/product_206367)
+ELSE IF $SP-21608$ LIKE "Swivel Hook" 
+    THEN "Swivel hook to attach ID card securely" 
 ELSE "@@";
 
---Output (Print Speed, Resolution, Color & Duplexing Capability)    
---Outputs in black ink up to 19 pages per minute single sided and 16 pages per minute double sided at up to 600 x 400 dpi (119 symblos)
-
---Features a printing speed of [] pages per minute in black and [] pages per minute in color 
-
-IF A[2760].Value IS NOT NULL
-AND A[2761].Value IS NOT NULL 
-    THEN "Features a printing speed of ##"_A[2760].Value_" pages per minute in black and ##"_A[2761].Value_" pages per minute in color" 
-
-ELSE IF A[2760].Value IS NULL
-AND A[2761].Value IS NOT NULL 
-AND A[5425].Value LIKE "yes" 
-    THEN "Features a printing speed of ##"_A[2761].Value_" pages per minute in color with automatic duplexing" 
-
-ELSE IF A[2760].Value IS NULL
-AND A[2761].Value IS NOT NULL 
-    THEN "Features a printing speed of ##"_A[2761].Value_" pages per minute in color" 
-
-ELSE IF A[2760].Value IS NOT NULL
-AND A[2761].Value IS NULL 
-AND A[5425].Value LIKE "yes" 
-    THEN "Features a printing speed of ##"_A[2760].Value_" pages per minute in black with automatic duplexing" 
-
-ELSE IF A[2760].Value IS NOT NULL
-AND A[2761].Value IS NULL
-    THEN "Features a printing speed of ##"_A[2760].Value_" pages per minute in black" 
-ELSE IF A[3172].Unit LIKE "ppm" THEN
-"Features a printing speed of ##"_A[3172].Value_" pages per minute" 
-
+--Badge loading style
+--Top-loading design prevents inserts from falling out (https://www.staples.com/product_440726)
+IF A[6087].Where("top side open").Values IS NOT NULL
+    THEN "Top-loading design prevents inserts from falling out" 
+--Self-adhesive badges adhere firmly and remove easily (https://www.staples.com/Avery-Print-or-Write-Name-Tags-Red-Border-2-11-32-x-3-3-8/product_404301)
+ELSE IF $SP-21603$ LIKE "Self Adhesive" 
+    THEN "Self-adhesive badges adhere firmly and remove easily" 
 ELSE "@@";
 
---Input loading feature, Input Capacity (standard & ADF) & Size
+--Name tag & Badge size
+--Name tag & Badge size
+IF $SP-20400$ IS NOT NULL --length
+AND $SP-21044$ IS NOT NULL --width
+    THEN "Size: " 
+         _$SP-21044$_"""W x " 
+         _$SP-20400$_"""L" 
 
---https://www.staples.com/product_711376
---Standard input paper capacity (sheets): 250 
---2731  -- standart capacity
---8601 feeder type (ADF)
---document feeder capacity
---media class size
-
---250-sheet paper capacity, 30-page auto document feeder 
---Accommodates A4/legal-size pages in the 250-sheet input tray and 50-sheet auto document feeder
-
-IF A[2731].Value IS NOT NULL
-AND A[2725].Value IS NOT NULL
-AND A[6838].Value IS NOT NULL
-    THEN "Accomodates " 
-        _A[6838].Value.Postfix("-size pages")
-        _" in the " 
-        _A[2731].Value_A[2731].Unit.Replace("sheets", "sheet").Prefix("-")
-        _" input tray and " 
-        _A[2725].Value_A[2725].Unit.Replace("sheets", "sheet").Prefix("-")
-        _" auto document feeder" 
-
-ELSE IF A[2731].Value IS NOT NULL
-AND A[6838].Value IS NOT NULL
-    THEN "Accomodates " 
-        _A[6838].Value.Postfix("-size pages")
-        _" in the " 
-        _A[2731].Value_A[2731].Unit.Replace("sheets", "sheet").Prefix("-")
-        _" input tray" 
-
-ELSE IF A[2725].Value IS NOT NULL
-AND A[6838].Value IS NOT NULL
-    THEN "Accomodates " 
-        _A[6838].Value.Postfix("-size pages")
-        _" in the " 
-        _A[2725].Value_A[2725].Unit.Replace("sheets", "sheet").Prefix("-")
-         _" auto document feeder" 
-
+ELSE IF $SP-20400$ IS NOT NULL
+AND $SP-18516$ LIKE "Lanyards" 
+    THEN "Lanyard length: "_$SP-20400$_"""" 
 ELSE "@@";
 
---Dimensions    
+--Printer type used (If applicable)
 
---SP-21044 width
---SP-20654 height
---SP-20657 depth
+--Designed for use with both inkjet and laser printers for optimal versatility (https://www.staples.com/Avery-74536-Garment-Friendly-Clip-Style-Name-Badges-White-3-x-4-50-Pack/product_461274)
+IF $SP-21605$ LIKE "Inkjet/Laser" 
+    THEN "Designed for use with both inkjet and laser printers for optimal versatility" 
 
-IF $SP-21044$ IS NOT NULL
-AND $SP-20654$ IS NOT NULL
-AND $SP-20657$ IS NOT NULL
-    THEN  "Dimensions: "_$SP-20654$_"""H x "_$SP-21044$_"""W x "_$SP-20657$_"""D" 
-
-ELSE IF  $SP-21044$ IS NOT NULL
-AND $SP-20657$ IS NOT NULL
-    THEN "Dimensions: "_$SP-21044$_"""W x "_$SP-20657$_"""L" 
+--Allows creating badges with laser printer, eliminating extra costs (https://www.staples.com/The-Mighty-Badge-901856-Insert-Sheet-Refill-Kit-for-Laser-Printer-Bright-White-60-Pack/product_1106903)    
+ELSE IF $SP-21605$ LIKE "Laser" 
+    THEN "Allows creating badges with laser printers, eliminating extra costs" 
+ELSE IF $SP-21605$ LIKE "Inkjet" 
+    THEN "Allows creating badges with inkjet printers, eliminating extra costs" 
 ELSE "@@";
 
---Display (Type & Size) & Indicators (includes Caller ID, telephone directory/capacity)    
--- LCD|LED display supports caller ID and up to 30 speed dial numbers for efficient faxing and calls 
+--Pack Size (# of badges)
 
---Easy to read [] 16-digit LCD display
-
-IF A[2780].Value IS NOT NULL AND A[2779].Value IS NOT NULL
-    THEN "Easy to read "_A[2780].Value.ExtractDecimals().First().Postfix("-character")_A[2779].Value.Replace(" lines", "-line").Prefix("/")_A[5299].Values.Where("LCD", "LED").Prefix(" ")_" display" 
-ELSE IF A[2779].Value IS NOT NULL
-    THEN "Easy to read "_A[2779].Value.Replace(" lines", "-line")_A[5299].Values.Where("LCD", "LED").Prefix(" ")_" display" 
+IF Request.Data["TX_UOM"] LIKE "%/%" 
+    THEN Request.Data["TX_UOM"].Replace("/", " per ")
 ELSE "@@";
 
---Broadcast Capacity (if applicable)
---Up to 222 station auto dialing 
+--Recycled Content (%)
 
-IF $SP-64$ IS NOT NULL
-    THEN "Up to "_$SP-64$_" auto dialing" 
+--10 percent post-consumer recycled content for an eco-friendly option (https://www.staples.com/Staples-Reinforced-Fastener-Folder-2-Fasteners-Legal-Manila-50-Box/product_831057)
+IF A[6628].Value > 0
+    THEN A[6628].Value
+         _"% post-consumer recycled content for an eco-friendly option" 
 ELSE "@@";
 
---Connectivity (No. of Ports & Interface) (includes wireless)    
+--Additional Bullet (Orientation)
 
---1 Hi-Speed USB 20 Device; 2 Hi-Speed USB 20 Host; 1 Gigabit Ethernet 10/100/1000T network 
+--Use in horizontal or vertical orientation  (https://www.staples.com/product_357520)
+IF A[6087].Where("landscape/portrait orientation").Values IS NOT NULL
+    THEN "Use in horizontal or vertical orientation" 
+ELSE IF COALESCE(
+                A[6121].Where("portrait orientation", "vertical cards orientation").Values,
+                A[6087].Where("portrait orientation", "vertical cards orientation").Values,
+                A[4783].Where("portrait orientation", "vertical cards orientation").Values
+                ) IS NOT NULL
+AND COALESCE(
+                A[6121].Where("landscape orientation", "horizontal cards orientation").Values,
+                A[6087].Where("landscape orientation", "horizontal cards orientation").Values,
+                A[4783].Where("landscape orientation", "horizontal cards orientation").Values,
+                A[5944].Value.IsEmpty.IfLike("Yes", "").IfLike("No", "Not empty")
+                ) IS NOT NULL
+    THEN "Use in horizontal or vertical orientation" 
 
---USB 20, 10/100/1000 Base-T Ethernet and Wi-Fi 80211b/g/n ports enable easy connectivity; mobile-ready through printing apps 
---https://www.staples.com/product_2656790
+--Portrait-orientation for easy loading of the badge (https://www.staples.com/134664931-Vertical-ID-Badge-Holders-Clear-50-Pack/product_206467)    
+ELSE IF COALESCE(
+                A[6121].Where("portrait orientation", "vertical cards orientation").Values,
+                A[6087].Where("portrait orientation", "vertical cards orientation").Values,
+                A[4783].Where("portrait orientation", "vertical cards orientation").Values
+                ) IS NOT NULL
+    THEN "Portrait orientation for easy loading of the badge" 
 
---USB 20, Base-T Ethernet and Wi-Fi connectivity enhance productivity 
---https://www.staples.com/product_2656788
+--Landscape orientation to slip badge easily into the holder (https://www.staples.com/134647931-Horizontal-ID-Badge-Holders-Clear-50-Pack/product_206466)
+ELSE IF COALESCE(
+                A[6121].Where("landscape orientation", "horizontal cards orientation").Values,
+                A[6087].Where("landscape orientation", "horizontal cards orientation").Values,
+                A[4783].Where("landscape orientation", "horizontal cards orientation").Values,
+                A[5944].Value.IsEmpty.IfLike("Yes", "").IfLike("No", "Not empty")
+                ) IS NOT NULL
+    THEN "Landscape orientation to slip badge easily into the holder";
 
-IF A[2703].Where("%Wi-Fi%").Values IS NOT NULL
-AND  A[2703].Where("%Bluetooth%").Values IS NULL
-AND A[6836].Values IS NOT NULL
-    THEN A[6836].Match(23, 6836).Values.Prefix("##").Flatten(", ").Replace("¦¬", " x ").Replace("<>", "##1")_" and ##Wi-Fi connectivity enhance productivity" 
+--Additional Bullet (PVC-free material)
 
-ELSE IF A[2703].Where("%Wi-Fi%").Values IS NOT NULL
-AND  A[2703].Where("%Bluetooth%").Values IS NULL
-AND A[2703].Values.Count > 1
-    THEN A[2703].WhereNot("%Wi-Fi%").Values.Flatten(", ")_" and ##Wi-Fi connectivity enhance productivity" 
+--Made from soft, PVC Free plastic (https://www.staples.com/product_SS941254)
+IF COALESCE(
+            A[6087].Where("PVC-free").Values,
+            A[4783].Where("PVC-free").Values
+            ) IS NOT NULL
+AND COALESCE(
+            A[372].Values,
+            A[6073].Values
+            ) IS NOT NULL
+    THEN "Made of PVC-free " 
+         _COALESCE(A[372].Values.First().ToLower(), A[6073].Values.First().ToLower())
 
---Network-ready wired 10/100/1000Base-T Ethernet and USB 30 connectivity with Apple and Google mobile print options 
---https://www.staples.com/product_2580332
+--material
+ELSE IF $SP-17447$ IS NOT NULL 
+    THEN "Made of "_$SP-17447$;
 
-ELSE IF A[2703].Where("%LAN%").Values IS NOT NULL
-AND  A[2703].Where("%Bluetooth%").Values IS NULL
-AND A[6836].Values IS NOT NULL
-    THEN "Network-ready wired " 
-    _A[6836].Where("%lan%").Match(23).Values.First().Prefix("##")
-    _" x " 
-    _A[2703].Where("%LAN%").Values.First()
-    _" ##Ethernet and " 
-    _A[6836].Match(23, 6836).Values.WhereNot("%LAN%").Prefix("##").Flatten(", ").Replace("¦¬", " x ").Replace("<>", "##1")
-    _" connectivity" 
+IF $SP-22967$ LIKE "Assorted" 
+     THEN "Comes in assorted colors" 
+ELSE IF $SP-22967$ IS NOT NULL
+     THEN "Comes in "_$SP-22967$;
 
-ELSE IF A[2703].Where("%LAN%").Values IS NOT NULL
-AND  A[2703].Where("%Bluetooth%").Values IS NULL
-    THEN "Network-ready wired "_A[2703].Where("%LAN%").Values.First()_" ##Ethernet"_A[2703].WhereNot("%LAN%").Values.FlattenWithAnd().Prefix(", ")_" connectivity" 
+--Additional Bullet (Prepunched)  
 
---Printer features USB port, Ethernet port, phone line port and wireless connectivity for added convenience 
+--Prepunched for use with strap clips, lanyards, reels, chains and more (https://www.staples.com/C-Line-Horizontal-ID-Badge-Holders-12-Pack/product_975994)
+IF COALESCE(
+            A[6087].Where("pre-punched holes", "pre-drilled holes").Values,
+            A[6121].Where("%pre-punched%").Values
+            ) IS NOT NULL
+    THEN "Pre-punched for use with strap clips, lanyards, reels, chains and more" 
+    ELSE "@@";
 
-ELSE IF A[6836].Values IS NOT NULL
-    THEN "Features "_A[6836].Match(23, 6836).Values.Prefix("##").Flatten(", ").Replace("¦¬", " x ").Replace("<>", "##1")_COALESCE(A[2703].Where("%Bluetooth%").Values.Prefix(" and ").Postfix(" interface "), " interface")
-ELSE "@@";
+--Additional Bullet (Garment Friendly clip)
 
---Copy Functionality (if applicable)
---Copies documents at up to 12 copies per minute so you need one less machine for your office 
---2763, 2764  
+--Garment-friendly clip helps to protect clothing (https://www.staples.com/Avery-Top-Loading-Clip-Style-Name-Tags-2-1-4-x-3-1-2/product_461148)
+IF A[6087].Where("Garment Friendly clip").Values IS NOT NULL
+    THEN "Garment-friendly clip helps protect clothing";
 
-IF COALESCE (A[2763].Value, A[2764].Value) IS NOT NULL
-    THEN "Copies documents at up to "_COALESCE (A[2763].Value, A[2764].Value)_" copies per minute so you need one less machine for your office" 
-ELSE "@@";
+--Additional Bulltet (Magnet Attachment)
 
---Scanning Capabilities (includes technology/software, resolution & output color) if applicable
+--Magnet attaches easily and won't mar clothing (https://www.staples.com/C-Line-Name-Badge-Holder-Kits-Magnetic-Top-Load-3-x-4-20-Bx/product_438493)
+IF A[6121].Where("lacquered magnetic side").Values IS NOT NULL
+OR A[6086].Where("magnet").Values IS NOT NULL    
+    THEN "Magnet attaches easily and won't mar clothing";
 
---Color flatbed scanner captures up to 19,200 x 19,200 dpi to capture every detail
---https://www.staples.com/product_153935
+--Additional Bulltet (Removable Adhesive)
 
---Color scanner captures resolutions up to 4,800 x 4,800 dpi at speeds up to 24 ipm for efficient archival and copying
---https://www.staples.com/product_2502596
-
-IF $SP-183$ IS NOT NULL
-AND A[2756].Value IS NOT NULL
-    THEN "This fax machine captures up "_$SP-183$_" resolution in color for efficient archiving and copying" 
-
-ELSE IF $SP-183$ IS NOT NULL
-AND A[2757].Value IS NOT NULL
-    THEN "This fax machine captures up "_$SP-183$_" resolution in grayscale for efficient archiving and copying" 
-ELSE IF $SP-183$ IS NOT NULL
-    THEN "This fax machine captures up  "_$SP-183$_" resolution for efficient archiving and copying" 
-ELSE "@@";
-
---Calling Capabilities (includes answering machine feature) if applicable    
-
---Supports fax forward, paging, caller ID, and distinctive ring for added convenience 
---https://www.staples.com/product_586026
-
---2791 - Error Correction Mode (ECM)
---2735 - One-Touch Dialing
---2736 - Speed Dialing
---2737 - Caller ID
---2738 - Telephone / Fax Switch
---2740 - Broadcast Transmission
---2741 - Delayed Transmission
-
-IF SKU.ProductId LIKE "10903324" 
-    THEN "Supports one-touch dialing, speed dialing" 
-ELSE IF SKU.ProductId LIKE "1268015" 
-    THEN "Supports caller ##ID, speed dialing, telephone/fax switch, fax forwarding, broadcast transmission, group dialing, and distinctive ring" 
-ELSE IF SKU.ProductId LIKE "10462012" 
-    THEN "Supports one-touch dialing, speed dialing, fax forwarding, and broadcast transmission" 
-ELSE IF SKU.ProductId LIKE "11134298" 
-    THEN "Supports one-touch dialing, speed dialing, telephone/fax switch, fax forwarding, and broadcast transmission" 
-ELSE IF SKU.ProductId LIKE "5824318" 
-    THEN "Supports caller ##ID, broadcast transmission, distinctive ring" 
-ELSE IF SKU.ProductId LIKE "1268016" 
-    THEN "Supports caller ##ID, one-touch dialing, speed dialing, telephone/fax switch, fax forwarding, and broadcast transmission" 
-ELSE IF SKU.ProductId LIKE "11098412" 
-    THEN "Supports one-touch dialing, speed dialing, fax forwarding, broadcast transmission, and group dialing" 
-ELSE IF SKU.ProductId LIKE "2549299" 
-    THEN "Supports caller ##ID, one-touch dialing, speed dialing, telephone/fax switch, fax forwarding, and broadcast transmission" 
-
-ELSE IF A[2737].Value IS NOT NULL
-OR A[2736].Value IS NOT NULL
-OR A[2735].Value IS NOT NULL
-OR A[2738].Value IS NOT NULL
-    THEN "Supports" 
-        _COALESCE(A[2737].Value
-            .HasText
-            .IfLike("Yes", " caller ##ID,")
-            .IfLike("no", ""))
-        _COALESCE(A[2735].Value
-            .HasText
-            .IfLike("Yes", " one-touch dialing,")
-            .IfLike("no", ""))
-        _COALESCE(A[2736].Value
-            .HasText
-            .IfLike("Yes", " speed dialing,")
-            .IfLike("no", ""))
-        _COALESCE(A[2738].Value
-            .HasText
-            .IfLike("Yes", " telephone/fax switch,")
-            .IfLike("no", ""))
-        _COALESCE(A[2743].Where("fax forwarding").Values.First()
-            .HasText
-            .IfLike("Yes", " fax forwarding,")
-            .IfLike("no", ""))
-        _COALESCE(A[2740].Value
-            .HasText
-            .IfLike("Yes", " Broadcast Transmission,")
-            .IfLike("no", ""))
-        _COALESCE(A[2743].Where("group dialing").Values.First()
-            .HasText
-            .IfLike("Yes", " group dialing,")
-            .IfLike("no", ""))
-        _COALESCE(A[2743].Where("Distinctive Ring").Values.First()
-            .HasText
-            .IfLike("Yes", " distinctive ring")
-            .IfLike("no", ""))
-ELSE "@@";
-
---Warranty
-IF A[430].Value IS NOT NULL
-    THEN A[430].Value.Replace(" days", "##-day").Replace(" year", "##-year").Replace(" years", "##-year").Replace(" months", "##-month").Erase("limited").Erase("manufacturer").Erase("warranty").Erase("with product registration").Postfix(" manufacturer limited warranty").ToUpperFirstChar().Prefix("##")
-ELSE "@@";
+--Name badge labels come with removable adhesive so they will not damage your clothing (https://www.staples.com/Blanks-USA-3-1-2-x-2-1-4-Name-Tag-Label-White-100-Pack/product_195253)
+IF $SP-18516$ LIKE "Sticker Name Tags/Labels" 
+AND A[4783].Where("removable adhesive").Values IS NOT NULL
+    THEN "Name badge labels come with removable adhesive so they will not damage your clothing";
