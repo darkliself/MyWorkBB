@@ -6,6 +6,14 @@ BadgeLoadingStyle();
 PrinterTypeUsed();
 // PackSize
 // RecycledContent
+// PostConsumerContent
+NameTagsOrientation();
+AdditionalPVCFree();
+// Additional material color
+AdditionalPrePunchedNameTags();
+AdditionalGarmentFriendlyClip();
+AdditionalLacqueredMagneticSide();
+AdditionalNameTagRemovableAdhesive();
 
 
 // --[FEATURE #1]
@@ -67,7 +75,7 @@ void BadgeLoadingStyle() {
     if (A[6087].HasValue("top side open")) {
         Add($"BadgeLoadingStyle⸮Top-loading design prevents inserts from falling out");
     }
-    else if (GetReferenceBase("SP-21603")) {
+    else if (GetReferenceBase("SP-21603").HasValue("Self Adhesive")) {
         Add($"BadgeLoadingStyle⸮Self-adhesive badges adhere firmly and remove easily");
     }
 }
@@ -94,31 +102,75 @@ void PrinterTypeUsed() {
 // --[FEATURE #7]
 // -- Recycled Content (%)
 
-// --[FEATURE #8]
-// -- Additional YOU ENDED HERE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+// --[FEATURE #9]
+// -- Additional Orientation
 void NameTagsOrientation() {
     var type = GetReferenceBase("SP-21605");
     if (A[6087].HasValue("landscape/portrait orientation")) {
         Add($"NameTagsOrientation⸮Use in horizontal or vertical orientation");
     }
     else if ((A[6121].HasValue("portrait orientation", "vertical cards orientation") 
-            || A[6087].HasValue("portrait orientation", "vertical cards orientation") 
-            || A[4783].HasValue("portrait orientation", "vertical cards orientation"))
-        && (A[6121].HasValue("portrait orientation", "vertical cards orientation") 
-            || A[6087].HasValue("portrait orientation", "vertical cards orientation") 
-            || A[4783].HasValue("portrait orientation", "vertical cards orientation"))
-   
+        || A[6087].HasValue("portrait orientation", "vertical cards orientation") 
+        || A[4783].HasValue("portrait orientation", "vertical cards orientation"))
+    && (A[6121].HasValue("landscape orientation", "horizontal cards orientation") 
+        || A[6087].HasValue("landscape orientation", "horizontal cards orientation") 
+        || A[4783].HasValue("landscape orientation", "horizontal cards orientation")
+        || A[5944].HasValue("Yes"))) {
+            Add($"NameTagsOrientation⸮Use in horizontal or vertical orientation");            
+    }
+    else if (A[6121].HasValue("portrait orientation", "vertical cards orientation") 
+    || A[6087].HasValue("portrait orientation", "vertical cards orientation") 
+    || A[4783].HasValue("portrait orientation", "vertical cards orientation")) {
+        Add($"NameTagsOrientation⸮Portrait orientation for easy loading of the badge");    
+    }
+    else if (A[6121].HasValue("landscape orientation", "horizontal cards orientation") 
+    || A[6087].HasValue("landscape orientation", "horizontal cards orientation") 
+    || A[4783].HasValue("landscape orientation", "horizontal cards orientation")
+    || A[5944].HasValue("Yes")) {
+        Add($"NameTagsOrientation⸮Landscape orientation to slip badge easily into the holder");            
+    }
 }
-// --[FEATURE #9]
-// -- Additional
-
 // --[FEATURE #10]
-// -- Additional
-
+// -- Additional PVC-free
+void AdditionalPVCFree() {
+    if (A[6087].HasValue("PVC-free") 
+    || A[4783].HasValue("PVC-free")) {
+        Add($"AdditionalPVCFree⸮The product is PVC-free");
+    }
+}
 // --[FEATURE #11]
-// -- Additional
+// -- Additional material color
 
 // --[FEATURE #12]
-// -- Additional
+// -- Additional Pre Punched
+void AdditionalPrePunchedNameTags() {
+    if (A[6087].HasValue("pre-punched holes", "pre-drilled holes") 
+    || A[6121].HasValue("%pre-punched%")) {
+        Add($"AdditionalPrePunchedNameTags⸮Pre-punched for use with strap clips, lanyards, reels, chains and more");
+    }
+}
 
+// --[FEATURE #13]
+// -- Additional Garment Friendly clip
+void AdditionalGarmentFriendlyClip() {
+    if (A[6087].HasValue("Garment Friendly clip")) {
+        Add($"AdditionalGarmentFriendlyClip⸮Garment-friendly clip helps protect clothing");
+    }
+}
+// --[FEATURE #14]
+// -- Additional lacquered magnetic side
+void AdditionalLacqueredMagneticSide() {
+    if (A[6121].HasValue("lacquered magnetic side") && A[6086].HasValue("magnet")) {
+        Add($"AdditionalLacqueredMagneticSide⸮Magnet attaches easily and won't mar clothing");
+    }
+}
+// --[FEATURE #15]
+// -- Additional Removable Adhesive
+void AdditionalNameTagRemovableAdhesive() {
+    if (GetReferenceBase("SP-18516").HasValue("Sticker Name Tags/Labels") && A[4783].HasValue("removable adhesive")) {
+        Add($"AdditionalNameTagRemovableAdhesive⸮Magnet attaches easily and won't mar clothing");
+    }
+}
+// --[FEATURE #16]
+// -- Additional
 //§§542129029641140965  end of "Name Tags & Badges"
