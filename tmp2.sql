@@ -1,195 +1,168 @@
---Name tag/badge type & Use
-
---Fasten this ID badge holder to clothing, bags and more to keep your hands free (https://www.staples.com/product_511100) - ID Badge Holder
-IF $SP-18516$ LIKE "ID Badge Holder" 
-    THEN "Fasten this ##ID badge holder to clothing, bags and more to keep your hands free" 
-
---ID reel connects easily to any ID card or name badge (not included) with clear badge holder (https://www.staples.com/Swivel-Back-Clip-On-Retractable-ID-Reel-with-Badge-Holder-Black-12-PK/product_890413) - ID reel
-ELSE IF $SP-18516$ LIKE "Badge Reels" 
-    THEN "Badge reel connects easily to any ID card or name badge" 
-
---Lanyard to hang identification badge around your neck (https://www.staples.com/product_662776?akamai-feo=off)
-ELSE IF $SP-18516$ LIKE "Lanyards" 
-    THEN "Lanyard to hang identification badge around your neck" 
-
---Name Tag is ideal for meetings, seminars, special events, conventions and more (https://www.staples.com/Avery-Self-Laminating-Name-Tags-with-Clips-2-x-3-1-4/product_612648)
-ELSE IF $SP-18516$ LIKE "Sticker Name Tags/Labels" 
-    THEN "Name tag is ideal for meetings, seminars, special events, conventions and more" 
-
-ELSE IF $SP-18516$ LIKE "ID Cards" 
-    THEN "ID Cards for everyday use" 
-
---Plastic ID badge holders for everyday use (https://www.staples.com/Avery-2921-Horizontal-Name-Tag-Holders-Clear-50-Pack/product_576409)
-ELSE IF $SP-18516$ LIKE "Plastic Name Tags/ID Cards" 
-    THEN "Plastic Name Tags for everyday use" 
+--Broom/dustpan type & Use    
+IF $SP-23349$ LIKE "Handle Braces" 
+    THEN "Handle brace lends an added support to prevent handles from breaking under strenuous conditions" 
+ELSE IF $SP-23349$ LIKE "Broom Heads" 
+    THEN "Broom head is designed to remove dirt and debris" 
+ELSE IF $SP-23349$ LIKE "Push Brooms" 
+    THEN "Push broom offers a quick and efficient cleaning solution" 
+ELSE IF $SP-23349$ LIKE "Kits" 
+    THEN "Kit offers a quick and efficient cleaning solution" 
+ELSE IF $SP-23349$ LIKE "Angled Brooms" 
+    THEN "Angled broom is designed to reach into the tightest corners very easily" 
+ELSE IF $SP-23349$ LIKE "Brooms w/Dustpan" 
+    THEN "Broom and dustpan set is great for all on-the-move applications for sweeping up and carrying debris" 
+ELSE IF $SP-23349$ LIKE "Corn Brooms" 
+    THEN "Corn broom traps dust and fine dirt with ease" 
+ELSE IF $SP-23349$ LIKE "Broom Handles" 
+    THEN "Broom handle enables smooth, efficient and swift cleaning" 
+ELSE IF $SP-23349$ LIKE "Standard Brooms" 
+    THEN "Standard broom for easy and effective cleaning" 
+ELSE IF $SP-23349$ LIKE "Dustpan" 
+    THEN "Dustpan for efficient pick-up of dust and dirt" 
+ELSE IF $SP-23349$ LIKE "%tool holder%" 
+    THEN $SP-23349$_" provides a convenient storage solution" 
+ELSE IF $SP-23349$ IS NOT NULL 
+    THEN $SP-23349$_" for easy and effective cleaning" 
 ELSE "@@";
 
---Attachment style
-
---Pin securely holds badge in place  (https://www.staples.com/product_SS941254)
-IF $SP-21608$ LIKE "Pin" 
-    THEN "Pin securely holds badge in place" 
-
---Secures to clothing with metal clip (https://www.staples.com/Staples-Vinyl-Straps-with-Two-Hole-Clips-Clear-100-Pack-18914-1122897/product_573105)
-ELSE IF A[6086].Where("metal clip").Values IS NOT NULL
-OR A[6121].Where("metal clip").Values IS NOT NULL
-    THEN "Secures to clothing with metal clip" 
-
---Clip secures badge to clothing (https://www.staples.com/C-line-Reusable-Clear-Plastic-Name-Tag-Holders/product_76611)    
-ELSE IF A[6086].Where("clip").Values IS NOT NULL
-OR A[6121].Where("clip").Values IS NOT NULL
-    THEN "Clip secures badge to clothing" 
-
---Belt clip model hooks on pants belt     (https://www.staples.com/product_458940)    
-ELSE IF A[6121].Where("belt carabiner", "belt clip").Values IS NOT NULL
-    THEN "Belt clip model hooks on pants belt" 
-
---Bulldog clip fastens to clothing, bags and more (https://www.staples.com/Swingline-GBC-1122897-ID-Badge-Clip-Clear-Strap-Silver-Clip/product_857505)
-ELSE IF $SP-21608$ LIKE "Bulldog Clip" 
-    THEN "Bulldog clip fastens to clothing, bags and more" 
-
---Integrated swivel clip helps prevent damage to garments (https://www.staples.com/Avery-74536-Garment-Friendly-Clip-Style-Name-Badges-White-3-x-4-50-Pack/product_461274)    
-ELSE IF $SP-21608$ LIKE "Swivel Clip" 
-    THEN "Integrated swivel clip helps prevent damage to garments" 
-
---Swivel hook to attach ID cards securely (https://www.staples.com/1344043BAC31-36-Visitor-Pre-Designed-Lanyards-with-Breakaway-Release-Red-10-Pack/product_206367)
-ELSE IF $SP-21608$ LIKE "Swivel Hook" 
-    THEN "Swivel hook to attach ID card securely" 
+--Handle Information (Length and Material)
+IF $SP-23349$ LIKE "%handle%" AND $SP-20400$ IS NOT NULL AND $SP-21026$ IS NOT NULL
+    THEN "Handle features "_$SP-20400$_""" length and made of "_$SP-21026$_" for durability" 
+ELSE IF $SP-23349$ LIKE "%handle%" AND $SP-21026$ LIKE "%plastic%" 
+    THEN "Handle features durable plastic construction" 
+ELSE IF $SP-23349$ LIKE "%handle%" AND $SP-21026$ IS NOT NULL
+    THEN "Handle made of "_$SP-21026$_" material for durability" 
+ELSE IF $SP-23349$ LIKE "%handle%" AND $SP-20400$ IS NOT NULL
+    THEN "It measures"_$SP-20400$_""" in length, allowing easy access in hard-to-reach areas" 
 ELSE "@@";
 
---Badge loading style
---Top-loading design prevents inserts from falling out (https://www.staples.com/product_440726)
-IF A[6087].Where("top side open").Values IS NOT NULL
-    THEN "Top-loading design prevents inserts from falling out" 
---Self-adhesive badges adhere firmly and remove easily (https://www.staples.com/Avery-Print-or-Write-Name-Tags-Red-Border-2-11-32-x-3-3-8/product_404301)
-ELSE IF $SP-21603$ LIKE "Self Adhesive" 
-    THEN "Self-adhesive badges adhere firmly and remove easily" 
+--Head Details (material and Size)
+IF $SP-23349$ LIKE "%Head%" AND $SP-20654$ IS NOT NULL
+AND $SP-21044$ IS NOT NULL AND $SP-20657$ IS NOT NULL AND $SP-21026$ IS NOT NULL
+    THEN "Head size is "_$SP-20654$_"""H x "_$SP-21044$_"""W x "_$SP-20657$_"""D and make from "_$SP-21026$_" material" 
+ELSE IF $SP-23349$ LIKE "%Head%" AND $SP-21044$ IS NOT NULL AND $SP-21026$ IS NOT NULL
+    THEN "Width head size is "_$SP-21044$_""" and made of "_$SP-21026$_" for durability" 
+ELSE IF $SP-23349$ LIKE "%Head%" AND $SP-20654$ IS NOT NULL
+AND $SP-21044$ IS NOT NULL AND $SP-20657$ IS NOT NULL
+    THEN "Head size is "_$SP-20654$_"""H x "_$SP-21044$_"""W x "_$SP-20657$_"""D" 
+ELSE IF $SP-23349$ LIKE "%Head%" AND $SP-21044$ IS NOT NULL
+    THEN "It measures "_$SP-21044$_""" width for effective cleaning" 
+ELSE IF $SP-23349$ LIKE "%Head%" AND $SP-21026$ LIKE "%plastic%" 
+    THEN "Head have durable plastic construction" 
+ELSE IF $SP-23349$ LIKE "%Head%" AND $SP-21026$ IS NOT NULL
+    THEN "Head made of "_$SP-21026$_" for durability" 
 ELSE "@@";
 
---Name tag & Badge size
---Name tag & Badge size
-IF $SP-20400$ IS NOT NULL --length
-AND $SP-21044$ IS NOT NULL --width
-    THEN "Size: " 
-         _$SP-21044$_"""W x " 
-         _$SP-20400$_"""L" 
-
-ELSE IF $SP-20400$ IS NOT NULL
-AND $SP-18516$ LIKE "Lanyards" 
-    THEN "Lanyard length: "_$SP-20400$_"""" 
+--Dimensions (in Inches): L x W
+IF $SP-23349$ NOT LIKE "%Head%" AND $SP-23349$ NOT LIKE "%handle%" 
+AND $SP-20400$ IS NOT NULL AND $SP-21044$ IS NOT NULL
+THEN "Dimensions: "_$SP-20400$_"""L x"_$SP-21044$_"""W" 
+ELSE IF $SP-23349$ NOT LIKE "%Head%" AND $SP-23349$ NOT LIKE "%handle%" 
+AND $SP-20654$ IS NOT NULL
+ AND $SP-21044$ IS NOT NULL AND $SP-20657$ IS NOT NULL
+THEN "Dimensions: "_$SP-20654$_"""H x "_$SP-21044$_"""W x "_$SP-20657$_"""D" 
+ELSE IF $SP-23349$ NOT LIKE "%Head%" AND $SP-23349$ NOT LIKE "%handle%" 
+AND $SP-20400$ IS NOT NULL 
+THEN "It measures "_$SP-20400$_""" length for effective cleaning" 
 ELSE "@@";
 
---Printer type used (If applicable)
-
---Designed for use with both inkjet and laser printers for optimal versatility (https://www.staples.com/Avery-74536-Garment-Friendly-Clip-Style-Name-Badges-White-3-x-4-50-Pack/product_461274)
-IF $SP-21605$ LIKE "Inkjet/Laser" 
-    THEN "Designed for use with both inkjet and laser printers for optimal versatility" 
-
---Allows creating badges with laser printer, eliminating extra costs (https://www.staples.com/The-Mighty-Badge-901856-Insert-Sheet-Refill-Kit-for-Laser-Printer-Bright-White-60-Pack/product_1106903)    
-ELSE IF $SP-21605$ LIKE "Laser" 
-    THEN "Allows creating badges with laser printers, eliminating extra costs" 
-ELSE IF $SP-21605$ LIKE "Inkjet" 
-    THEN "Allows creating badges with inkjet printers, eliminating extra costs" 
+--Pack Size (If more than 1)
+IF Request.Data["TX_UOM"] LIKE "%/Each" 
+    THEN "Sold as "_Request.Data["TX_UOM"].ExtractDecimals().First()_" individualy packed" 
+ELSE IF Request.Data["TX_UOM"] NOT LIKE "Each" 
+    THEN "Sold as "_Request.Data["TX_UOM"].ExtractDecimals().First()_" per pack" 
 ELSE "@@";
 
---Pack Size (# of badges)
-
-IF Request.Data["TX_UOM"] LIKE "%/%" 
-    THEN Request.Data["TX_UOM"].Replace("/", " per ")
-ELSE "@@";
-
---Recycled Content (%)
-
---10 percent post-consumer recycled content for an eco-friendly option (https://www.staples.com/Staples-Reinforced-Fastener-Folder-2-Fasteners-Legal-Manila-50-Box/product_831057)
-IF A[6628].Value > 0
-    THEN A[6628].Value
-         _"% post-consumer recycled content for an eco-friendly option" 
-ELSE "@@";
-
---Additional Bullet (Orientation)
-
---Use in horizontal or vertical orientation  (https://www.staples.com/product_357520)
-IF A[6087].Where("landscape/portrait orientation").Values IS NOT NULL
-    THEN "Use in horizontal or vertical orientation" 
-ELSE IF COALESCE(
-                A[6121].Where("portrait orientation", "vertical cards orientation").Values,
-                A[6087].Where("portrait orientation", "vertical cards orientation").Values,
-                A[4783].Where("portrait orientation", "vertical cards orientation").Values
-                ) IS NOT NULL
-AND COALESCE(
-                A[6121].Where("landscape orientation", "horizontal cards orientation").Values,
-                A[6087].Where("landscape orientation", "horizontal cards orientation").Values,
-                A[4783].Where("landscape orientation", "horizontal cards orientation").Values,
-                A[5944].Value.IsEmpty.IfLike("Yes", "").IfLike("No", "Not empty")
-                ) IS NOT NULL
-    THEN "Use in horizontal or vertical orientation" 
-
---Portrait-orientation for easy loading of the badge (https://www.staples.com/134664931-Vertical-ID-Badge-Holders-Clear-50-Pack/product_206467)    
-ELSE IF COALESCE(
-                A[6121].Where("portrait orientation", "vertical cards orientation").Values,
-                A[6087].Where("portrait orientation", "vertical cards orientation").Values,
-                A[4783].Where("portrait orientation", "vertical cards orientation").Values
-                ) IS NOT NULL
-    THEN "Portrait orientation for easy loading of the badge" 
-
---Landscape orientation to slip badge easily into the holder (https://www.staples.com/134647931-Horizontal-ID-Badge-Holders-Clear-50-Pack/product_206466)
-ELSE IF COALESCE(
-                A[6121].Where("landscape orientation", "horizontal cards orientation").Values,
-                A[6087].Where("landscape orientation", "horizontal cards orientation").Values,
-                A[4783].Where("landscape orientation", "horizontal cards orientation").Values,
-                A[5944].Value.IsEmpty.IfLike("Yes", "").IfLike("No", "Not empty")
-                ) IS NOT NULL
-    THEN "Landscape orientation to slip badge easily into the holder";
-
---Additional Bullet (PVC-free material)
-
---Made from soft, PVC Free plastic (https://www.staples.com/product_SS941254)
-IF COALESCE(
-            A[6087].Where("PVC-free").Values,
-            A[4783].Where("PVC-free").Values
-            ) IS NOT NULL
-AND COALESCE(
-            A[372].Values,
-            A[6073].Values
-            ) IS NOT NULL
-    THEN "Made of PVC-free " 
-         _COALESCE(A[372].Values.First().ToLower(), A[6073].Values.First().ToLower())
+--Use for additional product and/or manufacturer information relevant to the customer buying decision
 
 --material
-ELSE IF $SP-17447$ IS NOT NULL 
-    THEN "Made of "_$SP-17447$;
+IF $SP-23349$ NOT LIKE "%Head%" AND $SP-23349$ NOT LIKE "%handle%" 
+AND $SP-21026$ IS NOT NULL AND $SP-21026$ NOT IN ("Corn Bristle")
+    THEN "Made of "_$SP-21026$ _" for durability";
 
-IF $SP-22967$ LIKE "Assorted" 
-     THEN "Comes in assorted colors" 
-ELSE IF $SP-22967$ IS NOT NULL
-     THEN "Comes in "_$SP-22967$;
+--color
+IF $SP-21278$ IS NOT NULL AND $SP-21278$ NOT IN ("Assorted", "Multicolor", NULL, "clear")
+    THEN "Comes in "_$SP-21278$
+ELSE IF $SP-22967$ NOT IN ("Assorted", "Multicolor", NULL, "clear")
+    THEN "Comes in "_$SP-22967$;
 
---Additional Bullet (Prepunched)  
+IF $SP-23349$ LIKE "Brooms w/Dustpan" 
+AND A[6786].Values.Where("broom holder") IS NOT NULL
+    THEN "Broom easily snaps into and stores inside the pan";
 
---Prepunched for use with strap clips, lanyards, reels, chains and more (https://www.staples.com/C-Line-Horizontal-ID-Badge-Holders-12-Pack/product_975994)
-IF COALESCE(
-            A[6087].Where("pre-punched holes", "pre-drilled holes").Values,
-            A[6121].Where("%pre-punched%").Values
-            ) IS NOT NULL
-    THEN "Pre-punched for use with strap clips, lanyards, reels, chains and more" 
-    ELSE "@@";
+--hanger hole
+IF A[6786].Values.Where("hanger hole", "hanging hole") IS NOT NULL 
+    THEN A[6786].Values.Where("hanger hole", "hanging hole").Erase(" hole").FlattenWithAnd().ToUpperFirstChar()
+    _" hole for easy storage" 
+--wall mountable 
+ELSE IF A[6786].Values.Where("wall mountable") IS NOT NULL 
+    THEN "The hanging design helps prevent damage to bristles, handles, walls, and counters";
 
---Additional Bullet (Garment Friendly clip)
+--molded riges
+IF A[6786].Values.Where("molded ridges") IS NOT NULL 
+OR DC.Ksp.Values.Where("%molded ridge%") IS NOT NULL
+    THEN "Molded ridges for broom and counter brush cleaning" 
+ELSE IF A[6786].Values.Where("molded teeth") IS NOT NULL 
+OR DC.Ksp.Values.Where("%molded teeth%") IS NOT NULL 
+THEN "Molded teeth to help clean bristles";
 
---Garment-friendly clip helps to protect clothing (https://www.staples.com/Avery-Top-Loading-Clip-Style-Name-Tags-2-1-4-x-3-1-2/product_461148)
-IF A[6087].Where("Garment Friendly clip").Values IS NOT NULL
-    THEN "Garment-friendly clip helps protect clothing";
+--Cleaning usage
+IF $SP-15361$ IS NOT NULL 
+    THEN "Perfect for "_$SP-15361$;
 
---Additional Bulltet (Magnet Attachment)
+--adjustable handle
+IF A[6786].Values.Where("Adjustable handle") IS NOT NULL 
+    THEN "Adjustable handle enhances user comfort" 
+ELSE IF A[6786].Values.Where("Ergonomic handle") IS NOT NULL 
+    THEN "Ergonomic handle to prevent hand fatigue"; 
 
---Magnet attaches easily and won't mar clothing (https://www.staples.com/C-Line-Name-Badge-Holder-Kits-Magnetic-Top-Load-3-x-4-20-Bx/product_438493)
-IF A[6121].Where("lacquered magnetic side").Values IS NOT NULL
-OR A[6086].Where("magnet").Values IS NOT NULL    
-    THEN "Magnet attaches easily and won't mar clothing";
+IF A[6784].Value LIKE "Yes" 
+OR DC.Ksp.Values.Where("%Telescop%handle%") IS NOT NULL 
+OR DC.MarketingText.Values.Where("%Telescop%handle%") IS NOT NULL THEN "Telescoping handle makes it easy to use";
 
---Additional Bulltet (Removable Adhesive)
+--comfort grip
+IF A[6786].Values.Where("comfort grip%") IS NOT NULL 
+    THEN "Comfort grip for added convenience" 
+ELSE IF A[6786].Values.Where("% grip", "% grip %") IS NOT NULL 
+    THEN A[6786].Values.Where("% grip", "% grip %").First().Erase(" handle").ToUpperFirstChar() 
+_" for added convenience";
 
---Name badge labels come with removable adhesive so they will not damage your clothing (https://www.staples.com/Blanks-USA-3-1-2-x-2-1-4-Name-Tag-Label-White-100-Pack/product_195253)
-IF $SP-18516$ LIKE "Sticker Name Tags/Labels" 
-AND A[4783].Where("removable adhesive").Values IS NOT NULL
-    THEN "Name badge labels come with removable adhesive so they will not damage your clothing";
+IF A[6786].Values.Where("color-coded") IS NOT NULL 
+    THEN "Color-coded feature makes it ideal for assigning it to a specific work area"; 
+
+IF A[6786].Values.Where("% thread") IS NOT NULL 
+    THEN A[6786].Values.Where("% thread").FlattenWithAnd().ToUpperFirstChar()
+    _" for easy and secure attachment"; 
+
+IF A[7091].Values.Where("wet", "dry").Count = 2 
+    THEN "Can be used in dry or wet conditions";
+
+--heavy-duty    
+IF A[6786].Values.Where("heavy-duty") IS NOT NULL 
+    THEN "Heavy-duty for tough cleaning jobs";
+
+--bristles    
+IF A[6786].Where("%angled bristle%").Values IS NOT NULL AND $SP-23349$ NOT LIKE "%angled%" 
+    THEN "Angled bristle are great for sweeping in corners and other hard to sweep areas"    
+ELSE IF A[6786].Where("%stiff bristle%").Values IS NOT NULL 
+    THEN "Stiff bristles provide aggressive cleaning" 
+ELSE IF A[6786].Where("%heat-resistant bristles%").Values IS NOT NULL 
+    THEN "High heat resistant bristles offer long term economy" 
+ELSE IF A[6786].Where("%stain-resistant bristles%").Values IS NOT NULL 
+    THEN "Stain-resistant bristles for longer product life"; 
+
+IF $SP-23349$ LIKE "%tool holder%" 
+AND A[6786].Values.Where("%handle holders", "%brush holders").ExtractDecimals().Max() > 0 
+THEN "Can hold up to "_A[6786].Values.Where("%brush holders").ExtractDecimals().Max()_" items";
+
+--wheels
+IF A[6786].Values.Where("wheels") IS NOT NULL 
+    THEN "Wheels improve wear resistance";
+
+--Warranty Information
+IF A[3574].Value LIKE "%lifetime%" 
+    THEN "Lifetime manufacturer limited warranty" 
+ELSE IF A[3574].Value IS NOT NULL 
+    THEN A[3574].Value.Replace(" years","-year").Replace(" year","-year").Replace(" days","-day").Replace(" day","-day")
+    .Replace(" months", "-month").Replace(" month", "-month").Postfix(" manufacturer limited warranty")
+ELSE "@@";
