@@ -1,148 +1,124 @@
---Type of business envelope & use    
-IF A[6481].Value LIKE "envelope" 
-AND A[6514].Value IS NOT NULL 
-    THEN A[6514].Value.Replace("No. ","#").Erase("size ")_" business envelopes are suitable for many mailing projects" 
-ELSE IF A[6481].Value LIKE "envelope" 
-AND A[6485].Value LIKE "% (%)" 
-    THEN A[6485].Value.Split(" (").First().Replace("No ","#")_" business envelopes are suitable for many mailing projects" 
-ELSE IF A[6481].Value LIKE "envelope" 
-    THEN "Business envelopes are suitable for many mailing projects" 
+-- Paper Trimmers
+
+-- Paper trimmer type & Use (1)
+
+-- All paper crafting enthusiasts know a rotary trimmer is a must-have (https://www.staples.com/product_942162)
+IF $SP-14421$ IN ("guillotine", "rotary") 
+    THEN "All paper crafting enthusiasts know that "_$SP-14421$_" trimmer is a must-have" 
+ELSE IF $SP-14421$ LIKE "Cutting Mats" 
+    THEN "All paper crafting enthusiasts know that cutting mat is a must-have" 
+
+ELSE IF $SP-14421$ LIKE "Replacement Blades" 
+    THEN "All paper crafting enthusiasts know that "_$SP-14421$_" are must-have" 
+
+ELSE IF $SP-14421$ IS NOT NULL
+    THEN "All paper crafting enthusiasts know that "_$SP-14421$_" is a must-have" 
 ELSE "@@";
 
---True color & Material of item; including paper weight (If Applicable)
-IF $cnet_true_color$ NOT IN ("Assorted", "Multicolor", NULL)
-AND $SP-21543$ IS NOT NULL 
-AND $SP-21408$ IS NOT NULL 
-    THEN "Made from "_$cnet_true_color$_" "_$SP-21543$_" lb. "_$SP-21408$_" for durability" 
-ELSE IF $cnet_true_color$ IS NOT NULL 
-AND $cnet_true_color$ NOT IN ("Assorted", "Multicolor")
-AND $SP-21543$ IS NOT NULL 
-    THEN "Made from "_$cnet_true_color$_" "_$SP-21543$_" lb. paper for durability" 
-ELSE IF $cnet_true_color$ IS NOT NULL 
-AND $cnet_true_color$ NOT IN ("Assorted", "Multicolor")
-AND $SP-21408$ IS NOT NULL 
-    THEN "Made from "_$cnet_true_color$_" "_$SP-21408$_" for durability" 
-ELSE IF $cnet_true_color$ IN ("white", "manila")
-    THEN "Envelope is "_$cnet_true_color$_"-colored and ideal for business or personal correspondance" 
-ELSE IF $cnet_true_color$ IS NOT NULL 
-AND $cnet_true_color$ NOT IN ("Assorted", "Multicolor")
-    THEN "Available in eye-pleasing "_$cnet_true_color$_" color" 
-ELSE IF $cnet_true_color$ IN ("assorted") 
-        THEN "The assortment of colors allows you to color-code or simply add some color to mailings" 
-ELSE IF $SP-21408$ IS NOT NULL 
-    THEN "Made from "_$SP-21408$_" for durability" 
+-- Paper trimmer size (inches) (2)
+
+IF $SP-20654$ IS NOT NULL -- H
+AND $SP-21044$ IS NOT NULL -- W
+AND $SP-20657$ IS NOT NULL -- D
+    THEN "Paper trimmer size: "_$SP-20654$_"""H x "_$SP-21044$_"""W x "_$SP-20657$_"""D" 
+
+ELSE IF $SP-20654$ IS NOT NULL -- H
+AND $SP-21044$ IS NOT NULL -- W
+AND A[7520].Value Like "cutter cutting mat" 
+    THEN "Cutting mat size: "_$SP-20654$_"""H x "_$SP-21044$_"""W" 
+
+ELSE IF $SP-20654$ IS NOT NULL -- H
+AND $SP-21044$ IS NOT NULL -- W
+    THEN "Paper trimmer size: "_$SP-20654$_"""H x "_$SP-21044$_"""W" 
+
+ELSE IF $SP-21044$ IS NOT NULL -- W
+AND $SP-20657$ IS NOT NULL -- D
+    THEN "Base size: "_$SP-21044$_"""W x "_$SP-20657$_"""D" 
+
+ELSE IF $SP-20654$ IS NOT NULL -- H
+AND $SP-21044$ IS NOT NULL -- W
+AND A[7520].Value Like "cutter cutting mat" 
+    THEN "Cutting mat size: "_$SP-20654$_"""H x "_$SP-21044$_"""W" 
 ELSE "@@";
 
---Envelope size
-IF $SP-21019$ NOT IN (NULL, "Other")
-    THEN "These envelopes measure ]]"_$SP-21019$_"[[ in size, providing enough space for your mail" 
+-- Maximum Paper Size (3)
+
+-- Cuts up to 15 sheets of paper at a time (https://www.staples.com/product_103439)
+IF A[4312].Value IS NOT NULL
+    THEN "Cuts up to "_A[4312].Value_" sheets of paper at a time" 
 ELSE "@@";
 
-----Closure type & flap style
-IF $SP-18916$ NOT IN (NULL, "V-Flap") 
-AND $SP-18915$ LIKE "Gummed" 
-    THEN $SP-18915$_" closure with "_$SP-18916$_" flap keeps contents in place" 
+-- Blade length & Material (4)
 
-ELSE IF $SP-18915$ IN ("self seal") 
-AND $SP-18916$ NOT IN (NULL, "V-Flap")  
-    THEN "Self-seal closure with "_$SP-18916$_" flap seals securely without moistening" 
-
-ELSE IF $SP-18915$ IN ("%seal", "EasyClose") 
-AND $SP-18916$ NOT IN (NULL, "V-Flap")  
-    THEN $SP-18915$_" closure with "_$SP-18916$_" flap seals securely without moistening" 
-ELSE IF $SP-18915$ IS NOT NULL
-AND $SP-18916$ NOT IN (NULL, "V-Flap")  
-    THEN $SP-18915$_" closure with "_$SP-18916$_" flap for a secure seal" 
-
-ELSE IF $SP-18916$ IN ("V-Flap") 
-AND $SP-18915$ LIKE "Gummed" 
-    THEN $SP-18915$_" closure with ##"_$SP-18916$_" keeps contents in place" 
-
-ELSE IF $SP-18915$ IN ("self seal") 
-AND $SP-18916$ NOT IN (NULL, "V-Flap")  
-    THEN "Self-seal closure with ##"_$SP-18916$_" flap seals securely without moistening"     
-
-ELSE IF $SP-18915$ IN ("%seal", "EasyClose") 
-AND $SP-18916$ IN ("V-Flap") 
-    THEN $SP-18915$_" closure with ##"_$SP-18916$_" seals securely without moistening" 
-ELSE IF $SP-18915$ IS NOT NULL
-AND $SP-18916$ IN ("V-Flap")  
-    THEN $SP-18915$_" closure with ##"_$SP-18916$_" for a secure seal" 
-
-ELSE IF $SP-18915$ IN ("self seal") 
-THEN "Self-seal closure for a secure seal" 
-
-ELSE IF $SP-18915$ IS NOT NULL 
-THEN $SP-18915$_" closure for a secure seal" 
-
-ELSE IF $SP-18916$ IN ("V-Flap") 
-THEN $SP-18916$_" for a crisp, professional look" 
-
-ELSE IF $SP-18916$ NOT IN (NULL, "V-Flap")  
-THEN $SP-18916$_" flap for a crisp, professional look" 
-
-ELSE "@@";
-
---Interior cushioning (if any)
-IF A[6497].Value LIKE "%bubble wrap%" 
-    THEN "Interior bubble wrap keeps mail cushioned during bumpy rides" 
-ELSE "@@";
---Security tinted
-IF $SP-18919$ LIKE "Yes" 
-    THEN "Security-tinted pattern helps to discourage from reading sensitive information through the outside of the envelope" 
-ELSE "@@";
---Envelope pack size
-IF Request.Data["TX_UOM"] LIKE "%/%" 
-     THEN Request.Data["TX_UOM"].Split("/").First()_" envelopes per " 
-    _Request.Data["TX_UOM"].Split("/").Last().ToLower()
-ELSE "@@";
-
---Post Consumer Content
-IF $SP-21624$ NOT IN (NULL, "0") 
-    THEN "Contains minimum "_$SP-21624$_"% post-consumer content" 
-ELSE "@@";
-
---Recycled Content
-IF $SP-21623$ NOT IN (NULL, "0")  
-    THEN "Support the environment with envelopes made with "_$SP-21623$_"% recycled material" 
-ELSE "@@";
-
---protection
-IF A[6498].Values IS NOT NULL
-AND A[6500].Values.Where("%resistant" , "%proof", "%repellent").Count > 1
-    THEN A[6498].Values.Erase("-resistant").Flatten(", ").ToLower(true).ToUpperFirstChar()_", " 
-    _A[6500].Values.Where("%resistant" , "%proof", "%repellent").FlattenWithAnd().Erase("resistant").Erase("proof").Erase("repellent").ToLower(true)_
-    "resistant envelope provides extra security for item being shipped" 
-
-ELSE IF A[6498].Values IS NOT NULL 
-AND A[6500].Values.Where("%resistant" , "%proof", "%repellent").Count = 1 
-    THEN A[6500].Values.Where("%resistant" , "%proof", "%repellent").Flatten().Erase("resistant").Erase("proof").Erase("repellent").ToUpperFirstChar()_" and "_A[6498].Values.Erase("resistant").Flatten(", ").ToLower(true)_"resistant envelope provides extra security for item being shipped" 
-
-ELSE IF A[6498].Values.Where("%resistant") IS NOT NULL THEN
-A[6498].Values.Erase("resistant").FlattenWithAnd().ToUpperFirstChar()_"-resistant envelope provides extra security for item being shipped" 
-
-ELSE IF A[6500].Values.Where("%resistant", "%proof", "%repellent") IS NOT NULL 
-    THEN A[6500].Values.Where("%resistant", "%proof", "%repellent").FlattenWithAnd().Erase("resistant").Erase("proof").Erase("repellent").ToLower(true).ToUpperFirstChar()
-    _"resistant envelope provides extra security for item being shipped" 
+-- Features stainless steel blades (https://www.staples.com/product_829909)
+IF $SP-21137$ IS NOT NULL 
+AND $SP-12951$ IS NOT NULL 
+AND $SP-12951$ LIKE "%tripleTrack%" 
+THEN $SP-21137$_""" "_REF["$SP-12951$"].Prefix("##").Replace(" ", " ##")_" blade" 
+ELSE IF $SP-12951$ IS NOT NULL 
+AND $SP-21137$ IS NOT NULL 
+THEN $SP-21137$_""" "_$SP-12951$_" blade" 
+ELSE IF $SP-21137$ IS NOT NULL 
+THEN "Blade length: "_$SP-21137$_"""" 
+ELSE IF $SP-12951$ IS NOT NULL 
+THEN "Blade is made of "_$SP-12951$ 
 ELSE "@@"; 
 
---Use for additional product and/or manufacturer information relevant to the customer buying decision
-IF A[6500].Where("%address window%").Values IS NOT NULL AND A[6495].Value LIKE "%left%" 
-    THEN "Simply position the address to show through the single-left window" 
-        ELSE IF A[6493].Value = 1 AND A[6495].Value LIKE "%left%" 
-            THEN "Simply position the address to show through the single-left window" 
-                ELSE IF A[6493].Value = 2 
-                    THEN "Double-window envelopes conveniently display addresses" 
+-- Features (Grids/Locks/Guards) (5)
 
-ELSE IF A[6500].Where("%address window%").Values IS NOT NULL AND A[6495].Value LIKE "%right%" 
-    THEN "Simply position the address to show through the single-right window" 
-        ELSE IF A[6493].Value = 1 AND A[6495].Value LIKE "%right%" 
-            THEN "Simply position the address to show through the single-right window" 
-                ELSE IF A[6493].Value = 2 
-                    THEN "Double-window envelopes conveniently display addresses";
+IF A[4315].Values.Where("safety interlock") IS NOT NULL 
+    THEN "Safety interlock secures blade when not in use" 
 
---opening style
-IF A[6488].Value LIKE "open side" 
-    THEN "The flap is on the long side for easier filling" 
-ELSE IF A[6488].Value LIKE "open end" OR $SP-18916$ LIKE "Open End" 
-    THEN "Flap is on the short side, helping to keep things from falling out after opening";
+ELSE IF A[4315].Values.Where("automatic blade locking system") IS NOT NULL
+AND A[6703].Value LIKE "Yes" 
+    THEN "Safety features include finger guard ##and automatic blade locking system" 
+
+ELSE IF A[4315].Values.Where("automatic blade locking system") IS NOT NULL
+    THEN "Features automatic blade locking system" 
+ELSE "@@";
+
+-- True color (6)
+
+IF $SP-22967$ NOT IN (NULL, "Assorted", "Multicolor")
+    THEN "Comes in "_$SP-22967$
+
+ELSE IF $SP-22967$ LIKE "Assorted" 
+    THEN "Comes in assorted colors" 
+
+ELSE IF $SP-22967$ LIKE "Multicolor" 
+    THEN "Multicolor "_SKU.ProductType
+ELSE "@@";
+
+-- Pack Size (If more than 1) (7)
+
+IF Request.Data["TX_UOM"] IS NOT NULL
+AND Request.Data["TX_UOM"] Not Like "Each" 
+    THEN "Contains "_Request.Data["TX_UOM"].Replace("/", " trimmers per ")
+ELSE "@@";
+
+-- Use for additional (8-12)
+
+-- self-sharpening system keeps blade sharp (https://www.staples.com/product_264899)
+IF A[4315].Values.Where("self-sharpening blade") IS NOT NULL
+    THEN "Self-sharpening system keeps blade sharp";
+
+IF A[4315].Values.Where("titanium coated blades") IS NOT NULL
+    THEN "Titanium-bonded blades stay sharper longer";
+
+IF A[4315].Values.Where("Auto Clamp system") IS NOT NULL
+    THEN "Automatic clamp holds work securely and prevents shifting";
+
+-- Used for cutting photos and small crafts  (https://www.staples.com/product_ACM15191)   
+IF A[4309].Values IS NOT NULL
+    THEN "Used for cutting "_A[4309].Values.FlattenWithAnd();
+
+IF A[4315].Values.WhereNot("safety interlock", "self-sharpening blade", "automatic blade locking system", "titanium coated blades", "Auto Clamp system") IS NOT NULL
+    THEN "Features "_A[4315].Values.WhereNot("safety interlock", "self-sharpening blade", "automatic blade locking system", "titanium coated blades", "Auto Clamp system").Prefix("##").Replace(" "," ##").Replace("##TripleTrack ##System", "##TripleTrack system").Replace("##Soft-touch ##handle", "soft-touch handle").FlattenWithAnd();
+
+IF A[6628].Value > 0
+    THEN "Made from "_A[6628].Value_"% recycled material";
+
+IF A[3574].Value Like "%lifetime%" 
+    THEN "Lifetime manufacturer limited warranty" 
+ELSE IF A[3574].Value Like "%year%" 
+    THEN A[3574].Value.Erase("Warranty").Erase("limited").ExtractDecimals().Postfix("-year manufacturer limited warranty");

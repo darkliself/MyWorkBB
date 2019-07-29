@@ -30,7 +30,7 @@ void HighlighteTtypeAndUse(){
     else if (type.HasValue("Retractable")) {
         Add($"HighlighteTtypeAndUse⸮Retractable highlighter eliminates the need for capping and uncapping");
     }
-    else if (type.HasValue("Clear View", "Mini", "Tape")) {
+    else if (type.In("Clear View", "Mini", "Tape")) {
         Add($"HighlighteTtypeAndUse⸮{type.ToLower().ToUpperFirstChar()} highlighter is a dream to use - just highlight");
     }
     else if (type.HasValue("Blade")) {
@@ -51,13 +51,13 @@ void HighlighteTtypeAndUse(){
 void HighlighterTipStyle(){
     var inkColor = GetReferenceBase("SP-16334");
     var tipStyle = GetReferenceBase("SP-16332");
-    if (tipStyle.HasValue("chisel") && inkColor.HasValue("Yellow", "Orange", "Blue")) {
+    if (tipStyle.HasValue("chisel") && inkColor.In("Yellow", "Orange", "Blue")) {
         Add($"HighlighterTipStyle⸮Chisel tip for precise marking");
     }
     else if (tipStyle.HasValue("chisel") && inkColor.HasValue("Assorted")) {
         Add($"HighlighterTipStyle⸮Versatile chisel tip allows you to precisely highlight both wide and narrow lines of text");
     }
-    else if (tipStyle.HasValue("chisel") &&  inkColor.HasValue("Green", "Pink", "Purple")) {
+    else if (tipStyle.HasValue("chisel") &&  inkColor.In("Green", "Pink", "Purple")) {
         Add($"HighlighterTipStyle⸮Versatile chisel tip easily highlights or underlines text");
     }
     else if (tipStyle.HasValue("bullet")) {

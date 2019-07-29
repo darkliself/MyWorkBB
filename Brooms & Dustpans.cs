@@ -15,7 +15,7 @@ AdditionalCleaningUsage();
 AdditionalAdjustableHandle();
 AdditionalTelescopingHandle();
 AdditionalComfortGrip();
-AdditionalColorCoded();
+AdditionalBroomColorCoded();
 AdditionalBroomThread();
 AdditionalBroomWetDry();
 AdditionalBroomHeavyDuty();
@@ -211,9 +211,9 @@ void AdditionalComfortGrip(){
 
 // --[FEATURE #16]
 // Additional Color Coded
-void AdditionalColorCoded(){
+void AdditionalBroomColorCoded(){
     if (A[6786].HasValue("color-coded")) {
-        Add($"AdditionalColorCoded⸮Color-coded feature makes it ideal for assigning it to a specific work area");
+        Add($"AdditionalBroomColorCoded⸮Color-coded feature makes it ideal for assigning it to a specific work area");
     }
 }
 
