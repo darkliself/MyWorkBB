@@ -58,8 +58,10 @@ THEN $SP-21137$_""" "_REF["$SP-12951$"].Prefix("##").Replace(" ", " ##")_" blade
 ELSE IF $SP-12951$ IS NOT NULL 
 AND $SP-21137$ IS NOT NULL 
 THEN $SP-21137$_""" "_$SP-12951$_" blade" 
+
 ELSE IF $SP-21137$ IS NOT NULL 
 THEN "Blade length: "_$SP-21137$_"""" 
+
 ELSE IF $SP-12951$ IS NOT NULL 
 THEN "Blade is made of "_$SP-12951$ 
 ELSE "@@"; 
