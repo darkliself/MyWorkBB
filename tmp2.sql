@@ -1,139 +1,135 @@
---              Bullet 1
-----Pencil sharpener type & Use
-    --SP-22593
-    --Electric|Manual|Battery Powered
+-- Bullet 1
+-- Tape type & use
 
-IF $SP-22593$ LIKE "Electric" 
-    THEN "Electric pencil sharpener provides clean, precise sharpening" 
-ELSE IF $SP-22593$ LIKE "Manual" 
-    THEN "Manual pencil sharpener is quick and convenient for anywhere use" 
-ELSE IF $SP-22593$ LIKE "Battery Powered" 
-    THEN "Battery-powered pencil sharpener is ideal for high-quality clean line sharpening" 
+-- https://www.staples.com/product_169055
+IF $SP-18701$ LIKE "Double Sided" 
+THEN "Double Sided Tape holds things together without being seen" 
+-- https://www.staples.com/product_2301886
+ELSE IF $SP-18701$ LIKE "Masking" 
+THEN "Masking Tape provides instant adhesion and resists lifting or curling" 
+-- https://www.staples.com/product_772036
+ELSE IF $SP-18701$ LIKE "Electrical" 
+THEN "Electrical Tape provides excellent resistant to abrasion, moisture, alkalis, acids and corrosion" 
+-- https://www.staples.com/product_738006
+ELSE IF $SP-18701$ LIKE "Removable" 
+THEN "Removable Tape is great for temporary posting" 
+-- https://www.staples.com/product_487909
+ELSE IF $SP-18701$ LIKE "Transparent" 
+THEN "Transparent Tape is the perfect clear tape for wrapping, sealing, and label protection" 
+-- Scotch® Magic™ Tape is the perfect invisible tape for sealing, mending, and labeling 
+ELSE IF $SP-18701$ LIKE "Invisible" 
+THEN "Invisible tape is the perfect option for sealing, mending, and labeling" 
 ELSE "@@";
 
---              Bullet 2
-----Workload    
-    ---SP-23550
-    ---Heavy-duty|Light-duty
-IF $SP-23550$ LIKE "Light-duty" 
-    THEN "Pencil sharpener is ideal for light-duty pencil sharpening" 
-ELSE IF $SP-23550$ LIKE "Heavy-duty" 
-    THEN "Heavy-duty versatile sharpener" 
-ELSE IF $SP-23550$ LIKE "%Medium%Duty%" 
-    THEN "Pencil sharpener usage type: Medium-duty" 
+-- Bullet 2
+-- Dimensions as W (in inches) x L (in yards); width is how wide the tape is & length is the total length of the roll
+
+-- https://www.staples.com/product_DUC0021087
+IF $SP-22046$ IS NOT NULL
+AND $SP-22047$ IS NOT NULL
+THEN "Tape with dimensions of "_ $SP-22046$_"""W x "_ $SP-22047$_" yds." 
 ELSE "@@";
 
---              Bullet 3
-----Material of item & Product True color    
-        --SP-22967 - Product True Color
-        --SP-21408 - Material of Item
+-- Bullet 3
+-- Core diameter (Inches)
 
-IF $SP-21408$ IS NOT NULL 
-    AND $SP-22967$ IS NOT NULL
-        THEN $SP-22967$_" sharpener is made of "_$SP-21408$_" and is ideal for pencils" 
-ELSE IF $SP-21408$ IS NOT NULL 
-        THEN "Made of "_$SP-21408$_" to help you achieve a sharp pencil tip" 
-ELSE IF $SP-22967$ LIKE "available in different colors" OR  $SP-22967$ LIKE "assorted" 
-        THEN "This item comes in assorted colors" 
-ELSE IF $SP-22967$ IS NOT NULL 
-        THEN "Comes in "_$SP-22967$
+-- https://www.staples.com/product_368101
+IF A[6447].ValueUSM LIKE "%in%" 
+THEN A[6447].ValueUSM.Split(" ").First().Prefix("Core diameter: ").Postfix("""")
 ELSE "@@";
 
---              Bullet 4
-----Pencil sharpener mount type    
-        --SP-16315
-        --Desktop|Wall|Handheld
+-- Bullet 4
+-- True color
 
-IF $SP-16315$ LIKE "Desktop" 
-    THEN "Desktop pencil sharpener for your convenience" 
-    --Сomes in desktop design for more convenience. 
-    --Desktop pencil sharpening for your convenience.
-ELSE IF $SP-16315$ LIKE "Wall" 
-    THEN "Wall-mountable pencil sharpener"    
-ELSE IF $SP-16315$ LIKE "Handheld" 
-    THEN "Handheld pencil sharpener" 
+-- https://www.staples.com/product_826131
+IF A[6446].Values.Flatten(",").Split(",").Where("%tape%") IS NOT NULL
+THEN A[6446].Values.Flatten(",").Split(",").Where("%tape%").Erase("tape").Prefix("Comes in ").Postfix(" color")
+
+ELSE IF $SP-22967$ IS NOT NULL
+    THEN "Comes in "_$SP-22967$
+
 ELSE "@@";
 
---              Bullet 5
---Pencil sharpener selector dial
+-- Bullet 5
+-- Tape Pack Size (If more than 1)
 
---The Staples® Single-Hole Manual Pencil Sharpener is quick and convenient for use anywhere!
---https://www.staples.com/product_211672
-
-IF $SP-18669$ LIKE "1%" 
-    THEN "One-hole pencil sharpener is quick and convenient for use anywhere    " 
-
---6-hole dial accommodates various pencil widths 
---https://www.staples.com/product_356294
-
-ELSE IF $SP-18669$ IN ("2%", "3%", "4%")
-    THEN REF["SP-18669"].Replace(" holes", "-hole")_" dial accommodates various pencil widths" 
-
---Features a six-hole dial which conveniently sharpens assorted pencil widths
---https://www.staples.com/product_356294
-
-ELSE IF $SP-18669$ IS NOT NULL
-    THEN "Features a "_REF["SP-18669"].Replace(" holes", "-hole")_" dial which conveniently sharpens assorted pencil widths" 
+-- https://www.staples.com/product_518724?akamai-feo=off
+IF Request.Data["TX_UOM"].ExtractDecimals().First() > 1 
+THEN "They are sold as "_Request.Data["TX_UOM"].ExtractDecimals().First()_" per "_Request.Data["TX_UOM"].Split("/").Last().ToLower()
+ELSE IF Request.Data["TX_UOM"] LIKE "Dozen" 
+THEN "They are sold as 12 per pack" 
 ELSE "@@";
 
---              Bullet 6
---Pencil sharpener auto-shut off feature (If Applicable)    
+-- Bullet 6
+-- Dispenser included (If applicable)
 
---Auto shut off when pencil is completely sharpened 
---https://www.staples.com/product_185006
-
-IF $SP-16316$ LIKE "Yes" 
-    THEN "Auto shut off when pencil is completely sharpened" 
+-- https://www.staples.com/product_483534
+IF A[6461].Value LIKE "dispenser" 
+AND A[6462].Value LIKE "desktop" 
+THEN "Desktop tape dispenser for keeping tape at hand atop your desk" 
+-- https://www.staples.com/product_483534
+ELSE IF A[6461].Value LIKE "dispenser" 
+AND A[6462].Value LIKE "hand held" 
+THEN "Dispenser is easy to hold and carry" 
+-- https://www.staples.com/product_812056
+ELSE IF A[6461].Value LIKE "dispenser" 
+THEN "Includes dispenser for easy use" 
 ELSE "@@";
 
---              Bullet 7
-----Pack Size (If more than 1)    
+-- Bullet 7
+-- Tensile strength rating (If Applicable)
 
-IF $SP-12609$ NOT LIKE "each" 
-    THEN "Available in a "_Request.Data["TX_UOM"].RegexReplace("(\S+)[\/](\S+)", "$2 of $1")
+-- https://www.staples.com/product_425575?akamai-feo=off
+IF A[6453].UnitUSM LIKE "lb/in" 
+AND A[6453].ValueUSM = 1
+THEN "Features a tensile strength of one lb. per inch" 
+ELSE IF A[6453].UnitUSM LIKE "lb/in" 
+THEN A[6453].ValueUSM.Prefix("Features a tensile strength of ").Postfix(" lbs. per inch")
 ELSE "@@";
 
---              Bullet 9
---Use for additional product and/or manufacturer information relevant to the customer buying decision
+-- Bullet 8
+-- Certifications
 
---Features antimicrobial protection for the life of the product 
---https://www.staples.com/product_891795
-
-IF A[6189].Where("%antimicrobial%").Values IS NOT NULL
-    THEN "Features antimicrobial protection for the life of the product";
-
---Hardened helical cutter for maximum precision and durability 
---https://www.staples.com/product_264898
-
-IF A[6189].Where("%hardened helical cutter%").Values IS NOT NULL
-    THEN "Features antimicrobial protection for the life of the product";
-
---Pencil saver technology prevents over-sharpening 
---https://www.staples.com/product_116392
-
-IF A[6189].Where("%PencilSaver%").Values IS NOT NULL
-    THEN "Pencil saver technology prevents oversharpening";
-
---Overheat protection prevents motor from overheating 
---https://www.staples.com/product_356332
-
-IF A[6189].Where("overheat protection").Values IS NOT NULL
-    THEN "Overheat protection prevents motor from overheating";
-
---SafeStart system prevents sharpening until receptacle is in place 
---https://www.staples.com/product_810743
-
-IF A[6189].Where("SafeStart").Values IS NOT NULL
-    THEN "SafeStart system prevents sharpening until receptacle is in place";
-
---              Bullet 
---Warranty Information (If Applicable)    
-
-IF COALESCE(A[3574].Value, A[7241].Values) LIKE "limited lifetime warranty" 
-THEN "Lifetime manufacturer limited warranty" 
-ELSE IF COALESCE(A[3574].Value, A[7241].Values) IS NOT NULL 
-    THEN COALESCE(A[3574].Value.ToLower(true).Replace(" years","-year").Replace(" months", "-month").Replace(" days","-day").Replace(" year","-year").Replace(" month", "-month").Replace(" day","-day").Erase(" warranty")
-.Erase(" warranty"),
-    A[7241].Values.ToLower(true).Replace(" years","-year").Replace(" months", "-month").Replace(" days","-day").Replace(" year","-year").Replace(" month", "-month").Replace(" day","-day").Erase(" warranty").Erase(" warranty"))
-    _" manufacturer limited warranty" 
+--https://www.staples.com/product_512320
+IF A[380].Values IS NOT NULL
+THEN "Meets or exceeds "_A[380].Values.FlattenWithAnd()_"  standards" 
 ELSE "@@";
+
+-- Additional bullet
+-- Invisible 
+
+-- https://www.staples.com/product_487908
+IF A[6457].Values.Flatten() LIKE "%invisible after application%" 
+THEN "Once applied, tape becomes invisible";
+
+-- Additional bullet
+-- Permanent adhesive
+
+--https://www.staples.com/product_329504
+IF A[6457].Values.Flatten() LIKE "%permanent adhesive%" 
+THEN "Strong tape ideal for permanent, secure paper mending";
+
+-- Additional bullet
+-- Matte/glossy finish
+
+-- https://www.staples.com/product_504753
+IF A[6457].Value IS NOT NULL 
+THEN A[6457].Values.Flatten().Split("; ").Where("%finish%").ToUpperFirstChar().Postfix(" for basic office use");
+
+-- Additional bullet
+-- Writable surface
+
+-- https://www.staples.com/product_487908
+IF A[6685].Value IS NOT NULL
+THEN "Can be written on with pen, pencil, or marker";
+
+-- Additional bullet 
+-- Product Recycled Content
+
+-- https://www.staples.com/product_329504?akamai-feo=off
+IF A[6628].Value > 0
+THEN "More environmentally-friendly, made from "_A[6628].Value_"##% recycled or plant-based material";
+
+-- Lets you use both in indoor and outdoor places for maximum beneficiary (https://www.staples.com/3M-15-Dual-Lock-Re-closable-Fastener-System-Clear-2-Pack/product_IM1Y97725)
+IF A[6189].Values.Where("indoor/outdoor use") IS NOT NULL
+    THEN "You can use it both indoors and outdoors for maximum efficiency";
