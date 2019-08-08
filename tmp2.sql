@@ -1,135 +1,201 @@
--- Bullet 1
--- Tape type & use
+-- 1 - Paper type & Use
 
--- https://www.staples.com/product_169055
-IF $SP-18701$ LIKE "Double Sided" 
-THEN "Double Sided Tape holds things together without being seen" 
--- https://www.staples.com/product_2301886
-ELSE IF $SP-18701$ LIKE "Masking" 
-THEN "Masking Tape provides instant adhesion and resists lifting or curling" 
--- https://www.staples.com/product_772036
-ELSE IF $SP-18701$ LIKE "Electrical" 
-THEN "Electrical Tape provides excellent resistant to abrasion, moisture, alkalis, acids and corrosion" 
--- https://www.staples.com/product_738006
-ELSE IF $SP-18701$ LIKE "Removable" 
-THEN "Removable Tape is great for temporary posting" 
--- https://www.staples.com/product_487909
-ELSE IF $SP-18701$ LIKE "Transparent" 
-THEN "Transparent Tape is the perfect clear tape for wrapping, sealing, and label protection" 
--- Scotch® Magic™ Tape is the perfect invisible tape for sealing, mending, and labeling 
-ELSE IF $SP-18701$ LIKE "Invisible" 
-THEN "Invisible tape is the perfect option for sealing, mending, and labeling" 
+IF $SP-21737$ LIKE "Specialty" 
+AND A[4759].Value LIKE "%carbonless paper%" THEN
+"Specialty computer paper is excellent for making carbonless copies" 
+
+ELSE IF $SP-21737$ IS NOT NULL
+AND $SP-12560$ NOT IN (NULL, "Other")
+    THEN "Reliable "_$SP-21737$_" paper is perfect for "_$SP-12560$_" use" 
+ELSE IF $SP-21737$ IS NOT NULL
+AND $SP-12560$ IN ("Other")
+    THEN "Reliable "_$SP-21737$_" paper is perfect for various uses" 
+ELSE IF $SP-21737$ IS NOT NULL THEN
+    "Reliable "_$SP-21737$_" paper is perfect for everyday use" 
+ELSE IF A[4763].Values IS NOT NULL THEN
+    "Works great in your "_A[4763].Values.FlattenWithAnd().Replace("and", "or")_" printer" 
 ELSE "@@";
 
--- Bullet 2
--- Dimensions as W (in inches) x L (in yards); width is how wide the tape is & length is the total length of the roll
+-- 2 - Dimensions as follows:  If Standup (3D)  use Height (floor/base to top)  x Width (side to side)  x Depth (front to back)  in inches as H x W x D. If lay flat (2D such as paper) use Width (side to Side) x Length (top to bottom) in inches. If layflat has accountable Thickness (over .125”), add as Depth so use H x W x D.  If linear (rope, string, ribbon) use Width/Diameter in inches x Length in feet as W x L unless otherwise specified.  If liquid, dimensions should be appropriate content in ounces (oz.) or gallons (gal.)
+-- https://www.staples.com/Staples-100-Recycled-Copy-Paper-8-1-2-x-11-Case/product_620014
+--paper measuring 8 1/2 x 11 is ideal for bulletins, announcements, flyers, and memos. https://www.staples.com/product_733095
 
--- https://www.staples.com/product_DUC0021087
-IF $SP-22046$ IS NOT NULL
-AND $SP-22047$ IS NOT NULL
-THEN "Tape with dimensions of "_ $SP-22046$_"""W x "_ $SP-22047$_" yds." 
+IF $SP-21044$ IS NOT NULL
+AND $SP-20400$ IS NOT NULL THEN
+    "Paper dimensions: "_$SP-21044$_"""W x "_$SP-20400$_"""L";
+
+-- 3 - Paper Weight (lb.)
+-- https://www.staples.com/Staples-Copy-Paper-8-1-2-x-11-Case/product_135848
+IF $SP-18379$ IS NOT NULL THEN
+    "Paper weight: "_$SP-18379$_" lbs." 
 ELSE "@@";
 
--- Bullet 3
--- Core diameter (Inches)
+-- 4 - Brightness
+-- https://www.staples.com/Staples-Copy-Paper-8-1-2-x-11-Case/product_135848
+--Brights colored paper is ideal for direct mail, flyers and office or school projects (https://www.staples.com/product_578341)
+--This pastel paper is ideal for prints with moderate solid areas, graphics and saturated colors.
 
--- https://www.staples.com/product_368101
-IF A[6447].ValueUSM LIKE "%in%" 
-THEN A[6447].ValueUSM.Split(" ").First().Prefix("Core diameter: ").Postfix("""")
+--Office paper
+IF CAT.Main.Key LIKE "§1676385310823140679" 
+     THEN NULL
+ELSE IF $SP-18380$ IS NOT NULL THEN
+    "Brightness rating of "_$SP-18380$_" for sharp, clear print results" 
 ELSE "@@";
 
--- Bullet 4
--- True color
+-- 5 - Paper Color & Finish
+-- https://www.staples.com/Staples-Copy-Paper-8-1-2-x-11-Case/product_135848
+--requested
+--https://www.staples.com/Neenah-Paper-Astrobrights-Color-Cardstock-8-1-2-x-11-Eclipse-Black-100-Sheets-Pack-22024-01/product_581146
+        --https://www.staples.com/Neenah-Paper-Astrobrights-Color-Cardstock-8-1-2-x-11-Eclipse-Black-100-Sheets-Pack-22024-01/product_581146
+--https://www.staples.com/Boise-POLARIS-Premium-Color-Copy-Paper-11-x-17-White-500-Ream-BCP-2817/product_CASBCP2817
 
--- https://www.staples.com/product_826131
-IF A[6446].Values.Flatten(",").Split(",").Where("%tape%") IS NOT NULL
-THEN A[6446].Values.Flatten(",").Split(",").Where("%tape%").Erase("tape").Prefix("Comes in ").Postfix(" color")
+--Copy & Multipurpose Paper
+IF CAT.Main.Key LIKE "§1676385310823140691" 
+AND $SP-22967$ LIKE "Photo white" 
+AND $SP-21738$ IS NOT NULL THEN
+     "White photo paper with "_$SP-21738$_" finish" 
+ELSE IF CAT.Main.Key LIKE "§1676385310823140691" 
+AND $SP-14894$ IS NOT NULL 
+AND $SP-21738$ IS NOT NULL THEN
+    $SP-14894$_" paper with "_$SP-21738$_" finish" 
+ELSE IF CAT.Main.Key LIKE "§1676385310823140691" 
+AND $SP-22967$ NOT IN ("%bar%", NULL) 
+AND $SP-22967$ LIKE "white" THEN 
+    "Comes in white" 
+ELSE IF CAT.Main.Key LIKE "§1676385310823140691" 
+AND $SP-22967$ NOT IN ("%bar%", NULL) THEN 
+    "Comes in "_$SP-22967$
+ELSE "@@";
 
-ELSE IF $SP-22967$ IS NOT NULL
-    THEN "Comes in "_$SP-22967$
+-- 6 - Sheet Quantity & Reams per case
+
+--SP-23866
+
+IF SKU.ProductId IN ("20503614", "20503652") THEN
+    "Contains 10 reams per case, 40 cases per pallet" 
+-- Sheet Quantity & Reams per case
+ELSE IF A[353].Value IS NOT NULL
+AND $SP-22607$ LIKE "1-Ream" AND $SP-16747$ LIKE "1" AND $SP-23866$ LIKE "%Ream%" THEN
+    "One ream, one sheet" 
+
+ELSE IF A[353].Value IS NOT NULL
+AND $SP-22607$ LIKE "1-Ream" AND $SP-16747$ LIKE "1" AND $SP-23866$ IS NOT NULL THEN
+    "One ream per "_$SP-23866$_", one sheet" 
+
+ELSE IF $SP-16747$ IS NULL
+THEN NULL
+
+ELSE IF A[353].Value IS NOT NULL
+AND $SP-22607$ LIKE "1-Ream" AND $SP-23866$ LIKE "%Ream%" THEN
+    "One ream, "_$SP-16747$_" sheets total" 
+
+
+
+ELSE IF A[353].Value IS NOT NULL
+AND $SP-22607$ LIKE "1-Ream" AND $SP-23866$ IS NOT NULL THEN
+
+
+    "One ream per "_$SP-23866$_", "_$SP-16747$_" sheets total" 
+
+// here stoped
+ELSE IF A[353].Value IS NOT NULL
+AND $SP-22607$ LIKE "3-Ream" AND $SP-23866$ LIKE "%Ream%" THEN
+    "Three reams, "_$SP-16747$_" sheets total" 
+
+ELSE IF A[353].Value IS NOT NULL
+AND $SP-22607$ LIKE "3-Ream" AND $SP-23866$ IS NOT NULL THEN
+    "Three reams per "_$SP-23866$_", "_$SP-16747$_" sheets total" 
+
+ELSE IF A[353].Value IS NOT NULL
+AND $SP-22607$ LIKE "4-Ream" AND $SP-23866$ LIKE "%Ream%" THEN
+    "Four reams, "_$SP-16747$_" sheets total" 
+
+ELSE IF A[353].Value IS NOT NULL
+AND $SP-22607$ LIKE "4-Ream" AND $SP-23866$ IS NOT NULL THEN
+    "Four reams per "_$SP-23866$_", "_$SP-16747$_" sheets total" 
+
+ELSE IF A[353].Value IS NOT NULL
+AND $SP-22607$ LIKE "5-Ream" AND $SP-23866$ LIKE "%Ream%" THEN
+    "Five reams, "_$SP-16747$_" sheets total" 
+
+ELSE IF A[353].Value IS NOT NULL
+AND $SP-22607$ LIKE "5-Ream" AND $SP-23866$ IS NOT NULL THEN
+    "Five reams per "_$SP-23866$_", "_$SP-16747$_" sheets total" 
+
+ELSE IF A[353].Value IS NOT NULL
+AND $SP-22607$ LIKE "6-Ream" AND $SP-23866$ LIKE "%Ream%" THEN
+    "Six reams, "_$SP-16747$_" sheets total" 
+
+ELSE IF A[353].Value IS NOT NULL
+AND $SP-22607$ LIKE "6-Ream" AND $SP-23866$ IS NOT NULL THEN
+    "Six reams per "_$SP-23866$_", "_$SP-16747$_" sheets total" 
+
+ELSE IF A[353].Value IS NOT NULL
+AND $SP-22607$ LIKE "8-Ream" AND $SP-23866$ LIKE "%Ream%" THEN
+    "Eight reams, "_$SP-16747$_" sheets total" 
+
+ELSE IF A[353].Value IS NOT NULL
+AND $SP-22607$ LIKE "8-Ream" AND $SP-23866$ IS NOT NULL THEN
+    "Eight reams per "_$SP-23866$_", "_$SP-16747$_" sheets total" 
+
+ELSE IF A[353].Value IS NOT NULL
+AND $SP-22607$ LIKE "10-Ream" AND $SP-23866$ LIKE "%Ream%" THEN
+    "10 reams, "_$SP-16747$_" sheets total" 
+
+ELSE IF A[353].Value IS NOT NULL
+AND $SP-22607$ LIKE "10-Ream" AND $SP-23866$ IS NOT NULL THEN
+    "10 reams per "_$SP-23866$_", "_$SP-16747$_" sheets total" 
+
+ELSE IF A[353].Value IS NOT NULL
+AND $SP-22607$ LIKE "20-Ream" AND $SP-23866$ LIKE "%Ream%" THEN
+    "20 reams "_$SP-16747$_" sheets total" 
+
+ELSE IF A[353].Value IS NOT NULL
+AND $SP-22607$ LIKE "20-Ream" AND $SP-23866$ IS NOT NULL THEN
+    "20 reams per "_$SP-23866$_", "_$SP-16747$_" sheets total"  
 
 ELSE "@@";
 
--- Bullet 5
--- Tape Pack Size (If more than 1)
-
--- https://www.staples.com/product_518724?akamai-feo=off
-IF Request.Data["TX_UOM"].ExtractDecimals().First() > 1 
-THEN "They are sold as "_Request.Data["TX_UOM"].ExtractDecimals().First()_" per "_Request.Data["TX_UOM"].Split("/").Last().ToLower()
-ELSE IF Request.Data["TX_UOM"] LIKE "Dozen" 
-THEN "They are sold as 12 per pack" 
+-- 7 - Acid Free
+-- https://www.staples.com/HammerMill-Copy-Plus-Copy-Paper-8-1-2-x-11-Case/product_122374
+IF $SP-21736$ LIKE "Ye%" THEN
+    "Paper is acid-free, which prevents it from crumbling or yellowing" 
 ELSE "@@";
 
--- Bullet 6
--- Dispenser included (If applicable)
-
--- https://www.staples.com/product_483534
-IF A[6461].Value LIKE "dispenser" 
-AND A[6462].Value LIKE "desktop" 
-THEN "Desktop tape dispenser for keeping tape at hand atop your desk" 
--- https://www.staples.com/product_483534
-ELSE IF A[6461].Value LIKE "dispenser" 
-AND A[6462].Value LIKE "hand held" 
-THEN "Dispenser is easy to hold and carry" 
--- https://www.staples.com/product_812056
-ELSE IF A[6461].Value LIKE "dispenser" 
-THEN "Includes dispenser for easy use" 
+-- 8 - Recycled Content (%)
+-- https://www.staples.com/Staples-30-Recycled-Copy-Paper-8-1-2-x-11-Case/product_492072
+-- https://www.staples.com/Staples-100-Recycled-Copy-Paper-8-1-2-x-11-Case/product_620014
+IF A[6628].Value > 0 THEN
+    "Contains "_A[6628].Value_"% recycled postconsumer content for a sustainable choice" 
 ELSE "@@";
 
--- Bullet 7
--- Tensile strength rating (If Applicable)
+-- 9 - Additional Bullet (if relevant)
 
--- https://www.staples.com/product_425575?akamai-feo=off
-IF A[6453].UnitUSM LIKE "lb/in" 
-AND A[6453].ValueUSM = 1
-THEN "Features a tensile strength of one lb. per inch" 
-ELSE IF A[6453].UnitUSM LIKE "lb/in" 
-THEN A[6453].ValueUSM.Prefix("Features a tensile strength of ").Postfix(" lbs. per inch")
-ELSE "@@";
+IF A[6010].Where("yes").Values IS NOT NULL
+AND A[380].Where("SFI").Values IS NOT NULL THEN 
+        "Meets or exceeds FSC and SFI standards" 
 
--- Bullet 8
--- Certifications
+ELSE IF A[6010].Where("yes").Values IS NOT NULL THEN
+    "FSC certified - this product comes from responsbilty managed forests" 
 
---https://www.staples.com/product_512320
-IF A[380].Values IS NOT NULL
-THEN "Meets or exceeds "_A[380].Values.FlattenWithAnd()_"  standards" 
-ELSE "@@";
+ELSE IF A[380].Where("SFI").Values IS NOT NULL THEN
+    "Meets or exceeds SFI standard";
 
--- Additional bullet
--- Invisible 
+-- 10 - Additional Bullet (if relevant)
+IF CAT.Main.Key LIKE "§1676385310823140679" 
+AND A[10618].Value LIKE "smooth" 
+    THEN "Smooth surface for high-impact color graphics";
 
--- https://www.staples.com/product_487908
-IF A[6457].Values.Flatten() LIKE "%invisible after application%" 
-THEN "Once applied, tape becomes invisible";
-
--- Additional bullet
--- Permanent adhesive
-
---https://www.staples.com/product_329504
-IF A[6457].Values.Flatten() LIKE "%permanent adhesive%" 
-THEN "Strong tape ideal for permanent, secure paper mending";
-
--- Additional bullet
--- Matte/glossy finish
-
--- https://www.staples.com/product_504753
-IF A[6457].Value IS NOT NULL 
-THEN A[6457].Values.Flatten().Split("; ").Where("%finish%").ToUpperFirstChar().Postfix(" for basic office use");
-
--- Additional bullet
--- Writable surface
-
--- https://www.staples.com/product_487908
-IF A[6685].Value IS NOT NULL
-THEN "Can be written on with pen, pencil, or marker";
-
--- Additional bullet 
--- Product Recycled Content
-
--- https://www.staples.com/product_329504?akamai-feo=off
-IF A[6628].Value > 0
-THEN "More environmentally-friendly, made from "_A[6628].Value_"##% recycled or plant-based material";
-
--- Lets you use both in indoor and outdoor places for maximum beneficiary (https://www.staples.com/3M-15-Dual-Lock-Re-closable-Fastener-System-Clear-2-Pack/product_IM1Y97725)
-IF A[6189].Values.Where("indoor/outdoor use") IS NOT NULL
-    THEN "You can use it both indoors and outdoors for maximum efficiency";
+IF A[4783].Values.Where("%-hole punched").ExtractDecimals().First() > 1 
+AND CAT.Main.Key LIKE "§1676385310823140691" THEN
+    "Prepunched copy paper eliminates the need for a "_
+    A[4783].Values.Where("%-hole punched").ExtractDecimals().First()
+        .IfLike("2", "two")
+        .IfLike("3", "three")
+        .IfLike("4", "four")
+        .IfLike("5", "five")
+        .IfLike("6", "six")
+        .IfLike("7", "seven")
+        .IfLike("8", "eight")
+        .IfLike("9", "nine")
+    _"-hole punch";

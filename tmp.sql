@@ -1,128 +1,83 @@
-//§§5585232188142681 "Business Envelopes" "Alex K."
-UseOfEnvelope();
-TrueColorMaterialPaperWeight();
-// EnvelopeSize - All
-ClosureTypeFlapStyle();
-InteriorCushioning();
-SecurityTinted();
-// PackSize
-// PostConsumerContent
-// RecycledContent
-AdditionalBusinessEnvelopesProtection();
-AdditionalBusinessEnvelopesFeatures();
-AdditionalBusinessEnvelopesOpeningStyle();
+/*
+IF A[5965].Where("compartment").Match(5971).Values IS NOT NULL --- Compartments Qty
+AND A[5965].Where("compartment").Match(5969).ValuesUSM IS NOT NULL -- Compartment Height
+AND A[5965].Where("compartment").Match(5969).ValuesAndUnitsUSM.FlattenWithAnd() LIKE "%in%" 
+AND A[5922].Value LIKE "storage clipboard" 
+THEN "Clipboard has "_A[5965].Where("compartment").Match(5971).Values.Flatten().IfLike("2", "dual").IfLike("3", "triple ")_" "_A[5965].Where("compartment").Match(5969).ValuesUSM_""" capacity storage compartment" 
 
-// --[FEATURE #1]
-// -- Use of envelope
-void UseOfEnvelope() {
-    if (A[6481].HasValue("envelope") && A[6514].HasValue()) {
-        Add($"UseOfEnvelope⸮{A[6514].FirstValueOrDefault().Replace("No. ","#").Replace("size ", "")} business envelopes are suitable for many mailing projects");
-    }
-    else if (A[6481].HasValue()) {
-        Add($"UseOfEnvelope⸮Business envelopes are suitable for many mailing projects");
-    }
-}
-// --[FEATURE #2]
-// -- True color & Material of item; including paper weight (If Applicable)
-void TrueColorMaterialPaperWeight() {
-    var paperWeight = GetReferenceBase("SP-21543");
-    var trueColor = GetReferenceBase("SP-22967");
-    var material = GetReferenceBase("SP-21408");
-    // if no paperWeight uses TrueColorMaterial from common pull
-    if (paperWeight.HasValue() && trueColor.HasValue() && material.HasValue()) {
-        Add($"TrueColorMaterialPaperWeight⸮Made of {material.ToLower(true)} and comes in {trueColor.ToLower().Replace("assoeted", "assorted colors")}; {paperWeight} lb. paper weight");
-    }
-    else  if (paperWeight.HasValue() && material.HasValue()) {
-        Add($"TrueColorMaterialPaperWeight⸮Made of {material.ToLower(true)}; {paperWeight} lb. paper weight");
-    }
-    else  if (paperWeight.HasValue() && trueColor.HasValue()) {
-        Add($"TrueColorMaterialPaperWeight⸮Comes in {trueColor.ToLower().Replace("assoeted", "assorted colors")}; {paperWeight} lb. paper weight");
-    }
-}
-// --[FEATURE #3]
-// -- Envelope size
-// EnvelopeSize -All
+ELSE IF A[5965].Where("compartment").Match(5969).ValuesUSM IS NOT NULL -- Compartment Height
+AND A[5965].Where("compartment").Match(5969).ValuesAndUnitsUSM.FlattenWithAnd() LIKE "%in%" 
+AND A[5922].Value LIKE "storage clipboard" 
+THEN "Clipboard has "_A[5965].Where("compartment").Match(5969).ValuesUSM.FlattenWithAnd()_""" capacity storage compartment";
 
-// --[FEATURE #4]
-// -- Closure type & flap style
-void ClosureTypeFlapStyle() {
-    // V-Flap|Open End|Wallet|Square|Commercial|Rectangular
-    var flapStyle = GetReferenceBase("SP-18916"); 
-    // Gummed|EasyClose|Redi-Seal|Button & String|Reveal-N-Seal|Moistenable Glue|Hook & Loop|Buckle|Hook|Clasp & Moistenable Glue|Self Seal|Elastic|Zip|Clasp|Open End|Snap
-    var closure = GetReferenceBase("SP-18915");
+*/
 
-    // if no paperWeight uses TrueColorMaterial from common pull
-    if (flapStyle.HasValue() && closure.HasValue()) {
-        Add($"ClosureTypeFlapStyle⸮{closure.ToLower().ToUpperFirstChar()} closure with {flapStyle.ToLower(true)} flap keeps contents in place");
-    }
-    else if (flapStyle.HasValue()) {
-        Add($"ClosureTypeFlapStyle⸮{flapStyle.ToLower(true).ToUpperFirstChar()} flap keeps contents in place");
-    }
-    else if (closure.HasValue()) {
-        Add($"ClosureTypeFlapStyle⸮{closure.ToLower().ToUpperFirstChar()} closure keeps contents in place");
+Some();
+void Some() {
+    if (A[5965].HasValue() && A[5965].Where("compartment").Match(5971).HasValue() && A[5965].HasValue() && A[5965].Where("compartment").Match(5969).HasValue()) {
+       Add("WOrk");
+        Add(A[5965].Where("compartment").Match(5971).Values("x"));
+        Add(A[5965].Where("compartment").Match(5969).Values("x"));
+        
     }
 }
-// --[FEATURE #5]
-// -- Interior cushioning (if any)
-void InteriorCushioning() {
-    if (A[6497].HasValue("%bubble wrap%")) {
-        Add($"InteriorCushioning⸮Interior bubble wrap keeps mail cushioned during bumpy rides");
+NutritionalInformation();
+void NutritionalInformation() {
+    var repeatingSets = new []{A[5965], A[5971], A[5969]};
+    var separators = new []{" ", "()x"};
+    var d = new Dictionary<int, string>();
+    int i = 0;
+    int j = -1;
+    string v="";
+    
+    foreach (var attr in repeatingSets){
+        if (attr.HasValue()){
+            foreach (var attrValue in attr.GetValuesWithUnits()){
+                i = attrValue.Value.SetNo;
+                //Add(attrValue.Value.Value() + " here");
+                v = (attrValue.Value.ValueUSM==""?attrValue.Value.Value():attrValue.Value.ValueUSM)+" "+(attrValue.Unit.NameUSM!=""?attrValue.Unit.NameUSM:attrValue.Unit.Name);
+                if(d.ContainsKey(i))
+                {
+                    d[i]=d[i]+(j>=0?separators[j]:"")+ v;
+                    //Add(v);
+                }
+                else
+                {
+                    d.Add(i, v);
+                }
+            }
+        }
+        j=j+1;
     }
-}
-// --[FEATURE #6]
-// -- Security tinted
-void SecurityTinted() {
-    var tined = GetReferenceBase("SP-18919");
-    if (A[6497].HasValue("Yes")) {
-        Add($"SecurityTinted⸮Security-tinted pattern helps to discourage from reading sensitive information through the outside of the envelope");
+    var some = "";
+    Add(d.Values.Flatten());
+    Add(d.Values.Flatten().HasValue("% mm"));
+    if (d.Values.Flatten().HasValue("% mm")) {
+        some = d.Values.Where(
+            o => (Coalesce(o).ExtractNumbers().Any() && Coalesce(o).ExtractNumbers().First() > 0)
+                || !Coalesce(o).ExtractNumbers().Any()
+                ).FlattenWithAnd().ExtractNumbers().Last();
+        foreach (var item in d.Values) {
+            if (Coalesce(item).ExtractNumbers().Any() && Coalesce(item).ExtractNumbers().Count() == 1) {
+                Add($"Clipboard has {Math.Round(Coalesce(item).ExtractNumbers().First() * 0.0393701, 2)}\" capacity storage compartment");
+                
+            }
+            else if (Coalesce(item).ExtractNumbers().Any() && Coalesce(item).ExtractNumbers().Count() == 2) {
+                Add($"Clipboard has {Math.Round(Coalesce(item).ExtractNumbers().First() * 0.0393701, 2)}\" capacity storage compartment");
+            }
+            
+        }
+    }
+    
+    if (some != "") {
+        Add($"NutritionalInformation⸮Each ##K-Cup contains {some}");
     }
 }
 
-
-// --[FEATURE #10]
-// --Additional protection
-void AdditionalBusinessEnvelopesProtection() {
-    if (A[6498].HasValue() && A[6500].HasValue("%resistant" , "%proof", "%repellent")) {
-        Add($"AdditionalBusinessEnvelopesProtection⸮{A[6498].Where("%resistant", "%proof", "%repellent").Flatten(", ").ToLower(true).ToUpperFirstChar().Replace("resistant", "")}, {A[6500].Where("%resistant" , "%proof", "%repellent").Select(o => o.Value()).FlattenWithAnd().Replace("resistant", "proof", "").Replace("repellent")} resistant envelope provides extra security for item being shipped");
-    }
-    else if (A[6498].HasValue("%resistant")) {
-        Add($"AdditionalBusinessEnvelopesProtection⸮{A[6498].Values.Select(o => o.Value()).FlattenWithAnd().Replace("resistant", "").ToUpperFirstChar()}-resistant envelope provides extra security for item being shipped");
-    }
-    else if (A[6500].HasValue("%resistant", "%proof", "%repellent")) {
-        Add($"AdditionalBusinessEnvelopesProtection⸮{A[6500].Where("%resistant" , "%proof", "%repellent").Select(o => o.Value()).FlattenWithAnd().Replace("resistant", "proof", "").Replace("repellent").ToLower(true).ToUpperFirstChar()}-resistant envelope provides extra security for item being shipped");
-    }
-}
-// --[FEATURE #11]
-// --Additional
-void AdditionalBusinessEnvelopesFeatures() {
-    if (A[6500].HasValue("%address window%") && A[6495].HasValue("%left%")) {
-        Add($"AdditionalBusinessEnvelopesFeatures⸮Simply position the address to show through the single-left window");
-    }
-    else if (A[6493].HasValue("1") && A[6495].HasValue("%left%")) {
-        Add($"AdditionalBusinessEnvelopesFeatures⸮Simply position the address to show through the single-left window");
-    }
-    else if (A[6493].HasValue("2")) {
-        Add($"AdditionalBusinessEnvelopesFeatures⸮Double-window envelopes conveniently display addresses");
-    }
-    else if (A[6500].HasValue("%address window%") && A[6495].HasValue("%right%")) {
-        Add($"AdditionalBusinessEnvelopesFeatures⸮Simply position the address to show through the single-right window");
-    }
-    else if (A[6500].HasValue("1") && A[6495].HasValue("%right%")) {
-        Add($"AdditionalBusinessEnvelopesFeatures⸮Simply position the address to show through the single-right window");
-    }
-    else if (A[6500].HasValue("2")) {
-        Add($"AdditionalBusinessEnvelopesFeatures⸮Double-window envelopes conveniently display addresses");
-    }
-}
 // --[FEATURE #12]
-// -- Additional opening style
-void AdditionalBusinessEnvelopesOpeningStyle() {
-    if (A[6488].HasValue("open side" )) {
-        Add($"AdditionalBusinessEnvelopesOpeningStyle⸮The flap is on the long side for easier filling");
-    }
-    else if (A[6488].HasValue("open end" ) || GetReferenceBase("SP-18916").HasValue("Open End")) {
-        Add($"AdditionalBusinessEnvelopesOpeningStyle⸮Flap is on the short side, helping to keep things from falling out after opening");
+void AdditionalMixedTea() {
+    if (SKU.ProductId.In("20658244", "20658237"))
+    {
+        Add("AdditionalMixedTea⸮Blend of decaffeinated green tea and decaffeinated ##Bai ##Mu ##Dan white tea");
     }
 }
-
-//§§5585232188142681 end of "Business Envelopes"

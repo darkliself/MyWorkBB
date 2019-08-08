@@ -1,114 +1,83 @@
 /*
---Packing tape type & Use    
-        --Acrylic
-        IF $SP-21708$ LIKE "Acrylic" 
-            THEN "Acrylic tape designed for moving and storage needs" 
+IF A[5965].Where("compartment").Match(5971).Values IS NOT NULL --- Compartments Qty
+AND A[5965].Where("compartment").Match(5969).ValuesUSM IS NOT NULL -- Compartment Height
+AND A[5965].Where("compartment").Match(5969).ValuesAndUnitsUSM.FlattenWithAnd() LIKE "%in%" 
+AND A[5922].Value LIKE "storage clipboard" 
+THEN "Clipboard has "_A[5965].Where("compartment").Match(5971).Values.Flatten().IfLike("2", "dual").IfLike("3", "triple ")_" "_A[5965].Where("compartment").Match(5969).ValuesUSM_""" capacity storage compartment" 
 
-        --Carton Sealing
-        ELSE IF $SP-21708$ LIKE "Carton Sealing" 
-            THEN "Carton sealing tape adheres instantly to most surfaces including cartons" 
+ELSE IF A[5965].Where("compartment").Match(5969).ValuesUSM IS NOT NULL -- Compartment Height
+AND A[5965].Where("compartment").Match(5969).ValuesAndUnitsUSM.FlattenWithAnd() LIKE "%in%" 
+AND A[5922].Value LIKE "storage clipboard" 
+THEN "Clipboard has "_A[5965].Where("compartment").Match(5969).ValuesUSM.FlattenWithAnd()_""" capacity storage compartment";
 
-        --Fashion
-        ELSE IF $SP-21708$ LIKE "Cellophane" 
-            THEN "Cellophane tape offers excellent adhesion, dispensing and handling properties" 
-
-        --Flatback
-        ELSE IF $SP-21708$ LIKE "Flatback" 
-            THEN "Flatback tape is designed to minimize carton-sealing failures and prevent pilferage" 
-
-        --Hot Melt
-        ELSE IF $SP-21708$ LIKE "Hot Melt" 
-            THEN "Hot melt adhesive tape holds strong for your shipping needs" 
-
-        --Label Protection
-        ELSE IF $SP-21708$ LIKE "Label Protection" 
-            THEN "Provides excellent label protection" 
-
-        --Paper Tape
-        ELSE IF $SP-21708$ LIKE "Paper Tape" 
-            THEN "Paper tape provides secure closure for inner packing and lightweight packaging" 
-
-        --Pre-Printed Message
-        ELSE IF $SP-21708$ LIKE "Pre-Printed Message" 
-            THEN "Pre-Printed Message" 
-
-        --PVC/Bag Sealing
-        ELSE IF $SP-21708$ LIKE "PVC/Bag Sealing" 
-            THEN "PVC/Bag Sealing tape offers excellent adhesion, dispensing and handling properties" 
-
-        --Reinforced
-        ELSE IF $SP-21708$ LIKE "Reinforced" 
-            THEN "Reinforced strapping tape is ideal for heavy tasks and bundling" 
-
-        --Standard
-        ELSE IF $SP-21708$ LIKE "Standard" 
-            THEN "Standard tape offers excellent adhesion, dispensing and handling properties" 
-
-        --Strapping/Filament
-        ELSE IF $SP-21708$ LIKE "Strapping/Filament" 
-            THEN "Strapping/Filament tape offers excellent adhesion, dispensing and handling properties" 
-
-        --Water Activated
-        ELSE IF $SP-21708$ LIKE "Water Activated" 
-            THEN "Water activated adhesive bonds to corrugated even in dusty conditions" 
-
-        --Moving
-        ELSE IF $SP-21708$ LIKE "Moving" 
-            THEN "Moving tape offers excellent adhesion, dispensing and handling properties" 
-
-        --Cellophane
-        ELSE IF $SP-21708$ LIKE "Cellophane" 
-            THEN "Cellophane tape offers excellent adhesion, dispensing and handling properties" 
-                ELSE "@@";
 */
 
+Some();
+void Some() {
+    if (A[5965].HasValue() && A[5965].Where("compartment").Match(5971).HasValue() && A[5965].HasValue() && A[5965].Where("compartment").Match(5969).HasValue()) {
+       Add("WOrk");
+        Add(A[5965].Where("compartment").Match(5971).Values("x"));
+        Add(A[5965].Where("compartment").Match(5969).Values("x"));
+        
+    }
+}
+NutritionalInformation();
+void NutritionalInformation() {
+    var repeatingSets = new []{A[5965], A[5971], A[5969]};
+    var separators = new []{" ", "()x"};
+    var d = new Dictionary<int, string>();
+    int i = 0;
+    int j = -1;
+    string v="";
+    
+    foreach (var attr in repeatingSets){
+        if (attr.HasValue()){
+            foreach (var attrValue in attr.GetValuesWithUnits()){
+                i = attrValue.Value.SetNo;
+                //Add(attrValue.Value.Value() + " here");
+                v = (attrValue.Value.ValueUSM==""?attrValue.Value.Value():attrValue.Value.ValueUSM)+" "+(attrValue.Unit.NameUSM!=""?attrValue.Unit.NameUSM:attrValue.Unit.Name);
+                if(d.ContainsKey(i))
+                {
+                    d[i]=d[i]+(j>=0?separators[j]:"")+ v;
+                    //Add(v);
+                }
+                else
+                {
+                    d.Add(i, v);
+                }
+            }
+        }
+        j=j+1;
+    }
+    var some = "";
+    Add(d.Values.Flatten());
+    Add(d.Values.Flatten().HasValue("% mm"));
+    if (d.Values.Flatten().HasValue("% mm")) {
+        some = d.Values.Where(
+            o => (Coalesce(o).ExtractNumbers().Any() && Coalesce(o).ExtractNumbers().First() > 0)
+                || !Coalesce(o).ExtractNumbers().Any()
+                ).FlattenWithAnd().ExtractNumbers().Last();
+        foreach (var item in d.Values) {
+            if (Coalesce(item).ExtractNumbers().Any() && Coalesce(item).ExtractNumbers().Count() == 1) {
+                Add($"Clipboard has {Math.Round(Coalesce(item).ExtractNumbers().First() * 0.0393701, 2)}\" capacity storage compartment");
+                
+            }
+            else if (Coalesce(item).ExtractNumbers().Any() && Coalesce(item).ExtractNumbers().Count() == 2) {
+                Add($"Clipboard has {Math.Round(Coalesce(item).ExtractNumbers().First() * 0.0393701, 2)}\" capacity storage compartment");
+            }
+            
+        }
+    }
+    
+    if (some != "") {
+        Add($"NutritionalInformation⸮Each ##K-Cup contains {some}");
+    }
+}
 
-void  PackingTapeTypeAndUse(){
-    // Pre-Printed Message|Paper Tape|Reinforced|PVC/Bag Sealing|Acrylic|Standard|Cellophane|Water Activated|Carton Sealing|Strapping/Filament|Flatback|Fashion|Moving|Label Protection|Hot Melt
-    var type = GetReferenceBase("SP-21708");
-    if (type.HasValue("Acrylic")) {
-        Add($"PackingTapeTypeAndUse⸮Acrylic tape designed for moving and storage needs");
-    }
-    else if (type.HasValue("Carton Sealing")) {
-        Add($"PackingTapeTypeAndUse⸮Carton sealing tape adheres instantly to most surfaces including cartons");
-    }
-    else if (type.HasValue("Cellophane")) {
-        Add($"PackingTapeTypeAndUse⸮Cellophane tape offers excellent adhesion, dispensing and handling properties");
-    }
-    else if (type.HasValue("Flatback")) {
-        Add($"PackingTapeTypeAndUse⸮Flatback tape is designed to minimize carton-sealing failures and prevent pilferage");
-    }
-    else if (type.HasValue("Hot Melt")) {
-        Add($"PackingTapeTypeAndUse⸮Hot melt adhesive tape holds strong for your shipping needs");
-    }
-    else if (type.HasValue("Label Protection")) {
-        Add($"PackingTapeTypeAndUse⸮Provides excellent label protection");
-    }
-    else if (type.HasValue("Paper Tape")) {
-        Add($"PackingTapeTypeAndUse⸮Paper tape provides secure closure for inner packing and lightweight packaging");
-    }
-    else if (type.HasValue("Pre-Printed Message")) {
-        Add($"PackingTapeTypeAndUse⸮Pre-printed message");
-    }
-    else if (type.HasValue("PVC/Bag Sealing")) {
-        Add($"PackingTapeTypeAndUse⸮PVC/Bag Sealing tape offers excellent adhesion, dispensing and handling properties");
-    }
-    else if (type.HasValue("Reinforced")) {
-        Add($"PackingTapeTypeAndUse⸮Reinforced strapping tape is ideal for heavy tasks and bundling");
-    }
-    else if (type.HasValue("Standard")) {
-        Add($"PackingTapeTypeAndUse⸮Standard tape offers excellent adhesion, dispensing and handling properties");
-    }
-    else if (type.HasValue("Strapping/Filament")) {
-        Add($"PackingTapeTypeAndUse⸮Strapping/Filament tape offers excellent adhesion, dispensing and handling properties");
-    }
-    else if (type.HasValue("Water Activated")) {
-        Add($"PackingTapeTypeAndUse⸮Water activated adhesive bonds to corrugated even in dusty conditions");
-    }
-    else if (type.HasValue("Moving")) {
-        Add($"PackingTapeTypeAndUse⸮Moving tape offers excellent adhesion, dispensing and handling properties");
-    }
-    else if (type.HasValue("Cellophane")) {
-        Add($"PackingTapeTypeAndUse⸮Cellophane tape offers excellent adhesion, dispensing and handling properties");
+// --[FEATURE #12]
+void AdditionalMixedTea() {
+    if (SKU.ProductId.In("20658244", "20658237"))
+    {
+        Add("AdditionalMixedTea⸮Blend of decaffeinated green tea and decaffeinated ##Bai ##Mu ##Dan white tea");
     }
 }
