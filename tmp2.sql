@@ -1,201 +1,141 @@
--- 1 - Paper type & Use
-
-IF $SP-21737$ LIKE "Specialty" 
-AND A[4759].Value LIKE "%carbonless paper%" THEN
-"Specialty computer paper is excellent for making carbonless copies" 
-
-ELSE IF $SP-21737$ IS NOT NULL
-AND $SP-12560$ NOT IN (NULL, "Other")
-    THEN "Reliable "_$SP-21737$_" paper is perfect for "_$SP-12560$_" use" 
-ELSE IF $SP-21737$ IS NOT NULL
-AND $SP-12560$ IN ("Other")
-    THEN "Reliable "_$SP-21737$_" paper is perfect for various uses" 
-ELSE IF $SP-21737$ IS NOT NULL THEN
-    "Reliable "_$SP-21737$_" paper is perfect for everyday use" 
-ELSE IF A[4763].Values IS NOT NULL THEN
-    "Works great in your "_A[4763].Values.FlattenWithAnd().Replace("and", "or")_" printer" 
+--Sponge/hand pad type, Grade & Use    
+IF $SP-18150$ LIKE "Scouring Pad" 
+    THEN "Scouring pad offers gentle action and cleans the toughest places with ease" 
+ELSE IF $SP-18150$ LIKE "Floor Pad" 
+    THEN "Floor pad can be used for everyday cleaning, remove light soil, scuff marks, and black heel marks" 
+ELSE IF $SP-18150$ LIKE "Steel Wool Pad" 
+    THEN "Steel wool pad cuts through grease, rust and soil" 
+ELSE IF $SP-18150$ LIKE "Stainless Steel Pad" 
+    THEN "Steel wool pad cuts through grease, rust and soil" 
+ELSE IF $SP-18150$ LIKE "Scrubber" 
+    THEN "Scrubber breaks up of tough dirt with ease" 
+ELSE IF $SP-18150$ LIKE "Set" 
+    THEN "Set let you tackle the cleaning of large surfaces and tough messe" 
+ELSE IF $SP-18150$ LIKE "Pad Holder" 
+    THEN "Pad holder is designed to make clean up jobs faster, easier or safer" 
+ELSE IF $SP-18150$ LIKE "Polishing Pad" 
+    THEN "Polishing pad removes soil and scuff marks with minimal dulling of finish" 
+ELSE IF $SP-18150$ LIKE "Stripper" 
+    THEN "Stripper removes dirt, spills and scuffs leaving a clean surface ready for recoating " 
+ELSE IF $SP-18150$ LIKE "Sponge" 
+    THEN "Sponge quickly wipes up spills and messes and can carry cleaning solutions to the work surface" 
+ELSE IF $SP-18150$ IS NOT NULL 
+    THEN $SP-18150$_" makes your cleaning job easier and more effective" 
 ELSE "@@";
 
--- 2 - Dimensions as follows:  If Standup (3D)  use Height (floor/base to top)  x Width (side to side)  x Depth (front to back)  in inches as H x W x D. If lay flat (2D such as paper) use Width (side to Side) x Length (top to bottom) in inches. If layflat has accountable Thickness (over .125”), add as Depth so use H x W x D.  If linear (rope, string, ribbon) use Width/Diameter in inches x Length in feet as W x L unless otherwise specified.  If liquid, dimensions should be appropriate content in ounces (oz.) or gallons (gal.)
--- https://www.staples.com/Staples-100-Recycled-Copy-Paper-8-1-2-x-11-Case/product_620014
---paper measuring 8 1/2 x 11 is ideal for bulletins, announcements, flyers, and memos. https://www.staples.com/product_733095
-
-IF $SP-21044$ IS NOT NULL
-AND $SP-20400$ IS NOT NULL THEN
-    "Paper dimensions: "_$SP-21044$_"""W x "_$SP-20400$_"""L";
-
--- 3 - Paper Weight (lb.)
--- https://www.staples.com/Staples-Copy-Paper-8-1-2-x-11-Case/product_135848
-IF $SP-18379$ IS NOT NULL THEN
-    "Paper weight: "_$SP-18379$_" lbs." 
+--Material & True color (Include handle & bristles if applicable)    
+IF $SP-22967$ NOT IN (NULL, "Assorted", "Multicolor") 
+AND $SP-17447$ IS NOT NULL 
+    THEN $SP-22967$_" and made of "_$SP-17447$_" for durability" 
+ELSE IF $SP-17447$ IS NOT NULL 
+    THEN "Made of "_$SP-17447$_" for durability" 
+ELSE IF $SP-22967$ NOT IN (NULL, "Assorted", "Multicolor")
+    THEN "Comes in "_$SP-22967$ 
+ELSE IF $SP-22967$ NOT IN ("Assorted")
+    THEN "Comes in assorted colors, so you can use a different color for each type of job" 
 ELSE "@@";
 
--- 4 - Brightness
--- https://www.staples.com/Staples-Copy-Paper-8-1-2-x-11-Case/product_135848
---Brights colored paper is ideal for direct mail, flyers and office or school projects (https://www.staples.com/product_578341)
---This pastel paper is ideal for prints with moderate solid areas, graphics and saturated colors.
-
---Office paper
-IF CAT.Main.Key LIKE "§1676385310823140679" 
-     THEN NULL
-ELSE IF $SP-18380$ IS NOT NULL THEN
-    "Brightness rating of "_$SP-18380$_" for sharp, clear print results" 
+--Level of use    
+IF $SP-20642$ LIKE "Heavy" 
+    THEN "Heavy-duty for tough cleaning jobs" 
+ELSE IF $SP-20642$ LIKE "Medium" 
+    THEN "Medium-duty for everyday general-purpose cleaning jobs" 
+ELSE IF $SP-20642$ LIKE "Light" 
+    THEN "Ideal for light duty jobs" 
 ELSE "@@";
 
--- 5 - Paper Color & Finish
--- https://www.staples.com/Staples-Copy-Paper-8-1-2-x-11-Case/product_135848
---requested
---https://www.staples.com/Neenah-Paper-Astrobrights-Color-Cardstock-8-1-2-x-11-Eclipse-Black-100-Sheets-Pack-22024-01/product_581146
-        --https://www.staples.com/Neenah-Paper-Astrobrights-Color-Cardstock-8-1-2-x-11-Eclipse-Black-100-Sheets-Pack-22024-01/product_581146
---https://www.staples.com/Boise-POLARIS-Premium-Color-Copy-Paper-11-x-17-White-500-Ream-BCP-2817/product_CASBCP2817
-
---Copy & Multipurpose Paper
-IF CAT.Main.Key LIKE "§1676385310823140691" 
-AND $SP-22967$ LIKE "Photo white" 
-AND $SP-21738$ IS NOT NULL THEN
-     "White photo paper with "_$SP-21738$_" finish" 
-ELSE IF CAT.Main.Key LIKE "§1676385310823140691" 
-AND $SP-14894$ IS NOT NULL 
-AND $SP-21738$ IS NOT NULL THEN
-    $SP-14894$_" paper with "_$SP-21738$_" finish" 
-ELSE IF CAT.Main.Key LIKE "§1676385310823140691" 
-AND $SP-22967$ NOT IN ("%bar%", NULL) 
-AND $SP-22967$ LIKE "white" THEN 
-    "Comes in white" 
-ELSE IF CAT.Main.Key LIKE "§1676385310823140691" 
-AND $SP-22967$ NOT IN ("%bar%", NULL) THEN 
-    "Comes in "_$SP-22967$
+--Suitable surface    
+IF A[6783].Values IS NOT NULL 
+    THEN "Great for cleaning "_A[6783].Values.ToLower(true).FlattenWithAnd()
 ELSE "@@";
 
--- 6 - Sheet Quantity & Reams per case
-
---SP-23866
-
-IF SKU.ProductId IN ("20503614", "20503652") THEN
-    "Contains 10 reams per case, 40 cases per pallet" 
--- Sheet Quantity & Reams per case
-ELSE IF A[353].Value IS NOT NULL
-AND $SP-22607$ LIKE "1-Ream" AND $SP-16747$ LIKE "1" AND $SP-23866$ LIKE "%Ream%" THEN
-    "One ream, one sheet" 
-
-ELSE IF A[353].Value IS NOT NULL
-AND $SP-22607$ LIKE "1-Ream" AND $SP-16747$ LIKE "1" AND $SP-23866$ IS NOT NULL THEN
-    "One ream per "_$SP-23866$_", one sheet" 
-
-ELSE IF $SP-16747$ IS NULL
-THEN NULL
-
-ELSE IF A[353].Value IS NOT NULL
-AND $SP-22607$ LIKE "1-Ream" AND $SP-23866$ LIKE "%Ream%" THEN
-    "One ream, "_$SP-16747$_" sheets total" 
-
-
-
-ELSE IF A[353].Value IS NOT NULL
-AND $SP-22607$ LIKE "1-Ream" AND $SP-23866$ IS NOT NULL THEN
-
-
-    "One ream per "_$SP-23866$_", "_$SP-16747$_" sheets total" 
-
-// here stoped
-ELSE IF A[353].Value IS NOT NULL
-AND $SP-22607$ LIKE "3-Ream" AND $SP-23866$ LIKE "%Ream%" THEN
-    "Three reams, "_$SP-16747$_" sheets total" 
-
-ELSE IF A[353].Value IS NOT NULL
-AND $SP-22607$ LIKE "3-Ream" AND $SP-23866$ IS NOT NULL THEN
-    "Three reams per "_$SP-23866$_", "_$SP-16747$_" sheets total" 
-
-ELSE IF A[353].Value IS NOT NULL
-AND $SP-22607$ LIKE "4-Ream" AND $SP-23866$ LIKE "%Ream%" THEN
-    "Four reams, "_$SP-16747$_" sheets total" 
-
-ELSE IF A[353].Value IS NOT NULL
-AND $SP-22607$ LIKE "4-Ream" AND $SP-23866$ IS NOT NULL THEN
-    "Four reams per "_$SP-23866$_", "_$SP-16747$_" sheets total" 
-
-ELSE IF A[353].Value IS NOT NULL
-AND $SP-22607$ LIKE "5-Ream" AND $SP-23866$ LIKE "%Ream%" THEN
-    "Five reams, "_$SP-16747$_" sheets total" 
-
-ELSE IF A[353].Value IS NOT NULL
-AND $SP-22607$ LIKE "5-Ream" AND $SP-23866$ IS NOT NULL THEN
-    "Five reams per "_$SP-23866$_", "_$SP-16747$_" sheets total" 
-
-ELSE IF A[353].Value IS NOT NULL
-AND $SP-22607$ LIKE "6-Ream" AND $SP-23866$ LIKE "%Ream%" THEN
-    "Six reams, "_$SP-16747$_" sheets total" 
-
-ELSE IF A[353].Value IS NOT NULL
-AND $SP-22607$ LIKE "6-Ream" AND $SP-23866$ IS NOT NULL THEN
-    "Six reams per "_$SP-23866$_", "_$SP-16747$_" sheets total" 
-
-ELSE IF A[353].Value IS NOT NULL
-AND $SP-22607$ LIKE "8-Ream" AND $SP-23866$ LIKE "%Ream%" THEN
-    "Eight reams, "_$SP-16747$_" sheets total" 
-
-ELSE IF A[353].Value IS NOT NULL
-AND $SP-22607$ LIKE "8-Ream" AND $SP-23866$ IS NOT NULL THEN
-    "Eight reams per "_$SP-23866$_", "_$SP-16747$_" sheets total" 
-
-ELSE IF A[353].Value IS NOT NULL
-AND $SP-22607$ LIKE "10-Ream" AND $SP-23866$ LIKE "%Ream%" THEN
-    "10 reams, "_$SP-16747$_" sheets total" 
-
-ELSE IF A[353].Value IS NOT NULL
-AND $SP-22607$ LIKE "10-Ream" AND $SP-23866$ IS NOT NULL THEN
-    "10 reams per "_$SP-23866$_", "_$SP-16747$_" sheets total" 
-
-ELSE IF A[353].Value IS NOT NULL
-AND $SP-22607$ LIKE "20-Ream" AND $SP-23866$ LIKE "%Ream%" THEN
-    "20 reams "_$SP-16747$_" sheets total" 
-
-ELSE IF A[353].Value IS NOT NULL
-AND $SP-22607$ LIKE "20-Ream" AND $SP-23866$ IS NOT NULL THEN
-    "20 reams per "_$SP-23866$_", "_$SP-16747$_" sheets total"  
-
+--Dimensions (in Inches): H x W x D
+--Dimensions (in Inches): H x W x D    
+IF $SP-20654$ IS NOT NULL --H
+AND $SP-21044$ IS NOT NULL --W
+AND $SP-20657$ IS NOT NULL --D
+    THEN "Dimensions: "_$SP-20654$_"""H x "_$SP-21044$_"""W x "_$SP-20657$_"""D" 
+ELSE IF $SP-21044$ IS NOT NULL --W
+AND COALESCE($SP-20657$, $SP-20654$) IS NOT NULL --L
+    THEN "Dimensions: "_$SP-21044$_"""W x "_COALESCE($SP-20657$,$SP-20654$)_"""L" 
+ELSE IF $SP-21453$ IS NOT NULL 
+    THEN "Dimensions: "_$SP-21453$_"""Dia." 
 ELSE "@@";
 
--- 7 - Acid Free
--- https://www.staples.com/HammerMill-Copy-Plus-Copy-Paper-8-1-2-x-11-Case/product_122374
-IF $SP-21736$ LIKE "Ye%" THEN
-    "Paper is acid-free, which prevents it from crumbling or yellowing" 
+--Construction/Design Features (Include handle & bristles)    
+IF A[6786].Where("%heat-resistant bristles%").Values IS NOT NULL 
+THEN "High heat resistant bristles offer long term economy" 
+ELSE IF A[6786].Where("%angled bristle%").Values IS NOT NULL 
+THEN "Angled bristle for efficient cleaning" 
+ELSE IF A[6786].Where("%soft bristle brush%").Values IS NOT NULL 
+THEN "Softer bristles for delicate cleaning of jars, bottles, and glasses" 
+ELSE IF A[6786].Where("%stiff bristle%").Values IS NOT NULL OR A[6786].Where("%hard bristle brush%").Values IS NOT NULL
+THEN "Stiff bristles provide aggressive cleaning" 
+ELSE IF A[6786].Where("%long handle%").Values IS NOT NULL
+THEN "Long handle is useful for cleaning needs" 
+ELSE IF A[6786].Where("%heat-resistant handle%").Values IS NOT NULL 
+THEN "Heat-resistant handle helps protect hands from burns, grease and grime" 
+ELSE IF A[6786].Where("%molded ridges%").Values IS NOT NULL 
+THEN "Comfortable molded ridges" 
+ELSE IF A[6786].Where("%hanging hole%").Values IS NOT NULL AND A[6786].Where("%plastic handle%").Values IS NOT NULL THEN "Plastic handle with convenient hole for hanging" 
+ELSE IF A[6786].Where("%flexible handle%").Values IS NOT NULL AND A[6786].Where("%plastic handle%").Values IS NOT NULL THEN "Flexible handle for getting into corners and around curves" 
 ELSE "@@";
 
--- 8 - Recycled Content (%)
--- https://www.staples.com/Staples-30-Recycled-Copy-Paper-8-1-2-x-11-Case/product_492072
--- https://www.staples.com/Staples-100-Recycled-Copy-Paper-8-1-2-x-11-Case/product_620014
-IF A[6628].Value > 0 THEN
-    "Contains "_A[6628].Value_"% recycled postconsumer content for a sustainable choice" 
+--Bristle trim length (If Applicable)--oos    
+
+--Pack qty    
+IF Request.Data["TX_UOM"] LIKE "%/%" 
+THEN Request.Data["TX_UOM"].Split("/").First()_" per " 
+    _Request.Data["TX_UOM"].Split("/").Last().ToLower()
 ELSE "@@";
 
--- 9 - Additional Bullet (if relevant)
+--Use for additional product and/or manufacturer information relevant to the customer buying decision
+IF A[6786].Where("%BPA-free%").Values IS NOT NULL 
+    THEN "BPA-free to address safety concerns";
 
-IF A[6010].Where("yes").Values IS NOT NULL
-AND A[380].Where("SFI").Values IS NOT NULL THEN 
-        "Meets or exceeds FSC and SFI standards" 
+--Add feauture
+IF $SP-18150$ LIKE "Set" AND A[7094].Values IS NOT NULL
+THEN "Set includes: "_A[7094].Values.Flatten(",");
 
-ELSE IF A[6010].Where("yes").Values IS NOT NULL THEN
-    "FSC certified - this product comes from responsbilty managed forests" 
+--Water-activated micro-scrubber
+IF DC.Ksp.Values.Where("%Water%activated micro%scrubber%") IS NOT NULL 
+    THEN "Water-activated micro-scrubbers reach into surface grooves, lifting away the toughest soils";
 
-ELSE IF A[380].Where("SFI").Values IS NOT NULL THEN
-    "Meets or exceeds SFI standard";
+-- built-in scourer 
+IF A[6786].Values.Where("built-in scourer", "scouring pad")    IS NOT NULL
+AND $SP-18150$ NOT LIKE "Scouring Pad" 
+    THEN "One side is a scouring pad for scrubbing and cleaning";
 
--- 10 - Additional Bullet (if relevant)
-IF CAT.Main.Key LIKE "§1676385310823140679" 
-AND A[10618].Value LIKE "smooth" 
-    THEN "Smooth surface for high-impact color graphics";
+--soap filling
+IF A[6786].Values.Where("soap filling") IS NOT NULL
+    THEN "Pre-loaded with soap to remove tough messes";
 
-IF A[4783].Values.Where("%-hole punched").ExtractDecimals().First() > 1 
-AND CAT.Main.Key LIKE "§1676385310823140691" THEN
-    "Prepunched copy paper eliminates the need for a "_
-    A[4783].Values.Where("%-hole punched").ExtractDecimals().First()
-        .IfLike("2", "two")
-        .IfLike("3", "three")
-        .IfLike("4", "four")
-        .IfLike("5", "five")
-        .IfLike("6", "six")
-        .IfLike("7", "seven")
-        .IfLike("8", "eight")
-        .IfLike("9", "nine")
-    _"-hole punch";
+--sanitizing
+IF A[7092].Values.Where("%dishwasher%") IS NOT NULL 
+    THEN "Sanitize in the dishwasher" 
+ELSE IF A[6786].Values.Where("washable%") IS NOT NULL 
+AND A[7092].Values.Where("machine washable") IS NOT NULL
+    THEN "Machine "_A[6786].Values.Where("washable%").First().ToUpperFirstChar()_", reducing waste and creating a more eco-friendly environmentn" 
+ELSE IF A[6786].Values.Where("washable%") IS NOT NULL 
+    THEN A[6786].Values.Where("washable%").First().ToUpperFirstChar()_", reducing waste and creating a more eco-friendly environment" 
+ELSE IF A[7092].Values.Where("machine washable") IS NOT NULL
+    THEN "Machine washable for multiple uses" 
+ELSE IF A[7092].Values IS NOT NULL
+    THEN "Washable for multiple uses";
+
+--scent 
+IF A[7356].Values IS NOT NULL 
+    THEN "Leaves "_A[7356].Values.FlattenWithAnd()_" scent";
+
+--Additional(Certifications & Standards)
+IF A[380].Values IS NOT NULL 
+THEN "Meets or exceeds "_A[380].Values.Flatten(",")_" standards";
+
+--recycled content
+IF A[6628].Value IS NOT NULL 
+    THEN "Made with "_A[6628].Value_"% recycled materials"; 
+
+--grip
+IF A[6786].Values.Where("non-slip grip") IS NOT NULL 
+OR DC.Ksp.Values.Where("%non%slip grip%") IS NOT NULL
+    THEN "Non-slip grip for more comfortable to use";
